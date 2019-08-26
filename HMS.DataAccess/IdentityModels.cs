@@ -32,5 +32,8 @@ namespace HMS.Web.Models
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<ContactInfo> ContactInfos { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }
