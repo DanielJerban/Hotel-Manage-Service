@@ -3,7 +3,7 @@ namespace HMS.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initialize : DbMigration
     {
         public override void Up()
         {
