@@ -1,63 +1,127 @@
 ﻿@using HMS.Web.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Dashboard/assets/images/favicon.png">
+    <title>ورود به سایت</title>
+    <link href="~/Dashboard/dist/css/style.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url(/Dashboard/assets/images/auth-bg.jpg) no-repeat center center;">
+            <div class="auth-box">
+                <div id="loginform">
+                    <div class="logo">
+                        <span class="db"><img src="~/Dashboard/assets/images/logo-icon.png" alt="logo" /></span>
+                        <h5 class="font-medium m-b-20">ورود به سایت</h5>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal m-t-20", role = "form", id = "loginform" }))
+                            {
+                                @Html.AntiForgeryToken();
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                                @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                    </div>
+                                    @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;" })
+                                    @*<input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">*@
+                                </div>
+
+                                @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                    </div>
+                                    @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;" })
+                                    @*<input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">*@
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="custom-control custom-checkbox" style="float: right;">
+                                            @*<input type="checkbox" class="custom-control-input" id="customCheck1">*@
+                                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "custom-control-input", id = "customCheck1" })
+                                            <label class="custom-control-label" for="customCheck1">مرا به خاطر بسپار</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <div class="col-xs-12 p-b-20">
+                                        <button class="btn btn-block btn-lg btn-info" type="submit">ورود</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+                                        <div class="social">
+                                            <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab  fa-facebook"></i> </a>
+                                            <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab  fa-google-plus"></i> </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group m-b-0 m-t-10">
+                                    <div class="col-sm-12 text-center">
+                                        <a href="/Account/Register" class="text-info m-1-5" style="font-size: 18px"><b>ثبت نام</b></a>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                <div id="recoverform">
+                    <div class="logo">
+                        <span class="db"><img src="~/Dashboard/assets/images/logo-icon.png" alt="logo" /></span>
+                        <h5 class="font-medium m-b-20">Recover Password</h5>
+                        <span>Enter your Email and instructions will be sent to you!</span>
+                    </div>
+                    <div class="row m-t-20">
+                        <!-- Form -->
+                        <form class="col-12" action="index.html">
+                            <!-- email -->
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <input class="form-control form-control-lg" type="email" required="" placeholder="Username">
+                                </div>
+                            </div>
+                            <!-- pwd -->
+                            <div class="row m-t-20">
+                                <div class="col-12">
+                                    <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
+    <script src="~/Dashboard/assets//jquery.min.js "></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <!-- <script src="~/Dashboard/assets/popper.min.js "></script> -->
+    <script src="~/Dashboard/assets/bootstrap.min.js "></script>
 
-@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+
+    <script>
+        $('[data-toggle="tooltip "]').tooltip();
+        $(".preloader ").fadeOut();</script>
+</body>
+</html>

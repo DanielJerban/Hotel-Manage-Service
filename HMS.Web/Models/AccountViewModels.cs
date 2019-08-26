@@ -48,12 +48,12 @@ namespace HMS.Web.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required (ErrorMessage = "فیلد ایمیل الزامیست")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "فیلد رمز عبور الزامیست")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
