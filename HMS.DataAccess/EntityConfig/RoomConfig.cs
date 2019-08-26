@@ -8,10 +8,12 @@ namespace HMS.DataAccess.EntityConfig
         public RoomConfig()
         {
             // Room * ------------ 0-1 Facility
-            this.HasOptional(c => c.Facility).WithMany(c => c.Rooms);
+            this.HasOptional(c => c.Facility)
+                .WithMany(c => c.Rooms);
 
             // Room 0-1 ------------ * Image
-            this.HasMany(c => c.Images).WithOptional(c => c.Room);
+            this.HasMany(c => c.Images)
+                .WithOptional(c => c.Room);
 
         }
     }

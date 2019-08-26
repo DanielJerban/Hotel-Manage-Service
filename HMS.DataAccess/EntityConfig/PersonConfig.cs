@@ -8,7 +8,8 @@ namespace HMS.DataAccess.EntityConfig
         public PersonConfig()
         {
             // Person 0-1 --------- * ContactInfo 
-            this.HasMany(c => c.Infos).WithOptional(c => c.Person);
+            this.HasMany(c => c.Infos)
+                .WithOptional(c => c.Person);
         }
     }
 }

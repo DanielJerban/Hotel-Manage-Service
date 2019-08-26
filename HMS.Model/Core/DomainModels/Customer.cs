@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace HMS.Model.Core.DomainModels
 {
@@ -8,5 +10,13 @@ namespace HMS.Model.Core.DomainModels
         public string PassportNo { get; set; }
 
         public HotelData Hotel { get; set; }
+
+
+        // Self relation 
+        [DisplayName("مسافر همراه")]
+        public Guid? ParentId { get; set; }
+
+        public virtual Customer CustomerParent { get; set; }
+        public List<Customer> CustomerChild { get; set; }
     }
 }
