@@ -54,11 +54,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Interfaces\IContactInfoRepo.cs" />
+    <Compile Include="Core\Interfaces\ICustomerRepo.cs" />
+    <Compile Include="Core\Interfaces\IEmployeeRepo.cs" />
+    <Compile Include="Core\Interfaces\IHotelRepo.cs" />
+    <Compile Include="Core\Interfaces\IPersonRepo.cs" />
+    <Compile Include="Core\Interfaces\IRepository.cs" />
+    <Compile Include="Core\Interfaces\IRoomFacilityRepo.cs" />
+    <Compile Include="Core\Interfaces\IRoomImageRepo.cs" />
+    <Compile Include="Core\Interfaces\IRoomRepo.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Persistance\Repositories\ContactInfoRepo.cs" />
+    <Compile Include="Persistance\Repositories\CustomerRepo.cs" />
+    <Compile Include="Persistance\Repositories\EmployeeRepo.cs" />
+    <Compile Include="Persistance\Repositories\HotelRepo.cs" />
+    <Compile Include="Persistance\Repositories\PersonRepo.cs" />
+    <Compile Include="Persistance\Repositories\Repository.cs" />
+    <Compile Include="Persistance\Repositories\RoomFacilityRepo.cs" />
+    <Compile Include="Persistance\Repositories\RoomImageRepo.cs" />
+    <Compile Include="Persistance\Repositories\RoomRepo.cs" />
+    <Compile Include="Persistance\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HMS.DataAccess\HMS.DataAccess.csproj">
+      <Project>{7DF8A10F-B270-4DC7-AE18-BE44D62D54CE}</Project>
+      <Name>HMS.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Model\HMS.Model.csproj">
+      <Project>{95D84E27-D62B-49EF-A06B-78D3612017CA}</Project>
+      <Name>HMS.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
