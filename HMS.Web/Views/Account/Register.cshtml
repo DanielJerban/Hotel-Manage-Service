@@ -41,7 +41,7 @@
                                 @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                                     </div>
                                     @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;" })
                                 </div>
@@ -49,7 +49,7 @@
                                 @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                                     </div>
                                     @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;" })
                                 </div>
@@ -93,7 +93,7 @@
                                 @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
                                     </div>
                                     @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;" })
                                     
@@ -102,7 +102,7 @@
                                 @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
                                     </div>
                                     @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;" })
                                 </div>
@@ -110,7 +110,7 @@
                                 @Html.ValidationMessageFor(c => c.ConfirmPassword, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
                                     </div>
                                     @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control form-control-lg", placeholder = "تکرار رمز عبور", style = "text-align:right;" })
                                 </div>
@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="form-group m-b-0 m-t-10">
                                     <div class="col-sm-12 text-center">
-                                        <a href="/Account/Register" class="text-info m-1-5" style="font-size: 14px"><b>حساب کاربری دارم</b></a>
+                                        <a href="/Account/Login" class="text-info m-1-5" style="font-size: 14px"><b>حساب کاربری دارم</b></a>
                                     </div>
                                 </div>
                             }

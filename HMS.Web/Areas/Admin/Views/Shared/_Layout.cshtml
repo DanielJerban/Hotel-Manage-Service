@@ -1,4 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@using HMS.Web.Models
+
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+
+    var username = User.Identity.Name;
+    string fullName;
+    var customer = db.Customers.SingleOrDefault(c => c.User.UserName == username);
+    if (customer != null)
+    {
+        fullName = customer.FirstName + ' ' + customer.LastName;
+    }
+    else
+    {
+        fullName = " ";
+    }
+}
+
+<!DOCTYPE html>
 <html dir="rtl" lang="en">
 <head>
     <title>Hotel Manage Service</title>
@@ -72,7 +90,7 @@
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user"></i>
                                 <span class="m-l-5 font-medium d-none d-sm-inline-block">
-                                    دانیال جربان
+                                    @fullName
                                     <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
@@ -82,7 +100,8 @@
                                 </span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                                     <div class="m-l-10">
-                                        <h4 class="m-b-0">دانیال جربان</h4>
+                                        <h4 class="m-b-0">@fullName</h4>
+                                        <h4 class="m-b-0">@*دانیال جربان*@</h4>
                                         <p class=" m-b-0">@User.Identity.Name</p>
                                     </div>
                                 </div>
@@ -95,9 +114,13 @@
                                         <i class="ti-settings m-r-5 m-l-5"></i> تنطیمات اکانت
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="fa fa-power-off m-r-5 m-l-5"></i> خروج
-                                    </a>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { AreaReference.UseRoot, id = "logoutForm", @class = "navbar-right"}))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
+                                            <i class="fa fa-power-off m-r-5 m-l-5"></i> خروج
+                                        </a>
+                                    }
                                     <div class="dropdown-divider"></div>
                                 </div>
                             </div>

@@ -41,24 +41,21 @@
                                 @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
                                     </div>
                                     @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;" })
-                                    @*<input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">*@
                                 </div>
 
                                 @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
                                     </div>
                                     @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;" })
-                                    @*<input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">*@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <div class="custom-control custom-checkbox" style="float: right;">
-                                            @*<input type="checkbox" class="custom-control-input" id="customCheck1">*@
                                             @Html.CheckBoxFor(m => m.RememberMe, new { @class = "custom-control-input", id = "customCheck1" })
                                             <label class="custom-control-label" for="customCheck1">مرا به خاطر بسپار</label>
                                         </div>
