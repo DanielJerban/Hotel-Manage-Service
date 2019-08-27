@@ -17,7 +17,9 @@ namespace HMS.Web.Areas.Customer
             context.MapRoute(
                 "Customer_default",
                 "Customer/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { "HMS.Web.Areas.Customer.Controllers" }
+
             );
         }
     }

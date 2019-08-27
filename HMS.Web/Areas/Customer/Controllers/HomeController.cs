@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HMS.Web.Areas.Admin.Controllers
+namespace HMS.Web.Areas.Customer.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class AdminHomeController : Controller
+    [Authorize(Roles = "User")]
+    public class HomeController : Controller
     {
-        // GET: Admin/AdminHome
+        // GET: Customer/CustomerHome
         public ActionResult Index()
         {
             return View();

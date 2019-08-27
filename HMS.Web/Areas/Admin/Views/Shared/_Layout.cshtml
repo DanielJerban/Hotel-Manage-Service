@@ -114,7 +114,7 @@
                                         <i class="ti-settings m-r-5 m-l-5"></i> تنطیمات اکانت
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { AreaReference.UseRoot, id = "logoutForm", @class = "navbar-right"}))
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { AreaReference.UseRoot, id = "logoutForm", @class = "navbar-right", action = "/Account/LogOff"}))
                                     {
                                         @Html.AntiForgeryToken()
                                         <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
