@@ -35,5 +35,11 @@ namespace HMS.Web.Models
 
         public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<HotelData> Hotels { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomFacility> RoomFacilities { get; set; }
+        public DbSet<RoomImage> RoomImages { get; set; }
     }
 }
