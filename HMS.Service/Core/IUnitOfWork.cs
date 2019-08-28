@@ -13,6 +13,7 @@ namespace HMS.Service.Core
         IRoomRepo Room { get; }
         IPersonRepo Person { get; }
         IContactInfoRepo ContactInfo { get; }
+        IUserRepo User { get; }
 
         /// <summary>
         /// Save changes on database 

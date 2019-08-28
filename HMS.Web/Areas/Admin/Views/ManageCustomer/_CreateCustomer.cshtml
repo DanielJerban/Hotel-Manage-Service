@@ -1,0 +1,33 @@
+﻿@using HMS.Model.Core.DomainModels
+
+
+<div id="createIzimodal" class="iziModal" hidden>
+
+    @*<div class="form-group">
+        <select class="form-control" id="TelType" name="TelType">
+            <option value="@TelType.Home">خانه</option>
+            <option value="@TelType.Work">کار</option>
+            <option value="@TelType.Mobile">موبایل</option>
+        </select>
+    </div>*@
+    
+    
+    @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+        </div>
+        @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;" })
+    </div>
+
+    @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+        </div>
+        @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;" })
+    </div>
+
+
+
+</div>

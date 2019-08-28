@@ -63,6 +63,7 @@
     <Compile Include="Core\Interfaces\IRoomFacilityRepo.cs" />
     <Compile Include="Core\Interfaces\IRoomImageRepo.cs" />
     <Compile Include="Core\Interfaces\IRoomRepo.cs" />
+    <Compile Include="Core\Interfaces\IUserRepo.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistance\Repositories\ContactInfoRepo.cs" />
     <Compile Include="Persistance\Repositories\CustomerRepo.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Persistance\Repositories\RoomFacilityRepo.cs" />
     <Compile Include="Persistance\Repositories\RoomImageRepo.cs" />
     <Compile Include="Persistance\Repositories\RoomRepo.cs" />
+    <Compile Include="Persistance\Repositories\UserRepo.cs" />
     <Compile Include="Persistance\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

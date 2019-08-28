@@ -25,6 +25,30 @@ namespace HMS.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/dashboard/css").Include(
+                "~/Content/kendo/2019.2.619/kendo.common.min.css",
+                "~/Content/kendo/2019.2.619/kendo.flat.min.css",
+                "~/Scripts/kendo/2019.2.619/kendo.all.min.js",
+                "~/Scripts/kendo/PersianKendo.js",
+                "~/Dashboard/dist/css/style.min.css",
+                "~/Content/iziModal.min.css",
+                "~/Content/iziToast.min.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/dashboard/js").Include(
+                "~/Dashboard/assets/bootstrap.min.js",
+                "~/Dashboard/dist/js/app.min.js",
+                "~/Dashboard/dist/js/app.init.js",
+                "~/Dashboard/dist/js/app-style-switcher.js",
+                "~/Dashboard/assets/perfect-scrollbar.jquery.min.js",
+                "~/Dashboard/dist/js/waves.js",
+                "~/Dashboard/dist/js/sidebarmenu.js",
+                "~/Dashboard/dist/js/custom.js",
+                "~/Scripts/iziModal.min.js",
+                "~/Scripts/iziToast.min.js"
+
+                ));
         }
     }
 }

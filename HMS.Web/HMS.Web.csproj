@@ -267,6 +267,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -280,6 +281,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\iziModal.min.css" />
+    <Content Include="Content\iziToast.min.css" />
     <Content Include="Content\kendo\2019.2.619\Black\editor.png" />
     <Content Include="Content\kendo\2019.2.619\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2019.2.619\Black\indeterminate.gif" />
@@ -1167,7 +1170,11 @@
     <Content Include="Areas\Customer\Views\web.config" />
     <Content Include="Areas\Customer\Views\CustomerHome\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCustomer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageCustomer\_CustomerGrid.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageCustomer\_CreateCustomer.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\iziModal.min.js" />
+    <Content Include="Scripts\iziToast.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -3055,6 +3062,7 @@
     <Content Include="Scripts\kendo\2019.2.619\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\2019.2.619\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\kendo\2019.2.619\pako_deflate.min.js" />
+    <Content Include="Scripts\kendo\PersianKendo.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3307,6 +3315,8 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Shared\_CustomerGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

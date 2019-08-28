@@ -1,8 +1,43 @@
-﻿
+﻿@model TelType
+@using HMS.Model.Core.DomainModels
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
+<input id="btnCreate" type="button" name="btnCreate" value="ثبت مسافر" style="background-color: #363940; color: rgb(255, 255, 255); margin-bottom: 10px;" class="btn" />
+
+@Html.Partial("_CustomerGrid")
+
+
+<br /><br /><br />
+
+@Html.Partial("_CreateCustomer")
+
+
+
+@section Scripts{
+    
+    <script>
+
+        $("#btnCreate").click(function() {
+            $("#createIzimodal").iziModal({
+                title: 'ثبت نام',
+                subtitle: 'ثبت نام مسافر جدید',
+                headerColor: '#6a7a8c',
+                icon: 'far fa-plus-square',
+                rtl: true,
+                closeOnEscape: true,
+                closeButton: true,
+                transitionIn: 'fadeInUp',
+                transitionOut: 'fadeOutDown'
+            });
+
+            $("#createIzimodal").iziModal('open');
+            $("#createIzimodal").removeAttr('hidden');
+        })
+
+    </script>
+    
+}

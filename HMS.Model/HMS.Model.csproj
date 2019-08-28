@@ -65,15 +65,15 @@
     <Compile Include="Core\DomainModels\Room.cs" />
     <Compile Include="Core\DomainModels\RoomFacility.cs" />
     <Compile Include="Core\DomainModels\RoomImage.cs" />
+    <Compile Include="Core\DTOs\Customer\GetCustomerDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
+    <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\DTOs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
