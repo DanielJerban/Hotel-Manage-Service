@@ -261,13 +261,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ManageCustomerController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -625,6 +624,7 @@
     <Content Include="Dashboard\assets\images\logo-light-icon.png" />
     <Content Include="Dashboard\assets\images\logo-light-text.png" />
     <Content Include="Dashboard\assets\images\logo-text.png" />
+    <Content Include="Dashboard\assets\images\lucas-benjamin-R79qkPYvrcM-unsplash.jpg" />
     <Content Include="Dashboard\assets\jquery.min.js" />
     <Content Include="Dashboard\assets\perfect-scrollbar.jquery.min.js" />
     <Content Include="Dashboard\assets\popper.min.js" />
@@ -1172,6 +1172,9 @@
     <Content Include="Areas\Admin\Views\ManageCustomer\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCustomer\_CustomerGrid.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCustomer\_CreateCustomer.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageContactInfo\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageContactInfo\_ContactInfoGrid.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageCustomer\_ContactInfoGrid.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\iziModal.min.js" />
     <Content Include="Scripts\iziToast.min.js" />
@@ -3315,12 +3318,10 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Shared\_CustomerGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
