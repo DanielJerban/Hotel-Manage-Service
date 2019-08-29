@@ -11,7 +11,7 @@ namespace HMS.Web.Controllers.Base
 {
     public class BaseController : Controller
     {
-        private readonly IUnitOfWork uow;
+        protected readonly IUnitOfWork uow;
 
         public BaseController()
         {
