@@ -1,0 +1,67 @@
+﻿<!--==========   ==========-->
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!--==========  Open Crete IziModal  ==========-->
+<input type="button" value="ثبت مسافر" class="btn btn-primary" style="width: 20em"/><br /><br />
+
+<!--========== Customer main Grid ==========-->
+<div class="k-rtl" id="customerGrid"></div>
+
+
+
+
+@section Scripts
+{
+    <!--========== Customer main Grid ==========-->
+    <script>
+        $(document).ready(function () {
+            $("#customerGrid").kendoGrid({
+                dataSource: {
+                    type: "aspnetmvc_ajax",
+                    transport: {
+                        read: "Customer_Read"
+                    },
+                    pageSize: 20
+                },
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "FirstName",
+                        title: "نام",
+                        width: 170
+                    },
+                    {
+                        field: "LastName",
+                        title: "نام خانوادگی",
+                        width: 170
+                    },
+                    {
+                        field: "PassportNo",
+                        title: "شماره پاسپورت",
+                        width: 170
+                    },
+                    {
+                        field: "NationalNo",
+                        title: "شماره ملی",
+                        width: 170
+                    },
+                ]
+            });
+        });
+
+    </script>
+    <!--========== /Customer main Grid ==========-->
+
+}
