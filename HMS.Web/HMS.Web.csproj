@@ -254,7 +254,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
@@ -1171,7 +1170,6 @@
     <Content Include="Areas\Admin\Views\ManageContactInfo\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageContactInfo\_ContactInfoGrid.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCustomer\_ContactInfoGrid.cshtml" />
-    <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\iziModal.min.js" />
