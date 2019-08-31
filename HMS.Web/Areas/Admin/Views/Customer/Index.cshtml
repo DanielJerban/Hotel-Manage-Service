@@ -1,284 +1,421 @@
-﻿@model HMS.Model.Core.ViewModels.CreateCustomerViewModel
+﻿@model HMS.Model.Core.DTOs.Customer.CreateCustomerDto
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<!--==========  Open Crete IziModal  ==========-->
-<input id="btnOpenCreateModal" type="button" value="ثبت مسافر" class="btn --blue" style="width: 10em; background-color: #1e90ff; color: white;" /><br /><br />
+<style>
 
-<!--========== Customer main Grid ==========-->
+    #btn-RemoveCustomer {
+        background-color: #ff0043;
+        border-color: #daeffd;
+        width: 110px;
+        margin-right: 20px;
+    }
+
+    .Create-Customer-Tab {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        vertical-align: middle;
+    }
+
+    #personalDetail:hover {
+        background-color: white;
+        color: #6a7a8c;
+        cursor: pointer;
+    }
+
+    #userDetail:hover {
+        background-color: white;
+        color: #6a7a8c;
+        cursor: pointer;
+    }
+
+    .disableTab {
+        background-color: #babbbc;
+        color: white;
+    }
+</style>
+
+
+
+
+<!--============ Button crete customer ============-->
+<div class="row">
+    <div class="col col-md-6">
+        <input id="btnCreateCustomer" type="button" value="ثبت مسافر" class="btn btn-dark" style="width: 15em" />
+    </div>
+</div>
+
+<!--============ Customer Grid ============-->
 <div id="customerGrid" class="k-rtl"></div>
 
 
-<!--========== Create Customer Modal ==========-->
-<div id="divCreateCustomer" hidden>
-    <div class="col-12">
-        <form id="frmCreateCustomer" class="m-t-20 form-horizontal" style="margin: 30px 20px">
-            @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                </div>
-            </div>
-            @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                </div>
-            </div>
-            @Html.ValidationMessageFor(c => c.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.TextBoxFor(c => c.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                </div>
-            </div>
-            @Html.ValidationMessageFor(c => c.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.TextBoxFor(c => c.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                </div>
-            </div>
 
+<br /><br /><br />
 
-
-            @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
-                </div>
-            </div>
-            @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
-                </div>
-            </div>
-            @Html.ValidationMessageFor(c => c.ConfirmPassword, null, new { @class = "text-danger", style = "float:right;" })
-            <div class="input-group mb-3">
-                @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control form-control-lg", placeholder = "تکرار رمز عبور", style = "text-align:right;" })
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
-                </div>
-            </div>
-
-        </form>
-
-
-    </div>
-    <input onclick="CreateCustomer()" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #1e90ff; color: white; margin: 0px" />
-</div>
-
-<!--========== Create Contact Modal ==========-->
-<div id="divCreateContact" hidden="">
-    @*<div class="col-12">
-            <form id="frmCreateContact" class="m-t-20 form-horizontal" style="margin: 30px 20px">
-                @Html.ValidationMessageFor(c => c.contact.TelNo, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.contact.TelNo, new { @class = "form-control form-control-lg", placeholder = "شماره تلفن", style = "text-align:right;", type = "number" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
-                    </div>
-                </div>
-
-                <div class="input-group mb-3">
-                    <select class="form-control" style="height: 40px">
-                        <option value="0">موبایل</option>
-                        <option value="1">خانه</option>
-                        <option value="2">محل کار</option>
-                    </select>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
-                    </div>
-                </div>
-
-                @Html.ValidationMessageFor(c => c.contact.Address, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.contact.Address, new { @class = "form-control form-control-lg", placeholder = "آدرس", style = "text-align:right;" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-address-card"></i></span>
-                    </div>
-                </div>
-
-            </form>
+<div id="createCustomerModal" hidden>
+    <div class="row" style="height: 60px;">
+        <div class="col col-md-6 Create-Customer-Tab" id="personalDetail" onclick="openPersonalTab()">
+            اطلاعات شخصی
         </div>
-        <input onclick="CreateCustomer()" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #1e90ff; color: white; margin: 0px" />*@
-    
-    <!--========== Contact Grid for the current created customer==========-->
-    <div id="ContactGrid"></div>
+        <div class="col col-md-6 Create-Customer-Tab disableTab" id="userDetail" onclick="openUserTab()">
+            اطلاعات حساب کاربری
+        </div>
+    </div>
 
+    <!-- Tab Contents -->
+    <form id="frmCreateCustomer" class="container">
+        <div class="row">
+            <div id="personalContent" class="col-12" style="padding: 20px;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;", id = "txt-firstName" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;", id = "txt-lastName" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;", id = "txt-nationalNo" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;", id = "txt-passportNo" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="userContent" hidden class="col-12" style="padding: 20px;">
+                @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;", id = "txt-email" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                    </div>
+
+                </div>
+
+                @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;", id = "txt-password" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.ConfirmPassword, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control form-control-lg", placeholder = "تکرار رمز عبور", style = "text-align:right;", id = "txt-confirmPassword" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <input onclick="CreateCustomer()" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--============ Hidden inputs ============-->
+<input type="hidden" id="customerId" />
+<!--============ /Hidden inputs ============-->
 
 
 @section Scripts
 {
-    <!--========== Customer main Grid ==========-->
+    <!--============ Customer Grid ============-->
     <script>
-        $(document).ready(function () {
+
+        // this is same as (document).ready(function(){})
+        $(function () {
             $("#customerGrid").kendoGrid({
                 dataSource: {
-                    type: "aspnetmvc_ajax",
+                    type: 'json',
                     transport: {
-                        read: "Customer_Read"
+                        read: "/Admin/Customer/Customer_Read"
                     },
                     pageSize: 20
                 },
+                filterable: true,
                 height: 550,
                 width: 'auto',
                 groupable: true,
                 sortable: true,
+                selectable: true,
                 pageable: {
                     refresh: true,
-                    pageSize: true,
+                    pageSize: 20,
                     buttonCount: 5
                 },
                 columns: [
                     {
                         field: "FirstName",
                         title: "نام",
-                        width: 170
+                        width: 180
                     },
                     {
                         field: "LastName",
                         title: "نام خانوادگی",
-                        width: 170
+                        width: 180
+                    },
+                    {
+                        field: "NationalNo",
+                        title: "کد ملی",
+                        width: 180
                     },
                     {
                         field: "PassportNo",
                         title: "شماره پاسپورت",
-                        width: 170
+                        width: 180
+                    },
+                    {
+                        field: "Id",
+                        title: " ",
+                        filterable: false,
+                        sortable: false,
+                        groupable: false,
+                        template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Customer(' + "'#=Id#'" + ')">حذف</button>',
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+         //Search in the customer grid
+        $("#txt-search").change(function () {
+            $("#customerGrid").kendoGrid({
+                dataSource: {
+                    type: 'json',
+                    transport: {
+                        read: "/Admin/Customer/Customer_Read?search=" + $("#txt-search").val()
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "FirstName",
+                        title: "نام",
+                        width: 200
+                    },
+                    {
+                        field: "LastName",
+                        title: "نام خانوادگی",
+                        width: 200
                     },
                     {
                         field: "NationalNo",
-                        title: "شماره ملی",
-                        width: 170
+                        title: "کد ملی",
+                        width: 200
                     },
-                ],
-                navigatable: true,
-                selectable: "single cell",
-                sortable: {
-                    mode: "single"
-                },
-                filterable: true,
-                scrollable: true
+                    {
+                        field: "PassportNo",
+                        title: "شماره پاسپورت",
+                        width: 200
+                    },
+                    {
+                        field: "Id",
+                        title: " ",
+                        filterable: false,
+                        sortable: false,
+                        groupable: false,
+                        template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Customer(' + "'#=Id#'" + ')">حذف</button>',
+                        width: 200
+                    }
+                ]
             });
         });
 
+        
     </script>
-    <!--========== /Customer main Grid ==========-->
-    <!--========== /Contact Grid ==========-->
+    <!--============ /Customer Grid ============-->
+    <!--============ Remove Customer ============-->
     <script>
 
-        $("#ContactGrid").kendoGrid({
-            height: 'auto',
-            columns: [
-                { field: "Id", title: "ID" },
-                { field: "TelType", title: "نوع" },
-                { field: "TelNo", title: "شماره تلفن" },
-                { field: "Address", title: "آدرس" },
-                { command: ["destroy"], width: 100 }
-            ],
-            toolbar: [
-                { name: "create", text: "جدید" },
-                { name: "save", text: "ذخیره تغییرات" }
-            ],
-            dataSource: {
-                type: "aspnetmvc-ajax",
-                batch: true,
-                transport: {
-                    read: {
-                        url: "Contact_Read",
-                        data: {
-                            id: $("#ContactId").val()
-                        }
-                    },
-                    create: {
-                        url: "Contact_Create",
-                        data: {
-                            personId: $("#ContactId").val()
-                        }
-                    },
-                    update: {
-                        url: "Contact_Update",
-                        data: {
-                            personId: $("#ContactId").val()
-                        }
-                    },
-                    destroy: {
-                        url: "Contact_Destroy",
-                        data: {
-                            personId: $("#ContactId").val()
-                        }
-                    }
-                },
-                schema: {
-                    data: "Data",
-                    model: {
-                        id: "Id",
-                        fields: {
-                            Id: { type: "string" },
-                            TelNo: { type: "string" },
-                            TelType: { type: "string" },
-                            Address: { type: "string" }
-                        }
-                    }
-                },
-                serverPaging: true,
-                serverSorting: true
-            },
-            editable: "incell",
-            pageable: {
-                pageSize: 50,
-                buttonCount: 1,
-                messages: {
-                    empty: "موردی وجود ندارد",
-                    display: "تعداد کل {2}"
-                }
-            },
-            navigatable: true,
-            selectable: "single cell",
-            sortable: {
-                mode: "single"
-            },
-            filterable: false,
-            scrollable: true
-        })
-    </script>
-    <!--========== /Contact Grid ==========-->
-    <!--========== Open Create customer and create contact modal ==========-->
-    <script>
-        $("#btnOpenCreateModal").click(function () {
-            $("#divCreateCustomer").iziModal({
-                title: 'ثبت نام',
-                subtitle: 'ثبت مسافر جدید',
-                rtl: true,
-                width: 600
-            });
-            $('#divCreateCustomer').iziModal('open');
-            $("#divCreateCustomer").removeAttr('hidden');
-        });
+        function remove_Customer(Id) {
+            // set the hidden id for customer
+            $("#customerId").val(Id);
 
-        function CreateCustomer() {
-            $("#divCreateContact").iziModal({
-                title: 'ثبت تلفن',
-                subtitle: 'ثبت شماره تلفن و آدرس',
+
+
+            iziToast.question({
+                timeout: 20000,
+                color: 'red',
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'حذف',
+                message: 'آیا مطمن هستید؟',
                 rtl: true,
-                width: 600
+                position: 'center',
+                buttons: [
+                    ['<button><b>بلی</b></button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Customer/Customer_Delete/" + Id,
+                            success: function (result) {
+                                if (result === true) {
+                                    iziToast.success({
+                                        position: "center",
+                                        pauseOnHover: false,
+                                        timeout: 2000,
+                                        displayMode: 1,
+                                        rtl: true,
+                                        title: "بسیار عالی",
+                                        message: "مسافر مورد نظر حذف شد."
+                                    });
+                                    $("#customerGrid").data("kendoGrid").dataSource.read();
+                                } else {
+                                    iziToast.warning({
+                                        position: "bottomRight",
+                                        timeout: 2000,
+                                        rtl: true,
+                                        title: "متاسفانه",
+                                        message: "مشکلی رخ داده است!"
+                                    });
+                                }
+                            }
+                        })
+
+                    }, true],
+                    ['<button>خیر</button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }],
+                ]
             });
-            // Close the current modal and open contact modal
-            $('#divCreateCustomer').iziModal('close');
-            $('#divCreateContact').iziModal('open');
-            $("#divCreateContact").removeAttr('hidden');
         }
 
     </script>
-    <!--========== /Open Create customer modal ==========-->
+    <!--============ /Remove Customer ============-->
+    <!--============ Create Customer ============-->
+    <script>
 
+        $("#btnCreateCustomer").click(function () {
+            $("#createCustomerModal").iziModal({
+                title: "ثبت مسافر",
+                subtitle: "ثبت نام مسافر جدید",
+                headerColor: '#343a40',
+                rtl: true,
+                fullscreen: true,
+                width: 800
+            });
+
+            $("#createCustomerModal").removeAttr("hidden");
+            $("#createCustomerModal").iziModal("open");
+        });
+    </script>
+    <script>
+        function CreateCustomer() {
+            debugger;
+            $.ajax({
+                url: "/Admin/Customer/Customer_Create",
+                type: "POST",
+                data: {
+                    customerDto: {
+                        FirstName: $("#txt-firstName").val(),
+                        LastName: $("#txt-lastName").val(),
+                        NationalNo: $("#txt-nationalNo").val(),
+                        PassportNo: $("#txt-passportNo").val(),
+                        Email: $("#txt-email"),
+                        Password: $("#txt-password").val(),
+                        ConfirmPassword: $("#txt-confirmPassword").val()
+                    }
+                },
+                success: function () {
+                    if (result === true) {
+                        iziToast.success({
+                            position: "center",
+                            pauseOnHover: false,
+                            timeout: 2000,
+                            displayMode: 1,
+                            rtl: true,
+                            title: "بسیار عالی",
+                            message: "مسافر جدید به سیستم اضافه شد."
+                        });
+                        $("#customerGrid").data("kendoGrid").dataSource.read();
+                    } else {
+                        iziToast.warning({
+                            position: "bottomRight",
+                            timeout: 2000,
+                            rtl: true,
+                            title: "متاسفانه",
+                            message: "مشکلی رخ داده است!"
+                        });
+                    }
+                }
+            });
+        }
+
+    </script>
+    <!--============ /Create Customer ============-->
+    <!--============ Handling Create Customer Tab ============-->
+    <script>
+
+        function openPersonalTab() {
+            $("#personalContent").removeAttr("hidden");
+            $("#userContent").attr("hidden", "hidden");
+
+            $("#userDetail").addClass("disableTab");
+            $("#personalDetail").removeClass("disableTab");
+        }
+
+        function openUserTab() {
+            $("#userContent").removeAttr("hidden");
+            $("#personalContent").attr("hidden", "hidden");
+
+            $("#personalDetail").addClass("disableTab");
+            $("#userDetail").removeClass("disableTab");
+        }
+
+    </script>
+    <!--============ Handling Create Customer Tab ============-->
 }

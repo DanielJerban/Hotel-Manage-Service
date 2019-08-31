@@ -1,12 +1,14 @@
-﻿using HMS.Model.Core.DTOs.Customer;
-using HMS.Web.Controllers.Base;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Web.Http;
 using System.Web.Mvc;
 using HMS.Model.Core.DomainModels;
-using HMS.Model.Core.DTOs.ContactInfo;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
+using HMS.Model.Core.DTOs.Customer;
+using HMS.Web.Controllers.Base;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -18,156 +20,125 @@ namespace HMS.Web.Areas.Admin.Controllers
             return View();
         }
 
-
-        public ActionResult Customer_Read()
+        public JsonResult Customer_Read(string search)
         {
-            var customers = uow.Customer.GetAll();
-            var customerDtos = new List<GetCustomerDto>();
+            var customers = uow.Customer.GetAll().ToList();
+
+            List<GetCustomerDto> customerDtos = new List<GetCustomerDto>();
 
             foreach (var customer in customers)
             {
                 customerDtos.Add(new GetCustomerDto()
                 {
-                    Id = customer.Id,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
-                    PassportNo = customer.PassportNo,
-                    NationalNo = customer.NationalNo
+                    NationalNo = customer.NationalNo ?? "",
+                    PassportNo = customer.PassportNo ?? "",
+                    Id = customer.Id
                 });
             }
 
-            return Json(customerDtos, JsonRequestBehavior.AllowGet);
-        }
-
-
-        public ActionResult Contact_Read([DataSourceRequest] DataSourceRequest request)
-        {
-            var contacts = uow.ContactInfo.GetAll().ToList();
-            var contactdtos = new List<ContactInfoDto>();
-
-
-            foreach (var contact in contacts)
+            if (search != null)
             {
-                contactdtos.Add(new ContactInfoDto()
-                {
-                    Id = contact.Id,
-                    TelNo = contact.TelNo,
-                    TelType = contact.TelType,
-                    Address = contact.Address
-                });
+                return Json(customerDtos.Where(c => c.FirstName.Contains(search) || c.LastName.Contains(search) || c.NationalNo.Contains(search) || c.PassportNo.Contains(search))
+                    .OrderBy(c => c.LastName).ThenBy(c => c.FirstName).ToList(), JsonRequestBehavior.AllowGet);
             }
 
-
-
-            DataSourceResult result = contactdtos.ToDataSourceResult(request);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(customerDtos.OrderBy(c => c.LastName).ThenBy(c => c.FirstName), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact_Create([DataSourceRequest] DataSourceRequest request,
-            [Bind(Prefix = "models")] IEnumerable<ContactInfoDto> contacts)
+        public JsonResult Customer_Delete(Guid? id)
         {
-            // will keep the inserted entities here. used to return the result later.
-            var entities = new List<ContactInfo>();
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                foreach (var contact in contacts)
-                {
-                    var entity = new ContactInfo()
-                    {
-                        Id = contact.Id,
-                        TelNo = contact.TelNo,
-                        TelType = contact.TelType,
-                        Address = contact.Address
-                    };
-                    uow.ContactInfo.Add(entity);
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
-                    // store the entity for later user 
-                    entities.Add(entity);
-                }
-
+            var contact = uow.ContactInfo.Get(c => c.Person.Id == id).SingleOrDefault();
+            if (contact != null)
+            {
+                uow.ContactInfo.Remove(contact);
                 uow.Complete();
             }
 
-            return Json(entities.ToDataSourceResult(request, ModelState, contact => new ContactInfoDto()
+            var user = uow.User.Get(c => c.Person.Id == id).SingleOrDefault();
+            if (user != null)
             {
-                Id = contact.Id,
-                TelNo = contact.TelNo,
-                TelType = contact.TelType,
-                Address = contact.Address
-
-            }));
-        }
-
-        public ActionResult Contact_Update([DataSourceRequest] DataSourceRequest request,
-            [Bind(Prefix = "models")] IEnumerable<ContactInfoDto> contacts)
-        {
-            // will keep the updated entities here. used to return the result later.
-            var entities = new List<ContactInfo>();
-            if (ModelState.IsValid)
-            {
-                foreach (var contact in contacts)
-                {
-                    var entity = new ContactInfo()
-                    {
-                        Id = contact.Id,
-                        TelType = contact.TelType,
-                        TelNo = contact.TelNo,
-                        Address = contact.Address
-                    };
-
-                    // Store the entity for later use
-                    entities.Add(entity);
-
-                    // Attach the entity
-                    uow.ContactInfo.Update(entity);
-                }
-
-                uow.Complete();
-
-            }
-            return Json(entities.ToDataSourceResult(request, ModelState, contact => new ContactInfoDto()
-            {
-                Id = contact.Id,
-                TelNo = contact.TelNo,
-                TelType = contact.TelType,
-                Address = contact.Address
-
-            }));
-        }
-
-        public ActionResult Contact_Destroy([DataSourceRequest] DataSourceRequest request,
-            [Bind(Prefix = "models")] IEnumerable<ContactInfoDto> contacts)
-        {
-            // will keep the destroyed entities here. used to return the result later 
-            var entities = new List<ContactInfo>();
-            if (ModelState.IsValid)
-            {
-                foreach (var contact in contacts)
-                {
-                    var entity = new ContactInfo()
-                    {
-                        Id = contact.Id,
-                        TelType = contact.TelType,
-                        TelNo = contact.TelNo,
-                        Address = contact.Address
-                    };
-
-                    entities.Add(entity);
-                    uow.ContactInfo.Remove(entity);
-                }
+                uow.User.Remove(user);
                 uow.Complete();
             }
-
-            return Json(entities.ToDataSourceResult(request, ModelState, contact => new ContactInfoDto()
+            else
             {
-                Id = contact.Id,
-                TelNo = contact.TelNo,
-                TelType = contact.TelType,
-                Address = contact.Address
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
 
-            }));
+            var customer = uow.Customer.Find(id);
+            if (customer != null)
+            {
+                uow.Customer.Remove(customer);
+                uow.Complete();
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Create Customer and a user for it
+        /// </summary>
+        public ActionResult Customer_Create(CreateCustomerDto customerDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = new Model.Core.DomainModels.Customer()
+                {
+                    FirstName = customerDto.FirstName,
+                    LastName = customerDto.LastName,
+                    NationalNo = customerDto.NationalNo,
+                    PassportNo = customerDto.PassportNo
+                };
+                uow.Customer.Add(customer);
+                uow.Complete();
+
+                PasswordHasher hasher = new PasswordHasher();
+                Random random = new Random();
+
+                // Create new user 
+                ApplicationUser user = new ApplicationUser()
+                {
+                    Email = customerDto.Email,
+                    UserName = customerDto.Email,
+                    PasswordHash = hasher.HashPassword(customerDto.Password),
+                    Person = customer,
+                    SecurityStamp = random.Next(100000).ToString()
+                };
+                uow.User.Add(user);
+                uow.Complete();
+
+                // Create new role 
+                if (!roleManager.RoleExists("User"))
+                {
+                    roleManager.Create(new IdentityRole()
+                    {
+                        Name = "User"
+                    });
+                }
+
+                // Set Role 
+                userManager.AddToRole(user.Id, "User");
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Contact_Create()
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
     }
 }

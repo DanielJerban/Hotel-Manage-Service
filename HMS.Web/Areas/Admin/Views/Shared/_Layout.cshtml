@@ -89,7 +89,7 @@
                 <div class="navbar-collapse collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav float-left mr-auto">
                         <li class="nav-item search-box">
-                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                            <a class="nav-link waves-effect waves-dark" href="#">
                                 <div class="d-flex align-items-center">
                                     <i class="mdi mdi-magnify font-20 mr-1"></i>
                                     <div class="ml-1 d-none d-sm-block">
@@ -97,12 +97,12 @@
                                     </div>
                                 </div>
                             </a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="جست و جو">
+                            <div class="app-search position-absolute">
+                                <input id="txt-search" type="text" class="form-control" placeholder="جست و جو و کلیک">
                                 <a class="srh-btn">
                                     <i class="ti-close"></i>
                                 </a>
-                            </form>
+                            </div>
                         </li>
                     </ul>
                     <ul class="navbar-nav float-right">
@@ -239,11 +239,11 @@
     @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
 
     @Scripts.Render("~/bundles/dashboard/js")
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 
     @RenderSection("Scripts", false)
-
-
 
 </body>
 </html>
