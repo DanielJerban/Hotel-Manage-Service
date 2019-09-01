@@ -1,0 +1,106 @@
+﻿@model HMS.Model.Core.DTOs.Customer.GetCustomerDto
+
+
+<style>
+
+    .center {
+        text-align: center;
+    }
+</style>
+
+
+
+<!--============ Hidden inputs ============-->
+<input type="hidden" value="@Model.Id" id="customerId" />
+<!--============ /Hidden inputs ============-->
+
+
+<div id="detailModal" hidden>
+
+    <div style="margin: 30px 20px 50px 20px">
+        <div class="row center">
+            <div class="col col-md-6"><strong>نام</strong></div>
+            <div class="col col-md-6">@Model.FirstName</div>
+        </div>
+        <div class="row center">
+            <div class="col col-md-6"><strong>نام خانوادگی</strong></div>
+            <div class="col col-md-6">@Model.LastName</div>
+        </div>
+        <div class="row center">
+            <div class="col col-md-6"><strong>کد ملی</strong></div>
+            <div class="col col-md-6">@Model.NationalNo</div>
+        </div>
+        <div class="row center">
+            <div class="col col-md-6"><strong>شماره پاسپورت</strong></div>
+            <div class="col col-md-6">@Model.PassportNo</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div style="width: 50%; padding-left: 0px;">
+            <button class="btn btn-block" id="btnCreateContact" style="background-color: white; color: #13a394; border-color: #13a394">اطلاعات تماس</button>
+        </div>
+        <div style="width: 50%; padding-right: 0px;">
+            <button class="btn btn-block" id="btnCreateFelowCustomer" style="background-color: white ; color: #13a394; border-color: #13a394">ثبت مسافرین همراه</button>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--============ Create Contact Partial view using ajax ============-->
+<div id="CreateContactPartial"></div>
+<!--============ /Create Contact Partial view using ajax ============-->
+<!--============ Open Detail Modal ============-->
+<script>
+    $(function () {
+
+        $("#detailModal").iziModal({
+            title: "مشخصات",
+            subtitle: "مشخصات مسافر و ثبت اطلاعات بیشتر",
+            headerColor: '#343a40',
+            rtl: true,
+            fullscreen: true,
+            width: 600
+        });
+
+        $("#detailModal").iziModal('open');
+        $("#detailModal").removeAttr("hidden", "hidden");
+
+
+        $("#btnCreateContact").mouseenter(function () {
+            $(this).css("background-color", "#13a394");
+            $(this).css("color", "#fff");
+        });
+        $("#btnCreateContact").mouseleave(function () {
+            $(this).css("background-color", "#fff");
+            $(this).css("color", "#13a394");
+        });
+
+        // Styling the buttons
+        $("#btnCreateFelowCustomer").mouseenter(function () {
+            $(this).css("background-color", "#13a394");
+            $(this).css("color", "#fff");
+        });
+        $("#btnCreateFelowCustomer").mouseleave(function () {
+            $(this).css("background-color", "#fff");
+            $(this).css("color", "#13a394");
+        });
+
+
+        // Calling the _CreateContact partial using ajax
+        $("#btnCreateContact").click(function () {
+            $.ajax({
+                dataType: "HTML",
+                type: "POST",
+                url: "/Admin/Customer/_CreateContact/" + $("#customerId").val(),
+                success: function (result) {
+                    $("#CreateContactPartial").html(result);
+                }
+            });
+        });
+    });
+
+</script>
+<!--============ /Open Detail Modal ============-->

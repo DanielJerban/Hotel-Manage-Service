@@ -1171,6 +1171,9 @@
     <Content Include="Areas\Admin\Views\ManageContactInfo\_ContactInfoGrid.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCustomer\_ContactInfoGrid.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\_CreateCustomer.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\_CustomerDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\_CreateContact.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\iziModal.min.js" />
     <Content Include="Scripts\iziToast.min.js" />

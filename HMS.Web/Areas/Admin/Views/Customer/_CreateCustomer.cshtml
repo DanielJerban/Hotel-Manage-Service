@@ -1,0 +1,164 @@
+﻿@model HMS.Model.Core.DTOs.Customer.CreateCustomerDto
+
+<div id="createCustomerModal" hidden>
+
+    <form id="frmCreateCustomer" class="container">
+        <div class="row">
+            <div class="col-12" style="padding: 20px;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;", id = "txt-firstName" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;", id = "txt-lastName" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;", id = "txt-nationalNo" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;", id = "txt-passportNo" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;", id = "txt-email" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                    </div>
+
+                </div>
+
+                @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;", id = "txt-password" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(c => c.ConfirmPassword, null, new { @class = "text-danger", style = "float:right;" })
+                <div class="input-group mb-3">
+                    @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control form-control-lg", placeholder = "تکرار رمز عبور", style = "text-align:right;", id = "txt-confirmPassword" })
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <input id="btnSubmitCreateCustomer" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+</div>
+
+
+<script>
+
+    $(function () {
+        $("#createCustomerModal").iziModal({
+            title: "ثبت مسافر",
+            subtitle: "ثبت نام مسافر جدید",
+            headerColor: '#343a40',
+            rtl: true,
+            fullscreen: true,
+            width: 800
+        });
+
+        $("#createCustomerModal").removeAttr("hidden");
+        $("#createCustomerModal").iziModal("open");
+    })
+</script>
+
+<script>
+    $(function () {
+        $("#btnSubmitCreateCustomer").click(function (e) {
+            e.preventDefault();
+
+            if ($("#frmCreateCustomer").valid()) {
+                $.ajax({
+                    url: "/Admin/Customer/Customer_Create",
+                    type: "POST",
+                    data: {
+                        customerDto: {
+                            FirstName: $("#txt-firstName").val(),
+                            LastName: $("#txt-lastName").val(),
+                            NationalNo: $("#txt-nationalNo").val(),
+                            PassportNo: $("#txt-passportNo").val(),
+                            Email: $("#txt-email").val(),
+                            Password: $("#txt-password").val(),
+                            ConfirmPassword: $("#txt-confirmPassword").val()
+                        }
+                    },
+                    success: function (result) {
+                        if (result === true) {
+                            iziToast.success({
+                                position: "bottomRight",
+                                pauseOnHover: false,
+                                timeout: 2000,
+                                displayMode: 1,
+                                rtl: true,
+                                title: "بسیار عالی",
+                                message: "مسافر جدید به سیستم اضافه شد."
+                            });
+
+                            // refresh the customer grid
+                            $("#customerGrid").data("kendoGrid").dataSource.read();
+
+                            // Clear the create customer modal
+                            $("#txt-firstName").val('');
+                            $("#txt-lastName").val('');
+                            $("#txt-nationalNo").val('');
+                            $("#txt-passportNo").val('');
+                            $("#txt-email").val('');
+                            $("#txt-password").val('');
+                            $("#txt-confirmPassword").val('');
+
+                            // close the create customer modal
+                            $("#createCustomerModal").iziModal("close");
+
+                        } else {
+                            iziToast.warning({
+                                position: "bottomRight",
+                                timeout: 2000,
+                                rtl: true,
+                                title: "متاسفانه",
+                                message: "مشکلی رخ داده است!"
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<!-- In this case will get an error-->
+@*<script>
+   $(function() {
+       @Scripts.Render("~/bundles/jqueryval")
+   });
+</script>*@

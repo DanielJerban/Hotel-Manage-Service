@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using System.Web.Mvc;
 using HMS.Model.Core.DomainModels;
+using HMS.Model.Core.DTOs.ContactInfo;
 using HMS.Model.Core.DTOs.Customer;
 using HMS.Web.Controllers.Base;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Telerik.Windows.Documents.Flow.Model.Lists;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -30,8 +33,8 @@ namespace HMS.Web.Areas.Admin.Controllers
             {
                 customerDtos.Add(new GetCustomerDto()
                 {
-                    FirstName = customer.FirstName,
-                    LastName = customer.LastName,
+                    FirstName = customer.FirstName ?? "",
+                    LastName = customer.LastName ?? "",
                     NationalNo = customer.NationalNo ?? "",
                     PassportNo = customer.PassportNo ?? "",
                     Id = customer.Id
@@ -67,23 +70,18 @@ namespace HMS.Web.Areas.Admin.Controllers
                 uow.User.Remove(user);
                 uow.Complete();
             }
-            else
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
 
             var customer = uow.Customer.Find(id);
             if (customer != null)
             {
                 uow.Customer.Remove(customer);
                 uow.Complete();
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
-
-            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -136,9 +134,131 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact_Create()
+        /// <summary>
+        /// Read the contacts of a special user from the database 
+        /// </summary>
+        /// <param name="Id">Customer Id</param>
+        public ActionResult Contact_Read(Guid Id)
         {
-            return Json("", JsonRequestBehavior.AllowGet);
+            var contacts = uow.ContactInfo.Get(c => c.Person.Id == Id).ToList();
+            var contactInfos = new List<ContactInfoDto>();
+
+            string telType;
+
+            foreach (var contact in contacts)
+            {
+                switch (contact.TelType)
+                {
+                    case TelType.Home:
+                        telType = "خانه";
+                        break;
+                    case TelType.Work:
+                        telType = "محل کار";
+                        break;
+                    case TelType.Mobile:
+                        telType = "موبایل";
+                        break;
+                    default:
+                        telType = "موبایل";
+                        break;
+                }
+
+                contactInfos.Add(new ContactInfoDto()
+                {
+                    Id = contact.Id,
+                    TelNo = contact.TelNo,
+                    TelType = telType,
+                    Address = contact.Address
+                });
+            }
+
+            return Json(contactInfos, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Contact_Delete(Guid Id)
+        {
+            var contact = uow.ContactInfo.Find(Id);
+            uow.ContactInfo.Remove(contact);
+            uow.Complete();
+
+            return Json(true);
+        }
+
+        /// <summary>
+        /// Create a new Contact info for a specific customer 
+        /// </summary>
+        public ActionResult Contact_Create(ContactInfoDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = uow.Customer.Find(model.Id);
+
+                TelType teltype = new TelType();
+                switch (model.TelType)
+                {
+                    case "0":
+                        teltype = TelType.Mobile;
+                        break;
+                    case "1":
+                        teltype = TelType.Home;
+                        break;
+                    case "2":
+                        teltype = TelType.Work;
+                        break;
+                }
+
+                var contactInfo = new ContactInfo()
+                {
+                    TelType = teltype,
+                    TelNo = model.TelNo,
+                    Address = model.Address,
+                    Person = customer 
+                };
+
+                uow.ContactInfo.Add(contactInfo);
+                uow.Complete();
+
+
+                customer.Infos.Add(contactInfo);
+                uow.Customer.Update(customer);
+                uow.Complete();
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+
+        #region Partial Views
+
+
+        public PartialViewResult _CreateCustomer()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult _CustomerDetails(Guid Id)
+        {
+            var customer = uow.Customer.Find(Id);
+            var customerDto = new GetCustomerDto()
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                NationalNo = customer.NationalNo,
+                PassportNo = customer.PassportNo
+            };
+
+            return PartialView(customerDto);
+        }
+
+        public PartialViewResult _CreateContact(Guid Id)
+        {
+            return PartialView();
+        }
+
+
+        #endregion
     }
 }

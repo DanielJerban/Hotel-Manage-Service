@@ -1,0 +1,311 @@
+﻿@model HMS.Model.Core.DTOs.ContactInfo.ContactInfoDto
+
+
+<!--================ Hidden Inputs ================-->
+<input type="hidden" id="customerId" />
+<!--================ /Hidden Inputs ================-->
+
+
+<style>
+
+    .disableTab {
+        background-color: #babbbc;
+        color: white;
+    }
+</style>
+
+
+
+<div id="createContactModal" hidden>
+
+    <div id="ContactTabs">
+        <div class="row" style="height: 60px;">
+            <div class="col col-md-6 Create-Customer-Tab" id="contactDetailsGrid" onclick="openTab1()" style="cursor: pointer">
+                اطلاعات تماس
+            </div>
+            <div class="col col-md-6 Create-Customer-Tab disableTab" id="newContact" onclick="openTab2()" style="cursor: pointer">
+                ثبت اطلاعات جدید
+            </div>
+        </div>
+
+        <!-- Tab Contents -->
+        <div>
+            <div class="row">
+                <div id="tabContent1" class="col-12" style="padding: 20px;">
+                    <!-- Contact Grid -->
+                    <div class="k-rtl" id="contactGrid"></div>
+                </div>
+
+                <div id="tabContent2" hidden class="col-12">
+                    <form id="frmCreateContact" style="padding: 20px;">
+
+                        @Html.ValidationMessageFor(c => c.TelNo, null, new { @class = "text-danger", style = "float:right;" })
+                        <div class="input-group mb-3">
+                            @Html.TextBoxFor(c => c.TelNo, new { @class = "form-control form-control-lg", placeholder = "شماره تلفن", style = "text-align:right;", id = "txt-telNo" })
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <select class="form-control" style="height: 40px; color: #4F5467; font-size: 18px;" id="dropdown-teltype">
+                                <option value="0">موبایل</option>
+                                <option value="1">خانه</option>
+                                <option value="2">محل کار</option>
+                            </select>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
+                            </div>
+                        </div>
+
+
+
+                        @Html.ValidationMessageFor(c => c.Address, null, new { @class = "text-danger", style = "float:right;" })
+                        <div class="input-group mb-3">
+                            @Html.TextAreaFor(c => c.Address, new { @class = "form-control form-control-lg", placeholder = "آدرس", style = "text-align:right;", id = "txt-address" })
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <input id="btnSubmitCreateContacts" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<!--================ Open Create Contact Modal ================-->
+<script>
+
+    $(function () {
+
+        $("#createContactModal").iziModal({
+            title: "ثبت اطلاعات",
+            subtitle: "ثبت اطلاعات تماس مسافر",
+            headerColor: '#343a40',
+            rtl: true,
+            fullscreen: true,
+            width: 800,
+            overlay: true,
+            zindex: 2000
+        });
+
+        $("#createContactModal").iziModal('open');
+        $("#createContactModal").removeAttr("hidden");
+
+    })
+
+</script>
+<!--================ /Open Create Contact Modal ================-->
+<!--================ Contact Grid ================-->
+<script>
+
+    $(function () {
+        $("#contactGrid").kendoGrid({
+            dataSource: {
+                type: 'JSONP',
+                transport: {
+                    read: "/Admin/Customer/Contact_Read/" + $("#customerId").val()
+                },
+                pageSize: 20
+            },
+            filterable: true,
+            height: 550,
+            width: 'auto',
+            groupable: true,
+            sortable: true,
+            selectable: true,
+            pageable: {
+                refresh: true,
+                pageSize: 20,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    field: "TelNo",
+                    title: "شماره تلفن",
+                    width: 50
+                },
+                {
+                    field: "TelType",
+                    title: "نوع",
+                    width: 50
+                },
+                {
+                    field: "Address",
+                    title: "آدرس",
+                    width: 50
+                },
+                {
+                    field: "Id",
+                    title: " ",
+                    filterable: false,
+                    sortable: false,
+                    groupable: false,
+                    template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Contact(' + "'#=Id#'" + ')">حذف</button>',
+                    width: 50
+                }
+            ]
+        });
+    });
+
+</script>
+<!--================ /Contact Grid ================-->
+<!--============ Handling Tab ============-->
+<script>
+
+    function openTab1() {
+        $("#tabContent1").removeAttr("hidden");
+        $("#tabContent2").attr("hidden", "hidden");
+
+        $("#newContact").addClass("disableTab");
+        $("#contactDetailsGrid").removeClass("disableTab");
+    }
+
+    function openTab2() {
+        $("#tabContent2").removeAttr("hidden");
+        $("#tabContent1").attr("hidden", "hidden");
+
+        $("#contactDetailsGrid").addClass("disableTab");
+        $("#newContact").removeClass("disableTab");
+    }
+
+</script>
+<!--============ Handling Tab ============-->
+<!--============ Remove Contact ============-->
+<script>
+
+    function remove_Contact(id) {
+
+        iziToast.question({
+            timeout: 20000,
+            color: 'red',
+            close: false,
+            overlay: true,
+            displayMode: 'once',
+            id: 'question',
+            zindex: 2100,
+            title: 'حذف',
+            message: 'آیا مطمن هستید؟',
+            rtl: true,
+            position: 'center',
+            buttons: [
+                ['<button><b>بلی</b></button>', function (instance, toast) {
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Customer/Contact_Delete/" + id,
+                        success: function (result) {
+                            if (result === true) {
+                                iziToast.success({
+                                    position: "bottomRight",
+                                    pauseOnHover: false,
+                                    timeout: 2000,
+                                    displayMode: 1,
+                                    rtl: true,
+                                    title: "بسیار عالی",
+                                    message: "اطلاعات تماس با موفقیت حذف شد."
+                                });
+                                $("#contactGrid").data("kendoGrid").dataSource.read();
+
+                            } else {
+                                iziToast.warning({
+                                    position: "bottomRight",
+                                    timeout: 2000,
+                                    rtl: true,
+                                    title: "متاسفانه",
+                                    message: "مشکلی رخ داده است!"
+                                });
+                            }
+                        }
+                    });
+
+                }, true],
+                ['<button>خیر</button>', function (instance, toast) {
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }]
+            ]
+        });
+    }
+
+</script>
+<!--============ /Remove Contact ============-->
+<!--============ Create Contact ============-->
+<script>
+
+    $(function () {
+
+        $("#btnSubmitCreateContacts").click(function (e) {
+            e.preventDefault();
+
+            var selectedTelType = $("#dropdown-teltype :selected").val();
+
+            if ($("#frmCreateContact").valid()) {
+
+                $.ajax({
+                    dataType: "JSON",
+                    type: "POST",
+                    url: "/Admin/Customer/Contact_Create",
+                    data: {
+                        model: {
+                            Id: $("#customerId").val(),
+                            TelNo: $("#txt-telNo").val(),
+                            TelType: selectedTelType,
+                            Address: $("#txt-address").val()
+                        }
+                    },
+                    success: function (result) {
+                        if (result === true) {
+                            iziToast.success({
+                                position: "bottomRight",
+                                pauseOnHover: false,
+                                timeout: 2000,
+                                displayMode: 1,
+                                rtl: true,
+                                title: "بسیار عالی",
+                                message: "اطلاعات تماس با موفقیت اضافه شد."
+                            });
+
+                            // Refresh the contact grid 
+                            $("#contactGrid").data("kendoGrid").dataSource.read();
+
+                            // Clear the inputs 
+                            $("#txt-telNo").val('');
+                            $("#txt-address").val('');
+
+
+                        } else {
+                            iziToast.warning({
+                                position: "bottomRight",
+                                timeout: 2000,
+                                rtl: true,
+                                title: "متاسفانه",
+                                message: "مشکلی رخ داده است!"
+                            });
+                        }
+                    }
+
+                })
+            }
+
+        });
+
+    })
+
+</script>
+<!--============ /Create Contact ============-->
+
+@Scripts.Render("~/bundles/jqueryval")

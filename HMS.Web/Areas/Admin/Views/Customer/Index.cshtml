@@ -54,88 +54,6 @@
 
 
 
-<br /><br /><br />
-
-<div id="createCustomerModal" hidden>
-    <div class="row" style="height: 60px;">
-        <div class="col col-md-6 Create-Customer-Tab" id="personalDetail" onclick="openPersonalTab()">
-            اطلاعات شخصی
-        </div>
-        <div class="col col-md-6 Create-Customer-Tab disableTab" id="userDetail" onclick="openUserTab()">
-            اطلاعات حساب کاربری
-        </div>
-    </div>
-
-    <!-- Tab Contents -->
-    <form id="frmCreateCustomer" class="container">
-        <div class="row">
-            <div id="personalContent" class="col-12" style="padding: 20px;">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;", id = "txt-firstName" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                    </div>
-                </div>
-
-                @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;", id = "txt-lastName" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                    </div>
-                </div>
-
-                @Html.ValidationMessageFor(c => c.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;", id = "txt-nationalNo" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                    </div>
-                </div>
-
-                @Html.ValidationMessageFor(c => c.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;", id = "txt-passportNo" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="userContent" hidden class="col-12" style="padding: 20px;">
-                @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;", id = "txt-email" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
-                    </div>
-
-                </div>
-
-                @Html.ValidationMessageFor(c => c.Password, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.PasswordFor(c => c.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;", id = "txt-password" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
-                    </div>
-                </div>
-
-                @Html.ValidationMessageFor(c => c.ConfirmPassword, null, new { @class = "text-danger", style = "float:right;" })
-                <div class="input-group mb-3">
-                    @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control form-control-lg", placeholder = "تکرار رمز عبور", style = "text-align:right;", id = "txt-confirmPassword" })
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <input onclick="CreateCustomer()" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
-</div>
 
 
 
@@ -147,11 +65,18 @@
 
 
 
+
+
+<!--============ Partial Views ============-->
+<div id="createCustomerPartial"></div>
+<div id="createContactandFelowTraveller"></div>
+<!--============ Partial Views ============-->
 
 
 <!--============ Hidden inputs ============-->
-<input type="hidden" id="customerId" />
 <!--============ /Hidden inputs ============-->
+
+
 
 
 @section Scripts
@@ -163,7 +88,7 @@
         $(function () {
             $("#customerGrid").kendoGrid({
                 dataSource: {
-                    type: 'json',
+                    type: 'JSONP',
                     transport: {
                         read: "/Admin/Customer/Customer_Read"
                     },
@@ -214,71 +139,12 @@
             });
         });
 
-         //Search in the customer grid
-        $("#txt-search").change(function () {
-            $("#customerGrid").kendoGrid({
-                dataSource: {
-                    type: 'json',
-                    transport: {
-                        read: "/Admin/Customer/Customer_Read?search=" + $("#txt-search").val()
-                    },
-                    pageSize: 20
-                },
-                filterable: true,
-                height: 550,
-                width: 'auto',
-                groupable: true,
-                sortable: true,
-                pageable: {
-                    refresh: true,
-                    pageSize: 20,
-                    buttonCount: 5
-                },
-                columns: [
-                    {
-                        field: "FirstName",
-                        title: "نام",
-                        width: 200
-                    },
-                    {
-                        field: "LastName",
-                        title: "نام خانوادگی",
-                        width: 200
-                    },
-                    {
-                        field: "NationalNo",
-                        title: "کد ملی",
-                        width: 200
-                    },
-                    {
-                        field: "PassportNo",
-                        title: "شماره پاسپورت",
-                        width: 200
-                    },
-                    {
-                        field: "Id",
-                        title: " ",
-                        filterable: false,
-                        sortable: false,
-                        groupable: false,
-                        template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Customer(' + "'#=Id#'" + ')">حذف</button>',
-                        width: 200
-                    }
-                ]
-            });
-        });
-
-        
     </script>
     <!--============ /Customer Grid ============-->
     <!--============ Remove Customer ============-->
     <script>
 
         function remove_Customer(Id) {
-            // set the hidden id for customer
-            $("#customerId").val(Id);
-
-
 
             iziToast.question({
                 timeout: 20000,
@@ -303,7 +169,7 @@
                             success: function (result) {
                                 if (result === true) {
                                     iziToast.success({
-                                        position: "center",
+                                        position: "bottomRight",
                                         pauseOnHover: false,
                                         timeout: 2000,
                                         displayMode: 1,
@@ -322,7 +188,7 @@
                                     });
                                 }
                             }
-                        })
+                        });
 
                     }, true],
                     ['<button>خیر</button>', function (instance, toast) {
@@ -336,86 +202,42 @@
 
     </script>
     <!--============ /Remove Customer ============-->
-    <!--============ Create Customer ============-->
+    <!--============ Open create customer partial using ajax ============-->
     <script>
-
         $("#btnCreateCustomer").click(function () {
-            $("#createCustomerModal").iziModal({
-                title: "ثبت مسافر",
-                subtitle: "ثبت نام مسافر جدید",
-                headerColor: '#343a40',
-                rtl: true,
-                fullscreen: true,
-                width: 800
-            });
-
-            $("#createCustomerModal").removeAttr("hidden");
-            $("#createCustomerModal").iziModal("open");
-        });
-    </script>
-    <script>
-        function CreateCustomer() {
-            debugger;
             $.ajax({
-                url: "/Admin/Customer/Customer_Create",
-                type: "POST",
-                data: {
-                    customerDto: {
-                        FirstName: $("#txt-firstName").val(),
-                        LastName: $("#txt-lastName").val(),
-                        NationalNo: $("#txt-nationalNo").val(),
-                        PassportNo: $("#txt-passportNo").val(),
-                        Email: $("#txt-email"),
-                        Password: $("#txt-password").val(),
-                        ConfirmPassword: $("#txt-confirmPassword").val()
-                    }
-                },
-                success: function () {
-                    if (result === true) {
-                        iziToast.success({
-                            position: "center",
-                            pauseOnHover: false,
-                            timeout: 2000,
-                            displayMode: 1,
-                            rtl: true,
-                            title: "بسیار عالی",
-                            message: "مسافر جدید به سیستم اضافه شد."
-                        });
-                        $("#customerGrid").data("kendoGrid").dataSource.read();
-                    } else {
-                        iziToast.warning({
-                            position: "bottomRight",
-                            timeout: 2000,
-                            rtl: true,
-                            title: "متاسفانه",
-                            message: "مشکلی رخ داده است!"
-                        });
-                    }
+                dataType: "HTML",
+                url: "/Admin/Customer/_CreateCustomer",
+                success: function (result) {
+                    $("#createCustomerPartial").html(result);
                 }
             });
-        }
-
+        })
     </script>
-    <!--============ /Create Customer ============-->
-    <!--============ Handling Create Customer Tab ============-->
+    <!--============ /Open create customer partial using ajax ============-->
+    <!--============ Kendo grid double click ============-->
     <script>
+        $("#customerGrid").on("dblclick",
+            "tr.k-state-selected",
+            function (e) {
+                var grid = $("#customerGrid").data("kendoGrid");
+                var row = grid.dataItem(grid.select());
+                var rowId = row.Id;
 
-        function openPersonalTab() {
-            $("#personalContent").removeAttr("hidden");
-            $("#userContent").attr("hidden", "hidden");
+                e.preventDefault();
 
-            $("#userDetail").addClass("disableTab");
-            $("#personalDetail").removeClass("disableTab");
-        }
+                // Open the Detail modal using ajax and partial view
+                $.ajax({
+                    dataType: "HTML",
+                    type: "POST",
+                    url: "/Admin/Customer/_CustomerDetails/" + rowId,
+                    success: function (result) {
+                        $("#createContactandFelowTraveller").html(result);
+                    }
+                });
 
-        function openUserTab() {
-            $("#userContent").removeAttr("hidden");
-            $("#personalContent").attr("hidden", "hidden");
-
-            $("#personalDetail").addClass("disableTab");
-            $("#userDetail").removeClass("disableTab");
-        }
-
+            });
     </script>
-    <!--============ Handling Create Customer Tab ============-->
+    <!--============ /Kendo grid double click ============-->
+
 }
