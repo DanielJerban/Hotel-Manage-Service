@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityConfig\CustomerConfig.cs" />
     <Compile Include="EntityConfig\HotelConfig.cs" />
     <Compile Include="EntityConfig\PersonConfig.cs" />
     <Compile Include="EntityConfig\RoomConfig.cs" />
@@ -62,6 +61,10 @@
     <Compile Include="Migrations\201909020652450_init.cs" />
     <Compile Include="Migrations\201909020652450_init.Designer.cs">
       <DependentUpon>201909020652450_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909020742263_removeCustomerSelfRelation.cs" />
+    <Compile Include="Migrations\201909020742263_removeCustomerSelfRelation.Designer.cs">
+      <DependentUpon>201909020742263_removeCustomerSelfRelation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +82,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909020652450_init.resx">
       <DependentUpon>201909020652450_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909020742263_removeCustomerSelfRelation.resx">
+      <DependentUpon>201909020742263_removeCustomerSelfRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
