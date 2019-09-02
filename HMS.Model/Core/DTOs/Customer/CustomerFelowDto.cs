@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HMS.Model.Core.DTOs.Customer
 {
-    public class CreateFelowCustomerDto
+    public class CustomerFelowDto
     {
-        public Guid CustomerId { get; set; }
-        public List<DomainModels.Customer> CustomerChildren { get; set; }
+        public Guid ParentCustomerId { get; set; }
+        public List<DomainModels.Customer> FelowCustomer { get; set; }
     }
 }

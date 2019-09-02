@@ -136,12 +136,37 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult FelowCustomer_Read(string Id)
+        {
+            var customerParentId = Guid.Parse(Id);
+
+            var felowCustomers = uow.Customer.Get(c => c.ParentId == customerParentId).ToList();
+            List<GetCustomerDto> dtos = new List<GetCustomerDto>();
+
+
+            foreach (var felow in felowCustomers)
+            {
+                dtos.Add(new GetCustomerDto()
+                {
+                    Id = felow.Id,
+                    FirstName = felow.FirstName,
+                    LastName = felow.LastName,
+                    PassportNo = felow.PassportNo,
+                    NationalNo = felow.NationalNo
+                });
+            }
+
+            return Json(dtos, JsonRequestBehavior.AllowGet);
+        }
+
+
         #endregion
 
 
 
         #region Contact
-        
+
         /// <summary>
         /// Read the contacts of a special user from the database 
         /// </summary>
@@ -269,11 +294,13 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         public PartialViewResult _CreateFelowCustomer(Guid Id)
         {
-            var customer = uow.Customer.Find(Id);
+            // Gets the felow of the selected customer
+            var customerFelows = uow.Customer.Get(c => c.ParentId == Id).ToList();
 
-            CreateFelowCustomerDto dto = new CreateFelowCustomerDto()
+            CustomerFelowDto dto = new CustomerFelowDto()
             {
-                CustomerId = Id,
+                ParentCustomerId = Id,
+                FelowCustomer = customerFelows
             };
 
             return PartialView(dto);

@@ -1,4 +1,4 @@
-﻿@model HMS.Model.Core.DTOs.Customer.CreateFelowCustomerDto
+﻿@model HMS.Model.Core.DTOs.Customer.CustomerFelowDto
 
 <style>
 
@@ -10,10 +10,10 @@
 
 <div id="ContactTabs">
     <div class="row" style="height: 60px;">
-        <div class="col col-md-6 Create-Customer-Tab" id="contactDetailsGrid" onclick="openTab1()">
+        <div class="col col-md-6 Create-Customer-Tab" id="contactDetailsGrid" onclick="openTab1()" style="cursor: pointer">
             مسافرین همراه
         </div>
-        <div class="col col-md-6 Create-Customer-Tab disableTab" id="newContact" onclick="openTab2()">
+        <div class="col col-md-6 Create-Customer-Tab disableTab" id="newContact" onclick="openTab2()" style="cursor: pointer">
             ثبت اطلاعات جدید
         </div>
     </div>
@@ -22,7 +22,7 @@
     <form id="frmCreateCustomer" class="container">
         <div class="row">
             <div id="tabContent1" class="col-12" style="padding: 20px;">
-                اطلاعات تماس
+                <div class="k-rtl" id="FelowCustomerGrid"></div>
             </div>
 
             <div id="tabContent2" hidden class="col-12" style="padding: 20px;">
@@ -35,6 +35,72 @@
 </div>
 
 
+
+<!-- Hidden Inputs -->
+<input type="hidden" id="parentCustomerId" value="@Model.ParentCustomerId"/>
+<!-- /Hidden Inputs -->
+
+
+<!--============ Felow Customer Grid ============-->
+<script>
+
+    $(function () {
+        $("#FelowCustomerGrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: "/Admin/Customer/FelowCustomer_Read/" + $("#parentCustomerId").val()
+                },
+                pageSize: 20
+            },
+            filterable: true,
+            height: 550,
+            width: 'auto',
+            groupable: true,
+            sortable: true,
+            selectable: true,
+            pageable: {
+                refresh: true,
+                pageSize: 20,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    field: "FirstName",
+                    title: "نام",
+                    width: 180
+                },
+                {
+                    field: "LastName",
+                    title: "نام خانوادگی",
+                    width: 180
+                },
+                {
+                    field: "NationalNo",
+                    title: "کد ملی",
+                    width: 180
+                },
+                {
+                    field: "PassportNo",
+                    title: "شماره پاسپورت",
+                    width: 180
+                },
+                {
+                    field: "Id",
+                    title: " ",
+                    filterable: false,
+                    sortable: false,
+                    groupable: false,
+                    template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Customer(' +
+                        "'#=Id#'" +
+                        ')">حذف</button>',
+                    width: 180
+                }
+            ]
+        });
+    });
+
+</script>
+<!--============ /Felow Customer Grid ============-->
 <!--============ Handling Tab ============-->
 <script>
 

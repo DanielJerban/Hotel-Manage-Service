@@ -67,7 +67,7 @@
     <Compile Include="Core\DomainModels\RoomImage.cs" />
     <Compile Include="Core\DTOs\ContactInfo\ContactInfoDto.cs" />
     <Compile Include="Core\DTOs\Customer\CreateCustomerDto.cs" />
-    <Compile Include="Core\DTOs\Customer\CreateFelowCustomerDto.cs" />
+    <Compile Include="Core\DTOs\Customer\CustomerFelowDto.cs" />
     <Compile Include="Core\DTOs\Customer\GetCustomerDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
