@@ -3,32 +3,36 @@ namespace HMS.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initialize : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.AspNetRoles",
+                "dbo.ContactInfoes",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
+                        Id = c.Guid(nullable: false),
+                        TelNo = c.String(),
+                        TelType = c.Int(nullable: false),
+                        Address = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
+                        Person_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+                .ForeignKey("dbo.People", t => t.Person_Id)
+                .Index(t => t.Person_Id);
             
             CreateTable(
-                "dbo.AspNetUserRoles",
+                "dbo.People",
                 c => new
                     {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
+                        Id = c.Guid(nullable: false),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        NationalNo = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -79,31 +83,17 @@ namespace HMS.DataAccess.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.People",
+                "dbo.AspNetUserRoles",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        NationalNo = c.String(),
-                        CreatedDate = c.DateTime(nullable: false),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.ContactInfoes",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        TelNo = c.String(),
-                        TelType = c.Int(nullable: false),
-                        Address = c.String(),
-                        CreatedDate = c.DateTime(nullable: false),
-                        Person_Id = c.Guid(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.People", t => t.Person_Id)
-                .Index(t => t.Person_Id);
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.HotelDatas",
@@ -166,6 +156,16 @@ namespace HMS.DataAccess.Migrations
                 .Index(t => t.Room_Id);
             
             CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
                 "dbo.Customer",
                 c => new
                     {
@@ -207,44 +207,44 @@ namespace HMS.DataAccess.Migrations
             DropForeignKey("dbo.Customer", "Hotel_Id", "dbo.HotelDatas");
             DropForeignKey("dbo.Customer", "CustomerParent_Id", "dbo.Customer");
             DropForeignKey("dbo.Customer", "Id", "dbo.People");
-            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUsers", "Person_Id", "dbo.People");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Rooms", "HotelId", "dbo.HotelDatas");
             DropForeignKey("dbo.RoomImages", "Room_Id", "dbo.Rooms");
             DropForeignKey("dbo.Rooms", "FacilityId", "dbo.RoomFacilities");
-            DropForeignKey("dbo.ContactInfoes", "Person_Id", "dbo.People");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "Person_Id", "dbo.People");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.ContactInfoes", "Person_Id", "dbo.People");
             DropIndex("dbo.Employee", new[] { "Hotel_Id" });
             DropIndex("dbo.Employee", new[] { "Id" });
             DropIndex("dbo.Customer", new[] { "Hotel_Id" });
             DropIndex("dbo.Customer", new[] { "CustomerParent_Id" });
             DropIndex("dbo.Customer", new[] { "Id" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.RoomImages", new[] { "Room_Id" });
             DropIndex("dbo.Rooms", new[] { "HotelId" });
             DropIndex("dbo.Rooms", new[] { "FacilityId" });
-            DropIndex("dbo.ContactInfoes", new[] { "Person_Id" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", new[] { "Person_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.ContactInfoes", new[] { "Person_Id" });
             DropTable("dbo.Employee");
             DropTable("dbo.Customer");
+            DropTable("dbo.AspNetRoles");
             DropTable("dbo.RoomImages");
             DropTable("dbo.RoomFacilities");
             DropTable("dbo.Rooms");
             DropTable("dbo.HotelDatas");
-            DropTable("dbo.ContactInfoes");
-            DropTable("dbo.People");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.People");
+            DropTable("dbo.ContactInfoes");
         }
     }
 }

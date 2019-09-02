@@ -23,6 +23,8 @@ namespace HMS.Web.Areas.Admin.Controllers
             return View();
         }
 
+        #region Customer
+
         public JsonResult Customer_Read(string search)
         {
             var customers = uow.Customer.GetAll().ToList();
@@ -134,6 +136,12 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+
+
+        #region Contact
+        
         /// <summary>
         /// Read the contacts of a special user from the database 
         /// </summary>
@@ -229,6 +237,7 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
 
         #region Partial Views
 
@@ -256,6 +265,18 @@ namespace HMS.Web.Areas.Admin.Controllers
         public PartialViewResult _CreateContact(Guid Id)
         {
             return PartialView();
+        }
+
+        public PartialViewResult _CreateFelowCustomer(Guid Id)
+        {
+            var customer = uow.Customer.Find(Id);
+
+            CreateFelowCustomerDto dto = new CreateFelowCustomerDto()
+            {
+                CustomerId = Id,
+            };
+
+            return PartialView(dto);
         }
 
 

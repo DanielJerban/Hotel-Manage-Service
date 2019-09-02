@@ -1,0 +1,58 @@
+﻿@model HMS.Model.Core.DTOs.Customer.CreateFelowCustomerDto
+
+<style>
+
+    .disableTab {
+        background-color: #babbbc;
+        color: white;
+    }
+</style>
+
+<div id="ContactTabs">
+    <div class="row" style="height: 60px;">
+        <div class="col col-md-6 Create-Customer-Tab" id="contactDetailsGrid" onclick="openTab1()">
+            مسافرین همراه
+        </div>
+        <div class="col col-md-6 Create-Customer-Tab disableTab" id="newContact" onclick="openTab2()">
+            ثبت اطلاعات جدید
+        </div>
+    </div>
+
+    <!-- Tab Contents -->
+    <form id="frmCreateCustomer" class="container">
+        <div class="row">
+            <div id="tabContent1" class="col-12" style="padding: 20px;">
+                اطلاعات تماس
+            </div>
+
+            <div id="tabContent2" hidden class="col-12" style="padding: 20px;">
+                ثبت اطلاعات جدید
+            </div>
+        </div>
+    </form>
+
+    <input id="btnSubmitCreateCustomer" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+</div>
+
+
+<!--============ Handling Tab ============-->
+<script>
+
+    function openTab1() {
+        $("#tabContent1").removeAttr("hidden");
+        $("#tabContent2").attr("hidden", "hidden");
+
+        $("#newContact").addClass("disableTab");
+        $("#contactDetailsGrid").removeClass("disableTab");
+    }
+
+    function openTab2() {
+        $("#tabContent2").removeAttr("hidden");
+        $("#tabContent1").attr("hidden", "hidden");
+
+        $("#contactDetailsGrid").addClass("disableTab");
+        $("#newContact").removeClass("disableTab");
+    }
+
+</script>
+<!--============ Handling Tab ============-->

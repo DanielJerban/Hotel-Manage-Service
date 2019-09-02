@@ -1174,6 +1174,7 @@
     <Content Include="Areas\Admin\Views\Customer\_CreateCustomer.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\_CustomerDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\_CreateContact.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\_CreateFelowCustomer.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\iziModal.min.js" />
     <Content Include="Scripts\iziToast.min.js" />

@@ -68,9 +68,17 @@
 
 
 <!--============ Partial Views ============-->
-<div id="createCustomerPartial"></div>
-<div id="createContactandFelowTraveller"></div>
+<div id="createCustomerModal" hidden>
+    <div id="createCustomerPartial"></div>
+</div>
+
+<div id="detailModal" hidden>
+    <div id="createContactandFelowTraveller"></div>
+</div>
+
 <!--============ Partial Views ============-->
+
+
 
 
 <!--============ Hidden inputs ============-->
@@ -88,7 +96,6 @@
         $(function () {
             $("#customerGrid").kendoGrid({
                 dataSource: {
-                    type: 'JSONP',
                     transport: {
                         read: "/Admin/Customer/Customer_Read"
                     },
@@ -205,6 +212,16 @@
     <!--============ Open create customer partial using ajax ============-->
     <script>
         $("#btnCreateCustomer").click(function () {
+
+            $("#createCustomerModal").iziModal({
+                title: "ثبت مسافر",
+                subtitle: "ثبت نام مسافر جدید",
+                headerColor: '#343a40',
+                rtl: true,
+                fullscreen: true,
+                width: 800
+            });
+
             $.ajax({
                 dataType: "HTML",
                 url: "/Admin/Customer/_CreateCustomer",
@@ -212,6 +229,9 @@
                     $("#createCustomerPartial").html(result);
                 }
             });
+
+            $("#createCustomerModal").iziModal("open");
+            $("#createCustomerModal").removeAttr("hidden");
         })
     </script>
     <!--============ /Open create customer partial using ajax ============-->
@@ -220,6 +240,17 @@
         $("#customerGrid").on("dblclick",
             "tr.k-state-selected",
             function (e) {
+
+                $("#detailModal").iziModal({
+                    title: "مشخصات",
+                    subtitle: "مشخصات مسافر و ثبت اطلاعات بیشتر",
+                    headerColor: '#343a40',
+                    rtl: true,
+                    fullscreen: true,
+                    width: 600
+                });
+
+
                 var grid = $("#customerGrid").data("kendoGrid");
                 var row = grid.dataItem(grid.select());
                 var rowId = row.Id;
@@ -236,8 +267,11 @@
                     }
                 });
 
+
+                $("#detailModal").iziModal('open');
+                $("#detailModal").removeAttr("hidden", "hidden");
+
             });
     </script>
     <!--============ /Kendo grid double click ============-->
-
 }

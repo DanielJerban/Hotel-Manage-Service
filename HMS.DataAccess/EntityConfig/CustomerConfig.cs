@@ -10,7 +10,7 @@ namespace HMS.DataAccess.EntityConfig
             // Self Relation for fellow-traveler 
             // Customer * -------------- 0-1 CustomerParent
             this.HasOptional(c => c.CustomerParent)
-                .WithMany(c => c.CustomerChild)
+                .WithMany(c => c.CustomerChild).HasForeignKey(c => c.ParentId)
                 .WillCascadeOnDelete(false);
         }
     }

@@ -16,7 +16,7 @@
 
 
 
-<div id="createContactModal" hidden>
+@*<div id="createContactModal" hidden>*@
 
     <div id="ContactTabs">
         <div class="row" style="height: 60px;">
@@ -78,41 +78,14 @@
 
     </div>
 
-</div>
+@*</div>*@
 
-
-
-
-<!--================ Open Create Contact Modal ================-->
-<script>
-
-    $(function () {
-
-        $("#createContactModal").iziModal({
-            title: "ثبت اطلاعات",
-            subtitle: "ثبت اطلاعات تماس مسافر",
-            headerColor: '#343a40',
-            rtl: true,
-            fullscreen: true,
-            width: 800,
-            overlay: true,
-            zindex: 2000
-        });
-
-        $("#createContactModal").iziModal('open');
-        $("#createContactModal").removeAttr("hidden");
-
-    })
-
-</script>
-<!--================ /Open Create Contact Modal ================-->
 <!--================ Contact Grid ================-->
 <script>
 
     $(function () {
         $("#contactGrid").kendoGrid({
             dataSource: {
-                type: 'JSONP',
                 transport: {
                     read: "/Admin/Customer/Contact_Read/" + $("#customerId").val()
                 },
