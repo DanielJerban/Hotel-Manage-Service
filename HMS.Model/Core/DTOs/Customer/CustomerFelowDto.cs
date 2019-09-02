@@ -10,5 +10,6 @@ namespace HMS.Model.Core.DTOs.Customer
     {
         public Guid ParentCustomerId { get; set; }
         public List<DomainModels.Customer> FelowCustomer { get; set; }
+        public CreateCustomerDto CreateCustomerDto { get; set; }
     }
 }

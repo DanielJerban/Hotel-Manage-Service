@@ -7,40 +7,103 @@
         color: white;
     }
 </style>
-
 <div id="ContactTabs">
     <div class="row" style="height: 60px;">
-        <div class="col col-md-6 Create-Customer-Tab" id="contactDetailsGrid" onclick="openTab1()" style="cursor: pointer">
-            مسافرین همراه
+        <div class="col col-md-6 Create-Customer-Tab" id="felowCustomerDetail" onclick="openTab3()" style="cursor: pointer">
+            اطلاعات مسافران همراه
         </div>
-        <div class="col col-md-6 Create-Customer-Tab disableTab" id="newContact" onclick="openTab2()" style="cursor: pointer">
+        <div class="col col-md-6 Create-Customer-Tab disableTab" id="newFelowCustomer" onclick="openTab4()" style="cursor: pointer">
             ثبت اطلاعات جدید
         </div>
     </div>
 
     <!-- Tab Contents -->
-    <form id="frmCreateCustomer" class="container">
+    <div>
         <div class="row">
-            <div id="tabContent1" class="col-12" style="padding: 20px;">
+            <div id="tabContent3" class="col-12" style="padding: 20px;">
+                <!-- Contact Grid -->
                 <div class="k-rtl" id="FelowCustomerGrid"></div>
             </div>
 
-            <div id="tabContent2" hidden class="col-12" style="padding: 20px;">
-                ثبت اطلاعات جدید
+            <div id="tabContent4" hidden class="col-12">
+
+                <form id="frmCreateCustomer" class="container">
+                    <div class="row">
+                        <div class="col-12" style="padding: 20px;">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.FirstName, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.TextBoxFor(c => c.CreateCustomerDto.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;", id = "txt-firstName" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.LastName, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.TextBoxFor(c => c.CreateCustomerDto.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;", id = "txt-lastName" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.TextBoxFor(c => c.CreateCustomerDto.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;", id = "txt-nationalNo" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.TextBoxFor(c => c.CreateCustomerDto.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;", id = "txt-passportNo" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.Email, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.TextBoxFor(c => c.CreateCustomerDto.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;", id = "txt-email" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                                </div>
+
+                            </div>
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.Password, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.PasswordFor(c => c.CreateCustomerDto.Password, new { @class = "form-control form-control-lg", placeholder = "رمز عبور", style = "text-align:right;", id = "txt-password" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+                                </div>
+                            </div>
+
+                            @Html.ValidationMessageFor(c => c.CreateCustomerDto.ConfirmPassword, null, new { @class = "text-danger", style = "float:right;" })
+                            <div class="input-group mb-3">
+                                @Html.PasswordFor(c => c.CreateCustomerDto.ConfirmPassword, new { @class = "form-control form-control-lg", placeholder = "تکرار رمز عبور", style = "text-align:right;", id = "txt-confirmPassword" })
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <input id="btnSubmitCreatefelowCustomer" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+
             </div>
         </div>
-    </form>
+    </div>
 
-    <input id="btnSubmitCreateCustomer" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
 </div>
 
 
 
 <!-- Hidden Inputs -->
-<input type="hidden" id="parentCustomerId" value="@Model.ParentCustomerId"/>
+<input type="hidden" id="parentCustomerId" value="@Model.ParentCustomerId" />
 <!-- /Hidden Inputs -->
-
-
 <!--============ Felow Customer Grid ============-->
 <script>
 
@@ -104,21 +167,151 @@
 <!--============ Handling Tab ============-->
 <script>
 
-    function openTab1() {
-        $("#tabContent1").removeAttr("hidden");
-        $("#tabContent2").attr("hidden", "hidden");
+    function openTab3() {
+        $("#tabContent3").removeAttr("hidden");
+        $("#tabContent4").attr("hidden", "hidden");
 
-        $("#newContact").addClass("disableTab");
-        $("#contactDetailsGrid").removeClass("disableTab");
+        $("#newFelowCustomer").addClass("disableTab");
+        $("#felowCustomerDetail").removeClass("disableTab");
     }
 
-    function openTab2() {
-        $("#tabContent2").removeAttr("hidden");
-        $("#tabContent1").attr("hidden", "hidden");
+    function openTab4() {
+        $("#tabContent4").removeAttr("hidden");
+        $("#tabContent3").attr("hidden", "hidden");
 
-        $("#contactDetailsGrid").addClass("disableTab");
-        $("#newContact").removeClass("disableTab");
+        $("#felowCustomerDetail").addClass("disableTab");
+        $("#newFelowCustomer").removeClass("disableTab");
     }
 
 </script>
 <!--============ Handling Tab ============-->
+<!-- Send an ajax to controller to create new customer-->
+<script>
+    $(function () {
+        $("#btnSubmitCreatefelowCustomer").click(function (e) {
+            e.preventDefault();
+
+            if ($("#frmCreateCustomer").valid()) {
+                $.ajax({
+                    url: "/Admin/Customer/Customer_Create",
+                    type: "POST",
+                    data: {
+                        customerDto: {
+                            FirstName: $("#txt-firstName").val(),
+                            LastName: $("#txt-lastName").val(),
+                            NationalNo: $("#txt-nationalNo").val(),
+                            PassportNo: $("#txt-passportNo").val(),
+                            Email: $("#txt-email").val(),
+                            Password: $("#txt-password").val(),
+                            ConfirmPassword: $("#txt-confirmPassword").val()
+                        },
+                        parentId: $("#parentCustomerId").val()
+                    },
+                    success: function (result) {
+                        if (result === true) {
+                            iziToast.success({
+                                position: "bottomRight",
+                                pauseOnHover: false,
+                                timeout: 2000,
+                                displayMode: 1,
+                                rtl: true,
+                                title: "بسیار عالی",
+                                message: "مسافر همراه جدید به سیستم اضافه شد."
+                            });
+
+                            // refresh the customer grid
+                            $("#FelowCustomerGrid").data("kendoGrid").dataSource.read();
+                            $("#customerGrid").data("kendoGrid").dataSource.read();
+
+                            // Clear the create customer modal
+                            $("#txt-firstName").val('');
+                            $("#txt-lastName").val('');
+                            $("#txt-nationalNo").val('');
+                            $("#txt-passportNo").val('');
+                            $("#txt-email").val('');
+                            $("#txt-password").val('');
+                            $("#txt-confirmPassword").val('');
+
+                            // close the create customer modal
+                            $("#createCustomerModal").iziModal("close");
+
+                        } else {
+                            iziToast.warning({
+                                position: "bottomRight",
+                                timeout: 2000,
+                                rtl: true,
+                                title: "متاسفانه",
+                                message: "مشکلی رخ داده است!"
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<!--============ Remove Customer ============-->
+<script>
+
+    function remove_Customer(Id) {
+
+        iziToast.question({
+            timeout: 20000,
+            color: 'red',
+            close: false,
+            overlay: true,
+            displayMode: 'once',
+            id: 'question',
+            zindex: 2200,
+            title: 'حذف',
+            message: 'آیا مطمن هستید؟',
+            rtl: true,
+            position: 'center',
+            buttons: [
+                ['<button><b>بلی</b></button>', function (instance, toast) {
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Customer/Customer_Delete/" + Id,
+                        success: function (result) {
+                            if (result === true) {
+                                iziToast.success({
+                                    position: "bottomRight",
+                                    pauseOnHover: false,
+                                    timeout: 2000,
+                                    displayMode: 1,
+                                    rtl: true,
+                                    title: "بسیار عالی",
+                                    message: "مسافر مورد نظر حذف شد."
+                                });
+                                $("#FelowCustomerGrid").data("kendoGrid").dataSource.read();
+                                $("#customerGrid").data("kendoGrid").dataSource.read();
+                            } else {
+                                iziToast.warning({
+                                    position: "bottomRight",
+                                    timeout: 2000,
+                                    rtl: true,
+                                    title: "متاسفانه",
+                                    message: "مشکلی رخ داده است!"
+                                });
+                            }
+                        }
+                    });
+
+                }, true],
+                ['<button>خیر</button>', function (instance, toast) {
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }],
+            ]
+        });
+    }
+
+</script>
+<!--============ /Remove Customer ============-->
+
+@Scripts.Render("~/bundles/jqueryval")

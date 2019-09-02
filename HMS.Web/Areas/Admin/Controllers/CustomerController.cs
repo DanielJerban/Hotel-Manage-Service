@@ -89,19 +89,24 @@ namespace HMS.Web.Areas.Admin.Controllers
         /// <summary>
         /// Create Customer and a user for it
         /// </summary>
-        public ActionResult Customer_Create(CreateCustomerDto customerDto)
+        /// <param name="customerDto">Customer and user details</param>
+        /// <param name="parentId">The Id of the parent customer</param>
+        /// <returns></returns>
+        public ActionResult Customer_Create(CreateCustomerDto customerDto, string parentId)
         {
             if (ModelState.IsValid)
             {
+                var customerParentId = Guid.Parse(parentId);
+
                 var customer = new Model.Core.DomainModels.Customer()
                 {
                     FirstName = customerDto.FirstName,
                     LastName = customerDto.LastName,
                     NationalNo = customerDto.NationalNo,
-                    PassportNo = customerDto.PassportNo
+                    PassportNo = customerDto.PassportNo,
+                    ParentId = customerParentId
                 };
                 uow.Customer.Add(customer);
-                uow.Complete();
 
                 PasswordHasher hasher = new PasswordHasher();
                 Random random = new Random();
