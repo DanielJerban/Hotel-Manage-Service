@@ -27,5 +27,9 @@ namespace HMS.Model.Core.DomainModels
         public HotelData Hotel { get; set; }
 
         public List<RoomImage> Images { get; set; }
+
+
+        // Room ----------------- Reservation 
+        public List<Reservation_Room> Reservations { get; set; }
     }
 }

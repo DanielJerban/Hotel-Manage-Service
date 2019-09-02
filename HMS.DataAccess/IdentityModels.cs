@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using HMS.DataAccess.EntityConfig;
+using HMS.Model.Core;
 using HMS.Model.Core.DomainModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -29,6 +30,8 @@ namespace HMS.Web.Models
             // Add Reference to config classes 
             modelBuilder.Configurations.Add(new PersonConfig());
             modelBuilder.Configurations.Add(new HotelConfig());
+            modelBuilder.Configurations.Add(new ReservationConfig());
+            modelBuilder.Configurations.Add(new Reservation_RoomConfig());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -41,5 +44,7 @@ namespace HMS.Web.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomImage> RoomImages { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Reservation_Room> Reservation_Room { get; set; }
     }
 }

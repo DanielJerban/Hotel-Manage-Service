@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="EntityConfig\HotelConfig.cs" />
     <Compile Include="EntityConfig\PersonConfig.cs" />
+    <Compile Include="EntityConfig\ReservationConfig.cs" />
+    <Compile Include="EntityConfig\Reservation_RoomConfig.cs" />
     <Compile Include="EntityConfig\RoomConfig.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Migrations\201909020652450_init.cs" />
@@ -65,6 +67,10 @@
     <Compile Include="Migrations\201909020742263_removeCustomerSelfRelation.cs" />
     <Compile Include="Migrations\201909020742263_removeCustomerSelfRelation.Designer.cs">
       <DependentUpon>201909020742263_removeCustomerSelfRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909021243161_reservation.cs" />
+    <Compile Include="Migrations\201909021243161_reservation.Designer.cs">
+      <DependentUpon>201909021243161_reservation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909020742263_removeCustomerSelfRelation.resx">
       <DependentUpon>201909020742263_removeCustomerSelfRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909021243161_reservation.resx">
+      <DependentUpon>201909021243161_reservation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

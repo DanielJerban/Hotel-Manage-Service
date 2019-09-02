@@ -11,6 +11,7 @@ namespace HMS.Model.Core.DomainModels
 
         public HotelData Hotel { get; set; }
 
+        public List<Reservation> Reservations { get; set; }
 
         // Self relation 
         [DisplayName("مسافر همراه")]

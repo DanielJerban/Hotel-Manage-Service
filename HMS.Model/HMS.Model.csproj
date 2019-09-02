@@ -62,6 +62,7 @@
     <Compile Include="Core\DomainModels\Employee.cs" />
     <Compile Include="Core\DomainModels\HotelData.cs" />
     <Compile Include="Core\DomainModels\Person.cs" />
+    <Compile Include="Core\DomainModels\Reservation.cs" />
     <Compile Include="Core\DomainModels\Room.cs" />
     <Compile Include="Core\DomainModels\RoomFacility.cs" />
     <Compile Include="Core\DomainModels\RoomImage.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Core\DTOs\Customer\CreateCustomerDto.cs" />
     <Compile Include="Core\DTOs\Customer\CustomerFelowDto.cs" />
     <Compile Include="Core\DTOs\Customer\GetCustomerDto.cs" />
+    <Compile Include="Core\Reservation_Room.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
