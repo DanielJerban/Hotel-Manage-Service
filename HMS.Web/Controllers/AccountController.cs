@@ -194,7 +194,6 @@ namespace HMS.Web.Controllers
                     Infos = contacts
                 };
                 context.Customers.Add(customer);
-                context.SaveChanges();
 
                 PasswordHasher hasher = new PasswordHasher();
                 Random random = new Random();
