@@ -14,8 +14,8 @@ namespace HMS.Model.Core.DomainModels
         [DisplayName("شماره اتاق")]
         public string RoomNumber { get; set; }
 
-        [DisplayName("محبوبیت"), Range(0, 5)]
-        public int Rate { get; set; }
+        [DisplayName("امتیاز"), Range(0, 5)]
+        public int? Rate { get; set; }
 
         [DisplayName("توضیحات بیشتر")]
         public string Description { get; set; }

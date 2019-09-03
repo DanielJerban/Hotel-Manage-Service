@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201909021243161_reservation.Designer.cs">
       <DependentUpon>201909021243161_reservation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909030433527_AddRatePropToHotel.cs" />
+    <Compile Include="Migrations\201909030433527_AddRatePropToHotel.Designer.cs">
+      <DependentUpon>201909030433527_AddRatePropToHotel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909021243161_reservation.resx">
       <DependentUpon>201909021243161_reservation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909030433527_AddRatePropToHotel.resx">
+      <DependentUpon>201909030433527_AddRatePropToHotel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
