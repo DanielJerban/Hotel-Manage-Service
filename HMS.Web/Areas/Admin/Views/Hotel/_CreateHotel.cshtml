@@ -1,0 +1,96 @@
+﻿@model HMS.Model.Core.DTOs.Hotel.CreateHotelDto
+
+<form id="frmCreateCustomer" class="container">
+    <div class="row">
+        <div class="col-12" style="padding: 20px;">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.ValidationMessageFor(c => c.Name, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;", id = "txt-Name" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.Rate, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.Rate, new { @class = "form-control form-control-lg", placeholder = "امتیاز", type = "number", style = "text-align:right;", id = "txt-Rate" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-percent"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.Description, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextAreaFor(c => c.Description, new { @class = "form-control form-control-lg", placeholder = "توضیحات", style = "text-align:right;", id = "txt-Desc" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-audio-description"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<input id="btnSubmitCreateCustomer" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+
+
+<!-- Send an ajax to controller to create new hotel-->
+<script>
+    $(function () {
+        $("#btnSubmitCreateCustomer").click(function (e) {
+            e.preventDefault();
+
+            if ($("#frmCreateCustomer").valid()) {
+                $.ajax({
+                    url: "/Admin/Hotel/Hotel_Create",
+                    type: "POST",
+                    data: {
+                        model: {
+                            Name: $("#txt-Name").val(),
+                            Rate: $("#txt-Rate").val(),
+                            Description: $("#txt-Desc").val(),
+                        }
+                    },
+                    success: function (result) {
+                        if (result === true) {
+                            iziToast.success({
+                                position: "bottomRight",
+                                pauseOnHover: false,
+                                timeout: 2000,
+                                displayMode: 1,
+                                rtl: true,
+                                title: "بسیار عالی",
+                                message: "هتل جدید به سیستم اضافه شد."
+                            });
+
+                            // refresh the customer grid
+                            $("#hotelGrid").data("kendoGrid").dataSource.read();
+
+                            // Clear the create customer modal
+                            $("#txt-Name").val('');
+                            $("#txt-Rate").val('');
+                            $("#txt-Desc").val('');
+
+                            // close the create customer modal
+                            $("#CreateHotelModal").iziModal("close");
+
+                        } else {
+                            iziToast.warning({
+                                position: "bottomRight",
+                                timeout: 2000,
+                                rtl: true,
+                                title: "متاسفانه",
+                                message: "مشکلی رخ داده است!"
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+@Scripts.Render("~/bundles/jqueryval")

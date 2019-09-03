@@ -96,7 +96,12 @@ namespace HMS.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customerParentId = Guid.Parse(parentId);
+                Guid customerParentId = new Guid();
+
+                if (parentId != null)
+                {
+                    customerParentId = Guid.Parse(parentId);
+                }
 
                 var customer = new Model.Core.DomainModels.Customer()
                 {
@@ -250,7 +255,7 @@ namespace HMS.Web.Areas.Admin.Controllers
                     TelType = teltype,
                     TelNo = model.TelNo,
                     Address = model.Address,
-                    Person = customer 
+                    Person = customer
                 };
 
                 uow.ContactInfo.Add(contactInfo);
