@@ -76,6 +76,14 @@
     <Compile Include="Migrations\201909030433527_AddRatePropToHotel.Designer.cs">
       <DependentUpon>201909030433527_AddRatePropToHotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909031030472_BedPropAddedToRoom.cs" />
+    <Compile Include="Migrations\201909031030472_BedPropAddedToRoom.Designer.cs">
+      <DependentUpon>201909031030472_BedPropAddedToRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909031330527_UpdateUser_PersonRelation.cs" />
+    <Compile Include="Migrations\201909031330527_UpdateUser_PersonRelation.Designer.cs">
+      <DependentUpon>201909031330527_UpdateUser_PersonRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,6 +109,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909030433527_AddRatePropToHotel.resx">
       <DependentUpon>201909030433527_AddRatePropToHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909031030472_BedPropAddedToRoom.resx">
+      <DependentUpon>201909031030472_BedPropAddedToRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909031330527_UpdateUser_PersonRelation.resx">
+      <DependentUpon>201909031330527_UpdateUser_PersonRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

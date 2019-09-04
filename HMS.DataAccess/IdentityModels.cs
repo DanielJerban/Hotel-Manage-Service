@@ -21,7 +21,8 @@ namespace HMS.Web.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // User 0-1 ------------ 1 Person
-            modelBuilder.Entity<ApplicationUser>().HasRequired(r => r.Person).WithOptional(w => w.User).WillCascadeOnDelete(true);
+            modelBuilder.Entity<ApplicationUser>().HasRequired(r => r.Person)
+                .WithMany(w => w.User).HasForeignKey(d => d.PersonId).WillCascadeOnDelete(true);
 
             // TPT(Table Per Type) inheritance from person 
             modelBuilder.Entity<Customer>().ToTable("Customer");

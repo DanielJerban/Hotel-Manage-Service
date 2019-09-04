@@ -9,7 +9,12 @@ namespace HMS.Web.Controllers
     public class TestController : Controller
     {
         // GET: Test
-        public ActionResult Index()
+        public ActionResult StrtRating()
+        {
+            return View();
+        }
+
+        public ActionResult Upload()
         {
             return View();
         }

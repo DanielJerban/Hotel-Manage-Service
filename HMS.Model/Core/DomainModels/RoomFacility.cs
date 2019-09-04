@@ -8,18 +8,13 @@ using HMS.Model.Core.DomainModels.Base;
 
 namespace HMS.Model.Core.DomainModels
 {
-    public enum BedModel
-    {
-        Single,Double
-    }
-
     public class RoomFacility : ObjectModel
     {
-        [DisplayName("نوع تخت خواب")]
-        public BedModel BedModel { get; set; }
+        [DisplayName("تعداد تخت خواب یک نفره")]
+        public byte SingleBedCount { get; set; }
 
-        [DisplayName("تعداد تخت خواب")]
-        public byte bedCount { get; set; }
+        [DisplayName("تعداد تخت خواب دو نفره")]
+        public byte DoubleBedCount { get; set; }
 
         [DisplayName("سرگرمی")]
         public string Entertainment { get; set; }

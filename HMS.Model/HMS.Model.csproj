@@ -75,12 +75,15 @@
     <Compile Include="Core\Reservation_Room.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
+    <Compile Include="Core\ViewModels\Room_FacilityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\DTOs\Room\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

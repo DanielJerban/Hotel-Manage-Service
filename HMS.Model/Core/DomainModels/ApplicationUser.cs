@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -16,6 +18,8 @@ namespace HMS.Model.Core.DomainModels
             return userIdentity;
         }
 
+        [Index(IsUnique = true)]
+        public Guid PersonId { get; set; }
         public virtual Person Person { get; set; }
     }
 }

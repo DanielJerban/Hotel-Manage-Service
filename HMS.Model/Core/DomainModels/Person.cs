@@ -15,7 +15,7 @@ namespace HMS.Model.Core.DomainModels
         [DisplayName("کد ملی")]
         public string NationalNo { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public virtual ICollection<ApplicationUser> User { get; set; }
 
         public List<ContactInfo> Infos { get; set; }
     }

@@ -52,7 +52,7 @@
 {
     <!-- Hotel Grid -->
     <script>
-        $(function () {
+        $(function() {
             $("#hotelGrid").kendoGrid({
                 dataSource: {
                     transport: {
@@ -86,40 +86,39 @@
                         field: "Rate",
                         title: "امتیااز",
                         template:
-                            '<span class="fa fa-star checked firstStar"></span>' +
-                            '<span class="fa fa-star checked secondStar"></span>' +
-                            '<span class="fa fa-star checked thirdStar"></span>' +
-                            '<span class="fa fa-star checked fourthStar"></span>' +
-                            '<span class="fa fa-star checked fifthStar"></span>' +
-                            '' +
-                            '#switch(Rate)' +
-                            '{' +
-                            'case 1:' +
-                            '$(".firstStar").addClass("checked");' +
-                            'break;' +
-                            'case 2:' +
-                            '$(".firstStar").addClass("checked");' +
-                            '$(".secondStar").addClass("checked");' +
-                            'break;' +
-                            'case 3:' +
-                            '$(".firstStar").addClass("checked");' +
-                            '$(".secondStar").addClass("checked");' +
-                            '$(".thirdStar").addClass("checked");' +
-                            'break;' +
-                            'case 4:' +
-                            '$(".firstStar").addClass("checked");' +
-                            '$(".secondStar").addClass("checked");' +
-                            '$(".thirdStar").addClass("checked");' +
-                            '$(".fourthStar").addClass("checked");' +
-                            'break;' +
-                            'case 5:' +
-                            '$(".firstStar").addClass("checked");' +
-                            '$(".secondStar").addClass("checked");' +
-                            '$(".thirdStar").addClass("checked");' +
-                            '$(".fourthStar").addClass("checked");' +
-                            '$(".fifthStar").addClass("checked");' +
-                            'break;' +
-                            '}#',
+                            '<span class="fa fa-star firstStar"></span>' +
+                                '<span class="fa fa-star secondStar"></span>' +
+                                '<span class="fa fa-star thirdStar"></span>' +
+                                '<span class="fa fa-star fourthStar"></span>' +
+                                '<span class="fa fa-star fifthStar"></span>' ,
+                                //'#switch(Rate)' +
+                                //'{' +
+                                //'case 1:' +
+                                //'console.log("DD"); ' +
+                                //'break;' +
+                                //'case 2:' +
+                                //`$("tr[data-uid='${uid}'] .firstStar").addClass("checked");` +
+                                //'$(".secondStar").addClass("checked");' +
+                                //'break;' +
+                                //'case 3:' +
+                                //'$(".firstStar").addClass("checked");' +
+                                //'$(".secondStar").addClass("checked");' +
+                                //'$(".thirdStar").addClass("checked");' +
+                                //'break;' +
+                                //'case 4:' +
+                                //'$(".firstStar").addClass("checked");' +
+                                //'$(".secondStar").addClass("checked");' +
+                                //'$(".thirdStar").addClass("checked");' +
+                                //'$(".fourthStar").addClass("checked");' +
+                                //'break;' +
+                                //'case 5:' +
+                                //'$(".firstStar").addClass("checked");' +
+                                //'$(".secondStar").addClass("checked");' +
+                                //'$(".thirdStar").addClass("checked");' +
+                                //'$(".fourthStar").addClass("checked");' +
+                                //'$(".fifthStar").addClass("checked");' +
+                                //'break;' +
+                                //'}#',
                         width: 120
                     },
                     {
@@ -162,47 +161,51 @@
                 rtl: true,
                 position: 'center',
                 buttons: [
-                    ['<button><b>بلی</b></button>', function (instance, toast) {
+                    [
+                        '<button><b>بلی</b></button>', function(instance, toast) {
 
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
-                        $.ajax({
-                            type: "POST",
-                            url: "/Admin/Hotel/Hotel_Destroy/" + id,
-                            success: function (result) {
-                                if (result === true) {
-                                    iziToast.success({
-                                        position: "bottomRight",
-                                        pauseOnHover: false,
-                                        timeout: 2000,
-                                        displayMode: 1,
-                                        rtl: true,
-                                        title: "بسیار عالی",
-                                        message: "هتل مورد نظر حذف شد."
-                                    });
-                                    $("#hotelGrid").data("kendoGrid").dataSource.read();
-                                } else {
-                                    iziToast.warning({
-                                        position: "bottomRight",
-                                        timeout: 2000,
-                                        rtl: true,
-                                        title: "متاسفانه",
-                                        message: "مشکلی رخ داده است!"
-                                    });
+                            $.ajax({
+                                type: "POST",
+                                url: "/Admin/Hotel/Hotel_Destroy/" + id,
+                                success: function(result) {
+                                    if (result === true) {
+                                        iziToast.success({
+                                            position: "bottomRight",
+                                            pauseOnHover: false,
+                                            timeout: 2000,
+                                            displayMode: 1,
+                                            rtl: true,
+                                            title: "بسیار عالی",
+                                            message: "هتل مورد نظر حذف شد."
+                                        });
+                                        $("#hotelGrid").data("kendoGrid").dataSource.read();
+                                    } else {
+                                        iziToast.warning({
+                                            position: "bottomRight",
+                                            timeout: 2000,
+                                            rtl: true,
+                                            title: "متاسفانه",
+                                            message: "مشکلی رخ داده است!"
+                                        });
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                    }, true],
-                    ['<button>خیر</button>', function (instance, toast) {
+                        }, true
+                    ],
+                    [
+                        '<button>خیر</button>', function(instance, toast) {
 
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                    }],
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        }
+                    ],
                 ]
             });
         }
 
-</script>
+    </script>
 
     <!-- Partial views izimodal instantiating -->
     <script>
@@ -231,7 +234,7 @@
 
         $("#hotelGrid").on("dblclick",
             "tr.k-state-selected",
-            function (e) {
+            function(e) {
 
                 $("#updateHotelModal").iziModal({
                     title: "مشخصات",
@@ -254,7 +257,7 @@
                     dataType: "HTML",
                     type: "POST",
                     url: "/Admin/Hotel/_UpdateHotel/" + rowId,
-                    success: function (result) {
+                    success: function(result) {
                         $("#updateHotelPartial").html(result);
                     }
                 });

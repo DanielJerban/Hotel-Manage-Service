@@ -257,6 +257,8 @@
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReservationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoomController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -1180,6 +1182,9 @@
     <Content Include="Areas\Admin\Views\Hotel\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\_CreateHotel.cshtml" />
     <Content Include="Areas\Admin\Views\Hotel\_UpdateHotel.cshtml" />
+    <Content Include="Areas\Admin\Views\Room\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Room\_CreateRoom.cshtml" />
+    <Content Include="Areas\Admin\Views\Reservation\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\iziModal.min.js" />
     <Content Include="Scripts\iziToast.min.js" />
@@ -3324,7 +3329,8 @@
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Views\Shared\_CustomerGrid.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\StrtRating.cshtml" />
+    <Content Include="Views\Test\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

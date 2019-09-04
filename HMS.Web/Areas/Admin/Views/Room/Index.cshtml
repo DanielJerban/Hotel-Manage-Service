@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+
+    #btn-RemoveCustomer {
+        background-color: #ff0043;
+        border-color: #daeffd;
+        width: 110px;
+        margin-right: 20px;
+    }
+</style>
+
+
+
+<!--============ Button crete room ============-->
+<div class="row">
+    <div class="col col-md-6">
+        <input id="btnCreateRoom" type="button" value="ثبت مسافر" class="btn btn-dark" style="width: 15em" />
+    </div>
+</div>
+
+<!--============ Room Grid ============-->
+<div id="roomGrid" class="k-rtl"></div>
+
+
+
+<div id="createRoomModal" hidden>
+    <div id="createRoomPartial"></div>
+</div>
+
+
+
+@section Scripts
+{
+
+    <!--============ Customer Grid ============-->
+    <script>
+
+        // this is same as (document).ready(function(){})
+        $(function () {
+            $("#roomGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Room/room_Read"
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "RoomNumber",
+                        title: "شماره اتاق",
+                        width: 180
+                    },
+                    {
+                        field: "SingleBedCount",
+                        title: "تعداد تخت خواب یک نفره",
+                        width: 180
+                    },
+                    {
+                        field: "DoubleBedCount",
+                        title: "تعداد تخت خواب دو نفره",
+                        width: 180
+                    },
+                    {
+                        field: "Rate",
+                        title: "امتیاز",
+                        width: 180
+                    },
+                    {
+                        field: "Entertainment",
+                        title: "سرگرمی",
+                        width: 180
+                    },
+                    {
+                        field: "Description",
+                        title: "توضیحات",
+                        width: 180
+                    },
+                    {
+                        field: "Id",
+                        title: " ",
+                        filterable: false,
+                        sortable: false,
+                        groupable: false,
+                        template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Room(' + "'#=Id#'" + ')">حذف</button>',
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+    </script>
+    <!--============ /Customer Grid ============-->
+    <!--============ Open create room partial using ajax ============-->
+    <script>
+        $("#btnCreateRoom").click(function () {
+
+            $("#createRoomModal").iziModal({
+                title: "ثبت مسافر",
+                subtitle: "ثبت نام مسافر جدید",
+                headerColor: '#343a40',
+                rtl: true,
+                fullscreen: true,
+                width: 800
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Room/_CreateRoom",
+                success: function (result) {
+                    $("#createRoomPartial").html(result);
+
+                    $("#createRoomModal").iziModal("open");
+                    $("#createRoomModal").removeAttr("hidden");
+                }
+            });
+
+        })
+    </script>
+    <!--============ /Open create customer partial using ajax ============-->
+    <!--============ Remove Customer ============-->
+    <script>
+
+        function remove_Room(Id) {
+
+            iziToast.question({
+                timeout: 20000,
+                color: 'red',
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'حذف',
+                message: 'آیا مطمن هستید؟',
+                rtl: true,
+                position: 'center',
+                buttons: [
+                    ['<button><b>بلی</b></button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Room/Room_Destroy/" + Id,
+                            success: function (result) {
+                                if (result === true) {
+                                    iziToast.success({
+                                        position: "bottomRight",
+                                        pauseOnHover: false,
+                                        timeout: 2000,
+                                        displayMode: 1,
+                                        rtl: true,
+                                        title: "بسیار عالی",
+                                        message: "اتاق مورد نظر حذف شد."
+                                    });
+                                    $("#roomGrid").data("kendoGrid").dataSource.read();
+                                } else {
+                                    iziToast.warning({
+                                        position: "bottomRight",
+                                        timeout: 2000,
+                                        rtl: true,
+                                        title: "متاسفانه",
+                                        message: "مشکلی رخ داده است!"
+                                    });
+                                }
+                            }
+                        });
+
+                    }, true],
+                    ['<button>خیر</button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }],
+                ]
+            });
+        }
+
+    </script>
+    <!--============ /Remove Customer ============-->
+
+}

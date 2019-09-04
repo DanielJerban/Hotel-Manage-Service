@@ -1,0 +1,180 @@
+﻿@model HMS.Model.Core.ViewModels.Room_FacilityViewModel
+
+
+<form id="frmCreateRoom" class="container">
+    <div class="row">
+        <div class="col-12" style="padding: 20px;">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.ValidationMessageFor(c => c.RoomNumber, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.RoomNumber, new { @class = "form-control form-control-lg", placeholder = "شماره اتاق", style = "text-align:right;", id = "txt-RoomNumber" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.Rate, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.Rate, new { type = "number", @class = "form-control form-control-lg", placeholder = "امتیاز", style = "text-align:right;", id = "txt-Rate" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-percent"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.SingleBedCount, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.SingleBedCount, new { type = "number", @class = "form-control form-control-lg", placeholder = "تعداد تخت یک نفره", style = "text-align:right;", id = "txt-SingleBedCount" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.DoubleBedCount, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.DoubleBedCount, new { type = "number", @class = "form-control form-control-lg", placeholder = "تعداد تخت دو نفره", style = "text-align:right;", id = "txt-DoubleBedCount" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                @Html.DropDownList("HotelId", null, htmlAttributes: new { @class = "form-control", style = "height:40px;", Id = "HotelId" })
+
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-home"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.Entertainment, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextAreaFor(c => c.Entertainment, new { @class = "form-control form-control-lg", placeholder = "سرگرمی ها", style = "text-align:right;", id = "txt-Entertainment" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-audio-description"></i></span>
+                </div>
+
+            </div>
+
+            @Html.ValidationMessageFor(c => c.Description, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextAreaFor(c => c.Description, new { @class = "form-control form-control-lg", placeholder = "توضیحات", style = "text-align:right;", id = "txt-Desc" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-audio-description"></i></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<hr />
+
+<div id="Upload" class="tabcontent">
+    <form id="myform">
+        <div class=" k-content" style="width:100%; padding: 1px 20px 20px 20px;">
+
+            <h4 style="margin-top: 1em; margin-bottom: 1em;">آپلود عکس</h4>
+            <p style="margin-bottom: 1em;">(عکس مورد نطر را در قالب زیر رها کنید)</p>
+
+            <input name="files" id="files-jpg" type="file" />
+            <div class="demo-hint" style="margin-top:2em; margin-bottom:1em;">شما فقط می توانید فایل های از نوع <strong>GIF</strong>, <strong>JPG</strong>, <strong>PNG</strong> آپلود کنید.</div>
+        </div>
+    </form>
+</div>
+
+<input id="bntCreateRoom" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+
+
+<!-- Send an ajax to controller to create new customer-->
+<script>
+    $(function () {
+        $("#bntCreateRoom").click(function (e) {
+            e.preventDefault();
+
+            if ($("#frmCreateRoom").valid()) {
+                $.ajax({
+                    url: "/Admin/Room/Room_Create",
+                    type: "POST",
+                    data: {
+                        model: {
+                            RoomNumber: $("#txt-RoomNumber").val(),
+                            Rate: $("#txt-Rate").val(),
+                            Description: $("#txt-Desc").val(),
+                            SingleBedCount: $("#txt-SingleBedCount").val(),
+                            DoubleBedCount: $("#txt-DoubleBedCount").val(),
+                            Entertainment: $("#txt-Entertainment").val()
+                        },
+                        hotelId: $("#HotelId").val()
+                    },
+                    success: function (result) {
+                        if (result === true) {
+                            iziToast.success({
+                                position: "bottomRight",
+                                pauseOnHover: false,
+                                timeout: 2000,
+                                displayMode: 1,
+                                rtl: true,
+                                title: "بسیار عالی",
+                                message: "مسافر جدید به سیستم اضافه شد."
+                            });
+
+                            // refresh the customer grid
+                            $("#roomGrid").data("kendoGrid").dataSource.read();
+
+                            // Clear the create customer modal
+                            $("#txt-RoomNumber").val('');
+                            $("#txt-Rate").val('');
+                            $("#txt-Desc").val('');
+                            $("#txt-SingleBedCount").val('');
+                            $("#txt-DoubleBedCount").val('');
+                            $("#txt-Entertainment").val('');
+
+                            // close the create customer modal
+                            $("#createRoomModal").iziModal("close");
+
+                            // clear the uploaded files
+                            $(".k-upload-files").remove();
+
+                        } else {
+                            iziToast.warning({
+                                position: "bottomRight",
+                                timeout: 2000,
+                                rtl: true,
+                                title: "متاسفانه",
+                                message: "مشکلی رخ داده است!"
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!-- Create Customer -->
+<!-- Kendo Upload -->
+<script>
+    $(document).ready(function () {
+        $("#files-jpg").kendoUpload({
+            validation: {
+                allowedExtensions: [".gif", ".jpg", ".png"],
+                maxFileSize: 4194304
+            }
+        });
+        // Send the data of the selected files to controller to hold it in a static class
+        $("#files-jpg").on("change",
+            function () {
+                $.ajax({
+                    data: new FormData($("#myform")[0]),
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    url: '/Admin/Room/GetImages'
+                });
+            });
+    });
+</script>
+<!-- /Kendo Upload -->
+
+
+
+@Scripts.Render("~/bundles/jqueryval")

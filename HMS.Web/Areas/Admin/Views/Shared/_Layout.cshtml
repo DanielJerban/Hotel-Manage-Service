@@ -5,7 +5,7 @@
 
     var username = User.Identity.Name;
     string fullName;
-    var customer = db.Customers.SingleOrDefault(c => c.User.UserName == username);
+    var customer = db.Customers.SingleOrDefault(c => c.User.FirstOrDefault().UserName == username);
     if (customer != null)
     {
         fullName = customer.FirstName + ' ' + customer.LastName;
