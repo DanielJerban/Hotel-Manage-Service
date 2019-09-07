@@ -18,5 +18,10 @@ namespace HMS.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult PersianDatePicker()
+        {
+            return View();
+        }
     }
 }
