@@ -10,5 +10,9 @@ namespace HMS.Service.Core.Interfaces
     public interface IReservationRepo : IRepository<Reservation>
     {
         List<Room> GetEmptyRoom(DateTime fromDate, DateTime toDate);
+        List<Room> GetAllFreeRooms();
+        string GetReservationCustomerName(Guid Id);
+        List<string> GetReservationCustomerRooms(Guid Id);
+
     }
 }

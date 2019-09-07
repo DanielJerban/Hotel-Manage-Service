@@ -72,8 +72,10 @@
     <Compile Include="Core\DTOs\Customer\GetCustomerDto.cs" />
     <Compile Include="Core\DTOs\Hotel\CreateHotelDto.cs" />
     <Compile Include="Core\DTOs\Hotel\GetHotelsDto.cs" />
+    <Compile Include="Core\DTOs\Reservation\CreateReserveDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
+    <Compile Include="Core\ViewModels\DetailReserveViewModel.cs" />
     <Compile Include="Core\ViewModels\Room_FacilityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
