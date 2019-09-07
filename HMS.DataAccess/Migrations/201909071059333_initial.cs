@@ -3,7 +3,7 @@ namespace HMS.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -39,6 +39,7 @@ namespace HMS.DataAccess.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        PersonId = c.Guid(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -50,12 +51,11 @@ namespace HMS.DataAccess.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
-                        Person_Id = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.People", t => t.Person_Id, cascadeDelete: true)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
-                .Index(t => t.Person_Id);
+                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .Index(t => t.PersonId, unique: true)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -102,6 +102,7 @@ namespace HMS.DataAccess.Migrations
                         Id = c.Guid(nullable: false),
                         Name = c.String(nullable: false),
                         Description = c.String(),
+                        Rate = c.Int(),
                         CreatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -112,25 +113,28 @@ namespace HMS.DataAccess.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         RoomNumber = c.String(),
-                        Rate = c.Int(nullable: false),
+                        Rate = c.Int(),
                         Description = c.String(),
                         FacilityId = c.Guid(nullable: false),
                         HotelId = c.Guid(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
+                        Reservation_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.RoomFacilities", t => t.FacilityId, cascadeDelete: true)
+                .ForeignKey("dbo.Reservations", t => t.Reservation_Id)
                 .ForeignKey("dbo.HotelDatas", t => t.HotelId, cascadeDelete: true)
                 .Index(t => t.FacilityId)
-                .Index(t => t.HotelId);
+                .Index(t => t.HotelId)
+                .Index(t => t.Reservation_Id);
             
             CreateTable(
                 "dbo.RoomFacilities",
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        BedModel = c.Int(nullable: false),
-                        bedCount = c.Byte(nullable: false),
+                        SingleBedCount = c.Byte(nullable: false),
+                        DoubleBedCount = c.Byte(nullable: false),
                         Entertainment = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
                     })
@@ -156,6 +160,20 @@ namespace HMS.DataAccess.Migrations
                 .Index(t => t.Room_Id);
             
             CreateTable(
+                "dbo.Reservations",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        FromDate = c.DateTime(nullable: false),
+                        ToDate = c.DateTime(nullable: false),
+                        CreatedDate = c.DateTime(nullable: false),
+                        Customer_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Customer", t => t.Customer_Id)
+                .Index(t => t.Customer_Id);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -170,17 +188,14 @@ namespace HMS.DataAccess.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        CustomerParent_Id = c.Guid(),
                         Hotel_Id = c.Guid(),
                         PassportNo = c.String(),
                         ParentId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.People", t => t.Id)
-                .ForeignKey("dbo.Customer", t => t.CustomerParent_Id)
                 .ForeignKey("dbo.HotelDatas", t => t.Hotel_Id)
                 .Index(t => t.Id)
-                .Index(t => t.CustomerParent_Id)
                 .Index(t => t.Hotel_Id);
             
             CreateTable(
@@ -205,36 +220,39 @@ namespace HMS.DataAccess.Migrations
             DropForeignKey("dbo.Employee", "Hotel_Id", "dbo.HotelDatas");
             DropForeignKey("dbo.Employee", "Id", "dbo.People");
             DropForeignKey("dbo.Customer", "Hotel_Id", "dbo.HotelDatas");
-            DropForeignKey("dbo.Customer", "CustomerParent_Id", "dbo.Customer");
             DropForeignKey("dbo.Customer", "Id", "dbo.People");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Rooms", "HotelId", "dbo.HotelDatas");
+            DropForeignKey("dbo.Rooms", "Reservation_Id", "dbo.Reservations");
+            DropForeignKey("dbo.Reservations", "Customer_Id", "dbo.Customer");
             DropForeignKey("dbo.RoomImages", "Room_Id", "dbo.Rooms");
             DropForeignKey("dbo.Rooms", "FacilityId", "dbo.RoomFacilities");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUsers", "Person_Id", "dbo.People");
+            DropForeignKey("dbo.AspNetUsers", "PersonId", "dbo.People");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ContactInfoes", "Person_Id", "dbo.People");
             DropIndex("dbo.Employee", new[] { "Hotel_Id" });
             DropIndex("dbo.Employee", new[] { "Id" });
             DropIndex("dbo.Customer", new[] { "Hotel_Id" });
-            DropIndex("dbo.Customer", new[] { "CustomerParent_Id" });
             DropIndex("dbo.Customer", new[] { "Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Reservations", new[] { "Customer_Id" });
             DropIndex("dbo.RoomImages", new[] { "Room_Id" });
+            DropIndex("dbo.Rooms", new[] { "Reservation_Id" });
             DropIndex("dbo.Rooms", new[] { "HotelId" });
             DropIndex("dbo.Rooms", new[] { "FacilityId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", new[] { "Person_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.AspNetUsers", new[] { "PersonId" });
             DropIndex("dbo.ContactInfoes", new[] { "Person_Id" });
             DropTable("dbo.Employee");
             DropTable("dbo.Customer");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Reservations");
             DropTable("dbo.RoomImages");
             DropTable("dbo.RoomFacilities");
             DropTable("dbo.Rooms");

@@ -20,16 +20,15 @@ namespace HMS.Model.Core.DomainModels
         [DisplayName("توضیحات بیشتر")]
         public string Description { get; set; }
 
+
         public Guid FacilityId { get; set; }
         public RoomFacility Facility { get; set; }
 
         public Guid HotelId { get; set; }
         public HotelData Hotel { get; set; }
 
+        public Reservation Reservation { get; set; }
+
         public List<RoomImage> Images { get; set; }
-
-
-        // Room ----------------- Reservation 
-        public List<Reservation_Room> Reservations { get; set; }
     }
 }

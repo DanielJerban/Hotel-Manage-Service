@@ -14,11 +14,6 @@ namespace HMS.Model.Core.DomainModels
 
 
         public Customer Customer { get; set; }
-
-        // Each reserve has n rooms 
-        // and 
-        // Each room belong to n reserve 
-        // I will handle the overlap later in the code 
-        public List<Reservation_Room> Rooms { get; set; }
+        public List<Room> Rooms { get; set; }
     }
 }

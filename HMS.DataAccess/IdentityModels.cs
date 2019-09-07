@@ -32,7 +32,6 @@ namespace HMS.Web.Models
             modelBuilder.Configurations.Add(new PersonConfig());
             modelBuilder.Configurations.Add(new HotelConfig());
             modelBuilder.Configurations.Add(new ReservationConfig());
-            modelBuilder.Configurations.Add(new Reservation_RoomConfig());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -46,6 +45,5 @@ namespace HMS.Web.Models
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomImage> RoomImages { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<Reservation_Room> Reservation_Room { get; set; }
     }
 }
