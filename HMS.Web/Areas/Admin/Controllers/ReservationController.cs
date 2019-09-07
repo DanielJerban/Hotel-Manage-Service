@@ -13,5 +13,6 @@ namespace HMS.Web.Areas.Admin.Controllers
         {
             return View();
         }
+
     }
 }

@@ -14,6 +14,7 @@ namespace HMS.Service.Core
         IPersonRepo Person { get; }
         IContactInfoRepo ContactInfo { get; }
         IUserRepo User { get; }
+        IReservationRepo Reservation { get; }
 
         /// <summary>
         /// Save changes on database 

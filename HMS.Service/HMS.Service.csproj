@@ -63,6 +63,7 @@
     <Compile Include="Core\Interfaces\IHotelRepo.cs" />
     <Compile Include="Core\Interfaces\IPersonRepo.cs" />
     <Compile Include="Core\Interfaces\IRepository.cs" />
+    <Compile Include="Core\Interfaces\IReservationRepo.cs" />
     <Compile Include="Core\Interfaces\IRoomFacilityRepo.cs" />
     <Compile Include="Core\Interfaces\IRoomImageRepo.cs" />
     <Compile Include="Core\Interfaces\IRoomRepo.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Persistance\Repositories\HotelRepo.cs" />
     <Compile Include="Persistance\Repositories\PersonRepo.cs" />
     <Compile Include="Persistance\Repositories\Repository.cs" />
+    <Compile Include="Persistance\Repositories\ReservationRepo.cs" />
     <Compile Include="Persistance\Repositories\RoomFacilityRepo.cs" />
     <Compile Include="Persistance\Repositories\RoomImageRepo.cs" />
     <Compile Include="Persistance\Repositories\RoomRepo.cs" />

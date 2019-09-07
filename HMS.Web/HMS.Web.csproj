@@ -933,6 +933,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="PersianDateTimePicker\bootstrap-theme.css" />
+    <Content Include="PersianDateTimePicker\bootstrap.min.css" />
+    <Content Include="PersianDateTimePicker\bootstrap.min.js" />
+    <Content Include="PersianDateTimePicker\jalaali.js" />
+    <Content Include="PersianDateTimePicker\jquery-3.1.0.min.js" />
+    <Content Include="PersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.css" />
+    <Content Include="PersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
