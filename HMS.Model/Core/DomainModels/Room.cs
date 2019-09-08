@@ -28,6 +28,7 @@ namespace HMS.Model.Core.DomainModels
         public HotelData Hotel { get; set; }
 
         public Reservation Reservation { get; set; }
+        public VerbalRoomRent VerbalRoomRent { get; set; }
 
         public List<RoomImage> Images { get; set; }
     }

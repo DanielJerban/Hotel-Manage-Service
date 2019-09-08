@@ -32,6 +32,7 @@ namespace HMS.Web.Models
             modelBuilder.Configurations.Add(new PersonConfig());
             modelBuilder.Configurations.Add(new HotelConfig());
             modelBuilder.Configurations.Add(new ReservationConfig());
+            modelBuilder.Configurations.Add(new VerbalRoomRentConfig());
 
             base.OnModelCreating(modelBuilder);
         }

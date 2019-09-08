@@ -13,6 +13,8 @@ namespace HMS.Model.Core.DomainModels
 
         public List<Reservation> Reservations { get; set; }
 
+        public List<VerbalRoomRent> VerbalRoomRents { get; set; }
+
         // Self relation 
         [DisplayName("مسافر همراه")]
         public Guid? ParentId { get; set; }

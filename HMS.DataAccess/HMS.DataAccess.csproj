@@ -58,6 +58,7 @@
     <Compile Include="EntityConfig\PersonConfig.cs" />
     <Compile Include="EntityConfig\ReservationConfig.cs" />
     <Compile Include="EntityConfig\RoomConfig.cs" />
+    <Compile Include="EntityConfig\VerbalRoomRentConfig.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Migrations\201909071059333_initial.cs" />
     <Compile Include="Migrations\201909071059333_initial.Designer.cs">
