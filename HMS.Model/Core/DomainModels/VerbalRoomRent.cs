@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HMS.Model.Core.DomainModels
 {
@@ -12,6 +14,8 @@ namespace HMS.Model.Core.DomainModels
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
         public DateTime AbsoluteCheckOut { get; set; }
+
+        [NotMapped]
         public List<Customer> ChildCustomer { get; set; }
 
         public Guid CustomerId { get; set; }

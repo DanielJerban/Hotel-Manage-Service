@@ -14,6 +14,7 @@ namespace HMS.DataAccess.EntityConfig
         {
             this.HasRequired(c => c.Customer)
                 .WithMany(c => c.VerbalRoomRents)
+                .HasForeignKey(c => c.CustomerId)
                 .WillCascadeOnDelete(false);
 
             this.HasMany(c => c.Rooms)

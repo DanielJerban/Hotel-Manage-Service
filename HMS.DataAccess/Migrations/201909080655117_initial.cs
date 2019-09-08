@@ -119,14 +119,17 @@ namespace HMS.DataAccess.Migrations
                         HotelId = c.Guid(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         Reservation_Id = c.Guid(),
+                        VerbalRoomRent_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.RoomFacilities", t => t.FacilityId, cascadeDelete: true)
                 .ForeignKey("dbo.Reservations", t => t.Reservation_Id)
+                .ForeignKey("dbo.VerbalRoomRents", t => t.VerbalRoomRent_Id)
                 .ForeignKey("dbo.HotelDatas", t => t.HotelId, cascadeDelete: true)
                 .Index(t => t.FacilityId)
                 .Index(t => t.HotelId)
-                .Index(t => t.Reservation_Id);
+                .Index(t => t.Reservation_Id)
+                .Index(t => t.VerbalRoomRent_Id);
             
             CreateTable(
                 "dbo.RoomFacilities",
@@ -166,12 +169,28 @@ namespace HMS.DataAccess.Migrations
                         Id = c.Guid(nullable: false),
                         FromDate = c.DateTime(nullable: false),
                         ToDate = c.DateTime(nullable: false),
+                        Status = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         Customer_Id = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Customer", t => t.Customer_Id)
                 .Index(t => t.Customer_Id);
+            
+            CreateTable(
+                "dbo.VerbalRoomRents",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CheckIn = c.DateTime(nullable: false),
+                        CheckOut = c.DateTime(nullable: false),
+                        AbsoluteCheckOut = c.DateTime(nullable: false),
+                        CustomerId = c.Guid(nullable: false),
+                        CreatedDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Customer", t => t.CustomerId)
+                .Index(t => t.CustomerId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -223,6 +242,8 @@ namespace HMS.DataAccess.Migrations
             DropForeignKey("dbo.Customer", "Id", "dbo.People");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Rooms", "HotelId", "dbo.HotelDatas");
+            DropForeignKey("dbo.Rooms", "VerbalRoomRent_Id", "dbo.VerbalRoomRents");
+            DropForeignKey("dbo.VerbalRoomRents", "CustomerId", "dbo.Customer");
             DropForeignKey("dbo.Rooms", "Reservation_Id", "dbo.Reservations");
             DropForeignKey("dbo.Reservations", "Customer_Id", "dbo.Customer");
             DropForeignKey("dbo.RoomImages", "Room_Id", "dbo.Rooms");
@@ -237,8 +258,10 @@ namespace HMS.DataAccess.Migrations
             DropIndex("dbo.Customer", new[] { "Hotel_Id" });
             DropIndex("dbo.Customer", new[] { "Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.VerbalRoomRents", new[] { "CustomerId" });
             DropIndex("dbo.Reservations", new[] { "Customer_Id" });
             DropIndex("dbo.RoomImages", new[] { "Room_Id" });
+            DropIndex("dbo.Rooms", new[] { "VerbalRoomRent_Id" });
             DropIndex("dbo.Rooms", new[] { "Reservation_Id" });
             DropIndex("dbo.Rooms", new[] { "HotelId" });
             DropIndex("dbo.Rooms", new[] { "FacilityId" });
@@ -252,6 +275,7 @@ namespace HMS.DataAccess.Migrations
             DropTable("dbo.Employee");
             DropTable("dbo.Customer");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.VerbalRoomRents");
             DropTable("dbo.Reservations");
             DropTable("dbo.RoomImages");
             DropTable("dbo.RoomFacilities");

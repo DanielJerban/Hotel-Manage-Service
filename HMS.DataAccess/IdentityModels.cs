@@ -46,5 +46,6 @@ namespace HMS.Web.Models
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomImage> RoomImages { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<VerbalRoomRent> VerbalRoomRents { get; set; }
     }
 }
