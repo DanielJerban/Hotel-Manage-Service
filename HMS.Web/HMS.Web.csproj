@@ -254,6 +254,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerCheckinController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
@@ -1194,6 +1195,7 @@
     <Content Include="Areas\Admin\Views\Room\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Room\_CreateRoom.cshtml" />
     <Content Include="Areas\Admin\Views\Reservation\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomerCheckin\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\iziModal.min.js" />
     <Content Include="Scripts\iziToast.min.js" />

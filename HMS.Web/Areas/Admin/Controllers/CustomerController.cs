@@ -25,7 +25,7 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         #region Customer
 
-        public JsonResult Customer_Read(string search)
+        public JsonResult Customer_Read()
         {
             var customers = uow.Customer.GetAll().ToList();
 
@@ -41,12 +41,6 @@ namespace HMS.Web.Areas.Admin.Controllers
                     PassportNo = customer.PassportNo ?? "",
                     Id = customer.Id
                 });
-            }
-
-            if (search != null)
-            {
-                return Json(customerDtos.Where(c => c.FirstName.Contains(search) || c.LastName.Contains(search) || c.NationalNo.Contains(search) || c.PassportNo.Contains(search))
-                    .OrderBy(c => c.LastName).ThenBy(c => c.FirstName).ToList(), JsonRequestBehavior.AllowGet);
             }
 
             return Json(customerDtos.OrderBy(c => c.LastName).ThenBy(c => c.FirstName), JsonRequestBehavior.AllowGet);
