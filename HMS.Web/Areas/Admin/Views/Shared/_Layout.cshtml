@@ -17,224 +17,402 @@
 }
 
 <!DOCTYPE html>
-<html dir="rtl" lang="en">
+<html lang="en">
 <head>
+    <meta charset="utf-8" />
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <title>@ViewBag.Title</title>
 
-    <title>Hotel Manage Service</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <!-- App favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="~/Dashboard/assets/images/favicon.png">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- Kendo -->
-    <link href="" rel="stylesheet" />
-    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.common.min.css")" rel="stylesheet" type="text/css" />
-    @*<link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.default.min.css")" rel="stylesheet" type="text/css" />*@
-    @*<link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.default.mobile.min.css")" rel="stylesheet" type="text/css" />*@
 
-    @*<link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.material.min.css")" rel="stylesheet" type="text/css" />*@
-    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.rtl.min.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/kendo.all.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo/PersianKendo.js")"></script>
+
+    <script src="~/Scripts/Dashboard/jquery.min.js"></script>
+
+
     <!-- /Kendo -->
-    <link href="~/Content/kendo/2019.2.619/kendo.flat.min.css" rel="stylesheet" />
-    <link href="~/Dashboard/dist/css/style.min.css" rel="stylesheet">
+    @*<link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.rtl.min.css")" rel="stylesheet" type="text/css" />
+        <link href="~/Content/kendo/2019.2.619/kendo.common.min.css" rel="stylesheet" />
+        <link href="~/Content/kendo/2019.2.619/kendo.default.min.css" rel="stylesheet" />
+        <link href="~/Content/kendo/2019.2.619/kendo.default.mobile.min.css" rel="stylesheet" />
+        <link href="~/Content/kendo/2019.2.619/kendo.flat.min.css" rel="stylesheet" />*@
+
+    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/kendo.all.min.js")"></script>
+
+    <link href="~/Content/Home/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Izimodal -->
     <link href="~/Content/iziModal.min.css" rel="stylesheet" />
     <link href="~/Content/iziToast.min.css" rel="stylesheet" />
-    <!-- /Izimodal -->
+
+
+    <!-- jvectormap -->
+    <link href="~/Content/Dashboard/jqvmap.min.css" rel="stylesheet" />
+
+    <!-- DataTables -->
+    <!-- Icons css -->
+    <link href="~/Content/Dashboard/materialdesignicons.min.css" rel="stylesheet" />
+
+    <!-- App css -->
+    <!-- build:css -->
+    <link href="~/Content/Dashboard/app.css" rel="stylesheet" />
+    <!-- endbuild -->
+
+    <style>
+
+        @@font-face {
+            font-family: 'Iran Sans';
+            src: url('/fonts/IranSans/IRANSansWeb.eot');
+            src: url('/fonts/IranSans/IRANSansWeb.woff') format('woff'), url('/fonts/IranSans/IRANSansWeb.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Iran Sans' !important;
+        }
+    </style>
 
     <link href="~/Content/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
 
+    <!--KENDO-->
+    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.rtl.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/PersianKendo.js")"></script>
+
+
 </head>
+
 <body>
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
-    <div id="main-wrapper">
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header">
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
-                        <i class="ti-menu ti-close"></i>
-                    </a>
-                    <div class="navbar-brand">
-                        <a href="#" class="logo">
-                            <b class="logo-icon">
-                                <img src="~/Dashboard/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
-                                <img src="~/Dashboard/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
-                            </b>
-                            <span class="logo-text" style="color: white;">
-                                <!-- <img src="~/Dashboard/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                                <img src="~/Dashboard/assets/images/logo-light-text.png" class="light-logo" alt="homepage" /> -->
-                                هتل ایران
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="false" aria-expanded="false">
+                            <i class="dripicons-bell noti-icon"></i>
+                            <span class="badge badge-info noti-icon-badge">21</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>پاک کردن همه</small></a> </span>اعلانات</h5>
+                            </div>
+
+                            <div class="slimscroll noti-scroll">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-warning"><i class="mdi mdi-comment-account-outline"></i></div>
+                                    <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">1 min ago</small></p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-info"><i class="mdi mdi-account-plus"></i></div>
+                                    <p class="notify-details">New user registered.<small class="text-muted">5 hours ago</small></p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon"><img src="~/Content/Dashboard/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                    <p class="notify-details">Cristina Pride</p>
+                                    <p class="text-muted font-13 mb-0 user-msg">Hi, How are you? What about our next meeting</p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-danger"><i class="mdi mdi-comment-account-outline"></i></div>
+                                    <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">4 days ago</small></p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon"><img src="~/Content/Dashboard/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                    <p class="notify-details">Karen Robinson</p>
+                                    <p class="text-muted font-13 mb-0 user-msg">Wow that's great</p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-primary"><i class="mdi mdi-heart"></i></div>
+                                    <p class="notify-details">Carlos Crouch liked <b>Admin</b><small class="text-muted">13 days ago</small></p>
+                                </a>
+                            </div>
+
+                            <!-- All-->
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                نمایش همه <i class="fi-arrow-right"></i>
+                            </a>
+
+                        </div>
+                    </li>
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="false" aria-expanded="false">
+                            <img src="~/Content/Dashboard/images/users/team-5.jpg" alt="user" class="rounded-circle"> <span class="mr-1">دانیال جربان<i class="mdi mdi-chevron-down"></i> </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h6 class="text-overflow m-0">خوش آمدید!</h6>
+                            </div>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="dripicons-user"></i><span>اکانت من</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="dripicons-checklist"></i><span>تنظیمات</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="dripicons-help"></i><span>پشتیبانی</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="dripicons-lock"></i> <span>قفل صفحه</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="dripicons-power"></i><span>خروج</span>
+                            </a>
+
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled menu-left mb-0">
+                    <li class="float-left">
+                        <a href="index.html" class="logo">
+                            <span class="logo-lg">
+                                <img src="~/Content/Dashboard/images/logo.png" alt="" height="20">
+                            </span>
+                            <span class="logo-sm">
+                                <img src="~/Content/Dashboard/images/logo_sm.png" alt="" height="28">
                             </span>
                         </a>
-                        <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
-                            <i class="mdi mdi-toggle-switch mdi-toggle-switch-off font-20"></i>
-                        </a>
-                    </div>
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent"
-                       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="ti-more"></i>
-                    </a>
-                </div>
-                <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item search-box">
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                                <span class="m-l-5 font-medium d-none d-sm-inline-block">
-                                    @fullName
-                                    <i class="mdi mdi-chevron-down"></i>
-                                </span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <span class="with-arrow">
-                                    <span class="bg-primary"></span>
-                                </span>
-                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-                                    <div class="m-l-10">
-                                        <h4 class="m-b-0">@fullName</h4>
-                                        <h4 class="m-b-0">@*دانیال جربان*@</h4>
-                                        <p class=" m-b-0">@User.Identity.Name</p>
-                                    </div>
-                                </div>
-                                <div class="profile-dis scrollable">
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-user m-r-5 m-l-5"></i>پروفایل من
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="ti-settings m-r-5 m-l-5"></i> تنطیمات اکانت
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { AreaReference.UseRoot, id = "logoutForm", @class = "navbar-right", action = "/Account/LogOff" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
-                                            <i class="fa fa-power-off m-r-5 m-l-5"></i> خروج
-                                        </a>
-                                    }
-                                    <div class="dropdown-divider"></div>
-                                </div>
+                    </li>
+                    <li class="float-left">
+                        <a class="button-menu-mobile open-left navbar-toggle">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                        </a>
+                    </li>
+                    <li class="app-search">
+                        <form>
+                            <input type="text" placeholder="جست و جو ..." class="form-control">
+                            <button type="submit" class="sr-only"></button>
+                        </form>
+                    </li>
+                </ul>
             </nav>
+            <!-- end navbar-custom -->
         </header>
-        <aside class="left-sidebar">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
+        <!-- End Navigation Bar-->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left-side-menu" style="background-color: #494f5c;">
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                @*<i class="mdi mdi-av-timer"></i>*@
-                                <i class="fa fa-home"></i>
-                                <span class="hide-menu">داشبرد </span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu"> خانه </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu"> تنطیمات </span>
-                                    </a>
-                                </li>
+            <div class="slimscroll-menu">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+
+                    <ul class="metismenu" id="side-menu">
+
+                        <li class="menu-title" style="color: white;">کلیات</li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="fa fa-home"></i> <span style="color: white;"> المان های ظاهر </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="ui-buttons.html">Buttons</a></li>
+                                <li><a style="color: white;" href="ui-modals.html">Modals</a></li>
+                                <li><a style="color: white;" href="ui-tabs.html">Tabs & Accordions</a></li>
+                                <li><a style="color: white;" href="ui-notifications.html">Notifications</a></li>
+                                <li><a style="color: white;" href="ui-cards.html">Cards</a></li>
+                                <li><a style="color: white;" href="ui-grid.html">Grid</a></li>
+                                <li><a style="color: white;" href="ui-general.html">General</a></li>
+                                <li><a style="color: white;" href="ui-typography.html">Typography</a></li>
+                                <li><a style="color: white;" href="ui-checkbox-radio.html">Checkbox & Radio</a></li>
+                                <li><a style="color: white;" href="ui-progress.html">Progress</a></li>
+                                <li><a style="color: white;" href="ui-sweetalerts.html">Sweet Alerts</a></li>
+                                <li><a style="color: white;" href="ui-range-slider.html">Range Slider</a></li>
+                                <li><a style="color: white;" href="ui-ribbons.html">Ribbons</a></li>
+                                <li><a style="color: white;" href="ui-materialdesign.html">Material Design</a></li>
+                                <li><a style="color: white;" href="ui-simpleline.html">Simple Line</a></li>
+                                <li><a style="color: white;" href="ui-dripicons.html">Dripicons</a></li>
                             </ul>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                @*<i class="mdi mdi-crop-square"></i>*@
-                                <i class="fa fa-info-circle"></i>
-                                <span class="hide-menu"> اطلاعات </span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">
-                                        <i class="mdi mdi-format-align-left"></i>
-                                        <span class="hide-menu"> کارمندان </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">
-                                        <i class="mdi mdi-format-align-right"></i>
-                                        <span class="hide-menu"> اتاق ها </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="#" class="sidebar-link">
-                                        <i class="mdi mdi-format-float-left"></i>
-                                        <span class="hide-menu"> مسافران </span>
-                                    </a>
-                                </li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="mdi mdi-email-outline"></i><span style="color: white;"> ایمیل </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="email-inbox.html">Inbox</a></li>
+                                <li><a style="color: white;" href="email-read.html">Read Email</a></li>
+                                <li><a style="color: white;" href="email-compose.html">Compose Email</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="fa fa-chart-bar"></i><span style="color: white;"> نمودار ها </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="chart-flot.html">Flot Chart</a></li>
+                                <li><a style="color: white;" href="chart-chartist.html">Chartist Chart</a></li>
+                                <li><a style="color: white;" href="chart-chartjs.html">Chartjs Chart</a></li>
+                                <li><a style="color: white;" href="chart-knob.html">Jquery Knob</a></li>
+                                <li><a style="color: white;" href="chart-sparkline.html">Sparkline Chart</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="mdi mdi-file-document-box"></i><span style="color: white;"> فرم ها </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="form-elements.html">Form Elements</a></li>
+                                <li><a style="color: white;" href="form-advanced.html">Form Advanced</a></li>
+                                <li><a style="color: white;" href="form-validation.html">Form Validation</a></li>
+                                <li><a style="color: white;" href="form-wizard.html">Form Wizard</a></li>
+                                <li><a style="color: white;" href="form-summernote.html">Summernote</a></li>
+                                <li><a style="color: white;" href="form-upload.html">Form Upload</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="mdi mdi-filter-variant"></i> <span style="color: white;"> جداول </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="tables-basic.html">Basic Tables</a></li>
+                                <li><a style="color: white;" href="tables-datatable.html">Data Tables</a></li>
+                                <li><a style="color: white;" href="tables-responsive.html">Responsive Tables</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="menu-title" style="color: white;">بیشتر</li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="mdi mdi-map"></i> <span style="color: white;"> نقشه ها </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="maps-google.html">Google Maps</a></li>
+                                <li><a style="color: white;" href="maps-vector.html">Vector Maps</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="mdi mdi-buffer"></i><span style="color: white;"> اعتبار سنجی </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="auth-login.html">Log In</a></li>
+                                <li><a style="color: white;" href="auth-register.html">Register</a></li>
+                                <li><a style="color: white;" href="auth-recoverpassword.html">Recover Password</a></li>
+                                <li><a style="color: white;" href="auth-lock-screen.html">Lock Screen</a></li>
+                                <li><a style="color: white;" href="auth-404.html">Error 404</a></li>
+                                <li><a style="color: white;" href="auth-500.html">Error 500</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);"><i class="mdi mdi-google-pages"></i> <span style="color: white;"> صفحات </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a style="color: white;" href="pages-invoice.html">Invoice</a></li>
+                                <li><a style="color: white;" href="pages-pricing.html">Pricing</a></li>
+                                <li><a style="color: white;" href="pages-starter.html">Starter</a></li>
+                                <li><a style="color: white;" href="pages-timeline.html">Timeline</a></li>
+                                <li><a style="color: white;" href="pages-faq.html">FAQs</a></li>
                             </ul>
                         </li>
                     </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
+
+                </div>
+                <!-- Sidebar -->
+
+                <div class="clearfix"></div>
+
             </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <div class="page-wrapper">
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-5 align-self-center">
-                        <h3 class="page-title">طرفه نگار</h3>
-                    </div>
-                    <div class="col-7 align-self-center">
-                        <div class="d-flex align-items-center justify-content-end">
-                        </div>
-                    </div>
+            <!-- Sidebar -left -->
+
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- Page Content Start -->
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid" style="padding-top: 20px;">
+
+                    @RenderBody();
+
                 </div>
             </div>
-            <div class="container-fluid">
-                @RenderBody()
-            </div>
-            <footer class="footer text-center">
-                طراحی شده و توسعه یافته توسط
-                <a href="https://github.com/DanielJerban">دانیال جربان</a>.
-            </footer>
         </div>
-    </div>
+        <!-- End Page Content-->
 
-    @*<script src="~/Dashboard/assets/jquery.min.js"></script>*@
-    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+
+    </div>
+    <!-- End #wrapper -->
+    <!-- jQuery  -->
+    <script src="~/Scripts/Dashboard/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/Dashboard/jquery.slimscroll.min.js"></script>
+    <script src="~/Scripts/Dashboard/metisMenu.min.js"></script>
+
+    <!-- KNOB JS -->
+    <script src="~/Scripts/Dashboard/jquery.knob.min.js"></script>
+
+    <!-- Jvector map -->
+    <!-- Datatable js -->
+
+    <script src="~/Scripts/Dashboard/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Dashboard/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/Dashboard/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/Dashboard/responsive.bootstrap4.min.js"></script>
+
+
+    <!-- Dashboard Init JS -->
+    <script src="~/Scripts/Dashboard/jquery.dashboard.js"></script>
+
+    <!-- App js -->
+    <script src="~/Scripts/Dashboard/jquery.app.js"></script>
+    <script src="~/Scripts/Dashboard/jquery.core.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Default Datatable
+            $('#datatable').DataTable({
+                "pageLength": 5,
+                "searching": false,
+                "lengthChange": false
+            });
+        });
+    </script>
 
 
     <!-- Datetime Picker -->
     <script src="~/Scripts/jquery.Bootstrap-PersianDateTimePicker.js"></script>
     <script src="~/Scripts/jalaali.js"></script>
 
-    @Scripts.Render("~/bundles/dashboard/js")
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+    <!-- IziModal-->
+    <script src="~/Scripts/iziModal.min.js"></script>
+    <script src="~/Scripts/iziToast.min.js"></script>
 
     @RenderSection("Scripts", false)
 
