@@ -50,7 +50,7 @@ namespace HMS.Web.Models
     {
         [Required (ErrorMessage = "فیلد ایمیل الزامیست")]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress (ErrorMessage ="فرمت ایمیل صحیح نمی باشد")]
         public string Email { get; set; }
 
         [Required (ErrorMessage = "فیلد رمز عبور الزامیست")]

@@ -1,33 +1,778 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = null;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>@User.Identity.Name</h1>
+<head>
+
+    <!-- required meta tags -->
+    <meta charset="utf-8">
+
+    <meta name="description" content="Building modern responsive website with html5, css3, jQuery & bootstrap framework">
+    <meta name="keywords" content="HTML5, CSS3, jQuery, Bootstrap, Web Design, Web Development, Responsive website, Modern website">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- title -->
+    <title>هتل اطلس</title>
+
+    <!-- favicon -->
+    @*<link rel="shortcut icon" href="~/Content/Home/img/favicon.ico">*@
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Dashboard/assets/images/favicon.png">
+
+    <!-- google fonts -->
+    @*<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">*@
+
+    <!-- fontawesome -->
+    <link href="~/Content/Home/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- bootstrap CSS -->
+    <link href="~/Content/Home/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- animate CSS -->
+    <link href="~/Content/Home/css/animate/animate.css" rel="stylesheet" />
+
+    <!-- magnific-popup CSS -->
+    <link href="~/Content/Home/css/magnific-popup/magnific-popup.css" rel="stylesheet" />
+
+    <!-- owl carousel CSS -->
+    <link href="~/Content/Home/css/owl-carousel/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/Home/css/owl-carousel/owl.theme.default.min.css" rel="stylesheet" />
+
+    <!-- style CSS -->
+    <link href="~/Content/Home/css/style.css" rel="stylesheet" />
+
+    <!-- responsive CSS -->
+    <link href="~/Content/Home/css/responsive.css" rel="stylesheet" />
+
+
+</head>
+
+<body data-spy="scroll" data-target=".navbar-fixed-top" data-offset="65">
+
+    <header>
+
+        <nav class="navbar navbar-fixed-top">
+
+            <div class="container-fluid">
+
+                <div class="vesco-nav-wrapper">
+
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#vesco-menu">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand" href="#home" style="color: white; font-size:18px;">
+                            <!-- <img src="img/logo.png" alt="logo"> -->
+                            هتل اطلس
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="vesco-menu">
+                        <ul class="nav navbar-nav">
+                            <li><a class="smooth-scroll" href="#home">خانه</a></li>
+                            <li><a class="smooth-scroll" href="#services">سرویس ها</a></li>
+                            <li><a class="smooth-scroll" href="#about">درباره ما</a></li>
+                            <li><a class="smooth-scroll" href="#team">تیم ما</a></li>
+                            <li><a class="smooth-scroll" href="#testimonials">نظرات</a></li>
+                            <li><a class="smooth-scroll" href="#pricing">هزینه</a></li>
+                            <li><a class="smooth-scroll" href="#stats">وضعیت</a></li>
+                            <li><a class="smooth-scroll" href="#clients">مشتریان</a></li>
+                            <li><a class="smooth-scroll" href="#contact">تماس با ما</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+
+    </header>
+
+    <!-- Home -->
+    <section id="home">
+
+        <div id="home-cover" class="bg-parallax animated fadeIn">
+
+            <div id="home-content-box">
+
+                <div id="home-content-box-inner" class="text-center">
+
+                    <div id="home-heading" class="animated zoomIn" style="text-align:left;">
+                        <h3>هتل اطلس<br>اطلس رزرو اتاق از تمامی هتل های کشور</h3>
+                    </div>
+                    <div id="home-btn" class="animated zoomIn">
+                        <a class="btn btn-lg btn-general btn-white" href="/Account/Login" role="button">ورود به سایت</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+
+        <div class="content-box">
+            <div class="content-title wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                <h3> سرویس ها </h3>
+                <div class="content-title-underline"></div>
+            </div>
+
+            <div class="container">
+
+                <div class="row" id="serviceheader">
+
+                    <div class="col-md-4 col-sm-6">
+
+                        <div class="service-item wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+
+                            <div class="service-item-icon">
+                                <i class="fa fa-dollar fa-3x"></i>
+                            </div>
+
+                            <div class="service-item-title">
+                                <h3 style="text-align:right;"> هزینه کمتر کیفیت بیشتر</h3>
+                            </div>
+
+                            <div class="service-item-desc">
+                                <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+
+                            <div class="service-item-icon">
+                                <i class="fa fa-laptop fa-3x"></i>
+                            </div>
+
+                            <div class="service-item-title">
+                                <h3 style="text-align:right;"> دسترسی آسان از طریق وبسایت</h3>
+                            </div>
+
+                            <div class="service-item-desc">
+                                <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+
+                        <div class="service-item wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+
+                            <div class="service-item-icon">
+                                <i class="fa fa-ticket fa-3x"></i>
+                            </div>
+
+                            <div class="service-item-title">
+                                <h3 style="text-align:right;">ارایه انواع بلیط</h3>
+                            </div>
+
+                            <div class="service-item-desc">
+                                <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+
+                            <div class="service-item-icon">
+                                <i class="fa fa-plane fa-3x"></i>
+                            </div>
+
+                            <div class="service-item-title">
+                                <h3 style="text-align:right;"> پوشش صد درصدی سفرها </h3>
+                            </div>
+
+                            <div class="service-item-desc">
+                                <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                            <div class="service-item-icon">
+                                <i class="fa fa-hotel fa-3x"></i>
+                            </div>
+
+                            <div class="service-item-title">
+                                <h3 style="text-align:right;"> پوشش صد درصدی هتل ها </h3>
+                            </div>
+
+                            <div class="service-item-desc">
+                                <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+
+                            <div class="service-item-icon">
+                                <i class="fa fa-life-ring fa-3x"></i>
+                            </div>
+
+                            <div class="service-item-title">
+                                <h3 style="text-align:right;"> دارای تور های متنوع </h3>
+                            </div>
+
+                            <div class="service-item-desc">
+                                <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <!-- About -->
+    <section id="about">
+
+        <!-- About right side with diagonal BG parallax -->
+        <div id="about-bg-diagonal" class="bg-parallax"></div>
+
+        <!-- About left side with content -->
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div id="about-content-box">
+
+                        <div id="about-content-box-outer">
+
+                            <div id="about-content-box-inner">
+
+                                <div class="content-title wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                                    <h3 style="text-align: center;"> درباره اطلس </h3>
+                                </div>
+
+                                <div id="about-desc" class="wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                                    <p style="text-align: center;">لورم ایپسوم یک متن فرضی است</p>
+                                </div>
+
+                                <div style="text-align: center;" id="about-btn" class="wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                                    <a class="btn btn-lg btn-general btn-blue smooth-scroll" href="#contact" role="button" title="View Work"> تماس با ما </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Team -->
+    <section id="team">
+
+        <div class="content-box">
+            <div class="content-title wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                <h3> تیم مدیریت </h3>
+                <div class="content-title-underline"></div>
+            </div>
+
+
+            <div class="container">
+
+                <div class="row wow animated fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                    <div class="col-md-12">
+
+                        <div id="team-members" class="owl-carousel owl-theme">
+                            <div class="team-member">
+                                <img src="~/Content/Home/img/team/team-1.jpg" class="img-responsive" alt="team member">
+                                <div class="team-member-info text-center">
+                                    <h4 class="team-member-name">دانیل جوردن </h4>
+                                    <h4 class="team-member-designation">مدیر تیم فنی</h4>
+                                    <ul class="social-list">
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <img src="~/Content/Home/img/team/team-2.jpg" class="img-responsive" alt="team member">
+                                <div class="team-member-info text-center">
+                                    <h4 class="team-member-name">سارا اسمیت</h4>
+                                    <h4 class="team-member-designation">مدیر امور مالی</h4>
+                                    <ul class="social-list">
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="team-member">
+                                <img src="~/Content/Home/img/team/team-3.jpg" class="img-responsive" alt="team member">
+                                <div class="team-member-info text-center">
+                                    <h4 class="team-member-name">استیو مایک</h4>
+                                    <h4 class="team-member-designation">مدیر ارتباط ها</h4>
+                                    <ul class="social-list">
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="team-member">
+                                <img src="~/Content/Home/img/team/team-4.jpg" class="img-responsive" alt="team member">
+                                <div class="team-member-info text-center">
+                                    <h4 class="team-member-name">رابرت هیناری</h4>
+                                    <h4 class="team-member-designation">مدیر بخش تجاری</h4>
+                                    <ul class="social-list">
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="team-member">
+                                <img src="~/Content/Home/img/team/team-5.jpg" class="img-responsive" alt="team member">
+                                <div class="team-member-info text-center">
+                                    <h4 class="team-member-name">مایک ترا</h4>
+                                    <h4 class="team-member-designation">مدیر بخش امنیت</h4>
+                                    <ul class="social-list">
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="social-icon icon-gray"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- End Content Box -->
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials">
+
+        <div id="testimonials-cover" class="bg-parallax">
+            <div class="content-box">
+                <div class="content-title content-title-white wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                    <h3> سخن مشتریان برتر ما </h3>
+                    <div class="content-title-underline"></div>
+                </div>
+
+                <div class="container">
+
+                    <div class="row wow animated bounceInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="col-md-12">
+
+                            <div id="customers-testimonials" class="text-center owl-carousel owl-theme">
+
+                                <div class="testimonial">
+                                    <img src="~/Content/Home/img/client/client-1.jpg" class="img-responsive img-circle" alt="testimonial">
+                                    <blockquote class="text-center">
+                                        <p>طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به‌عنوان عنصری از ترکیب‌بندی برای پُر کردن صفحه و ارائهٔ اولیهٔ شکل ظاهری و کلیِ طرح سفارش‌گرفته‌شده‌استفاده می‌کند، تا ازنظر گرافیکی نشانگر چگونگی نوع و اندازهٔ قلم و ظاهرِ متن باشد.</p>
+                                    </blockquote>
+                                    <div class="testimonial-author">
+                                        <p>
+                                            <strong> دانیل واتسون </strong>
+                                            <span> کارشناس ارشد گوگل </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="testimonial">
+                                    <img src="~/Content/Home/img/client/client-2.jpg" class="img-responsive img-circle" alt="client" />
+                                    <blockquote class="text-center">
+                                        <p>طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به‌عنوان عنصری از ترکیب‌بندی برای پُر کردن صفحه و ارائهٔ اولیهٔ شکل ظاهری و کلیِ طرح سفارش‌گرفته‌شده‌استفاده می‌کند، تا ازنظر گرافیکی نشانگر چگونگی نوع و اندازهٔ قلم و ظاهرِ متن باشد.</p>
+                                    </blockquote>
+
+                                    <div class="testimonial-author">
+                                        <p>
+                                            <strong>جان متیو</strong>
+                                            <span>کارشناس ارشد یاهو</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                                <div class="testimonial">
+                                    <img src="~/Content/Home/img/client/client-3.jpg" class="img-responsive img-circle" alt="client" />
+                                    <blockquote class="text-center">
+                                        <p>طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به‌عنوان عنصری از ترکیب‌بندی برای پُر کردن صفحه و ارائهٔ اولیهٔ شکل ظاهری و کلیِ طرح سفارش‌گرفته‌شده‌استفاده می‌کند، تا ازنظر گرافیکی نشانگر چگونگی نوع و اندازهٔ قلم و ظاهرِ متن باشد.</p>
+                                    </blockquote>
+
+                                    <div class="testimonial-author">
+                                        <p>
+                                            <strong>سارا اسمیت</strong>
+                                            <span>کارشناس ارشد آمازون</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Content Box -->
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+
+        <div class="content-box">
+            <div class="content-title wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                <h3> هزینه تور های کوتاه مدت مسکو </h3>
+                <div class="content-title-underline"></div>
+            </div>
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4 wow animated zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="pricing-box text-center">
+
+                            <h4 class="pricing-title">یک هفته ای</h4>
+                            <h3 class="pricing-value">4،900،000<sup>تومان</sup></h3>
+                            <ul class="pricing-spec">
+                                <li>
+                                    <p>صبحانه، ناهار، شام</p>
+                                </li>
+                                <li>
+                                    <p>سفر در بخش بیزینس کلاس هواپیما</p>
+                                </li>
+                                <li>
+                                    <p>هتل 3 ستاره</p>
+                                </li>
+                            </ul>
+                            <div class="pricing-btn">
+                                <a class="btn btn-lg btn-general btn-blue" href="#" role="button">ثبت خرید</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 wow animated bounceInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="pricing-box pricing-box-lg text-center">
+
+                            <h4 class="pricing-title">بیست روزه</h4>
+                            <h3 class="pricing-value">9،700،000<sup>تومان</sup></h3>
+                            <ul class="pricing-spec">
+                                <li>
+                                    <p>صبحانه، ناهار، شام</p>
+                                </li>
+                                <li>
+                                    <p>سفر با هواپیمای شخصی</p>
+                                </li>
+                                <li>
+                                    <p>هتل 5 ستاره</p>
+                                </li>
+                            </ul>
+                            <div class="pricing-btn">
+                                <a class="btn btn-lg btn-general btn-white" href="#" role="button">ثبت خرید</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 wow animated zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="pricing-box text-center">
+
+                            <h4 class="pricing-title">10 روزه</h4>
+                            <h3 class="pricing-value">7،400،000<sup>تومان</sup></h3>
+                            <ul class="pricing-spec">
+                                <li>
+                                    <p>صبحانه، ناهار، شام</p>
+                                </li>
+                                <li>
+                                    <p>سفر در بخش فرست کلاس هواپیما</p>
+                                </li>
+                                <li>
+                                    <p>هتل 4 ستاره</p>
+                                </li>
+                            </ul>
+                            <div class="pricing-btn">
+                                <a class="btn btn-lg btn-general btn-blue" href="#" role="button">ثبت خرید</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- End Content Box -->
+    </section>
+
+    <!-- Stats -->
+    <section id="stats">
+
+        <div id="stats-cover" class="bg-parallax">
+
+            <div class="content-box">
+                <div class="content-title content-title-white wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                    <h3> به پیشرفت ادامه میدهیم </h3>
+                    <div class="content-title-underline"></div>
+                </div>
+
+                <div class="container">
+
+                    <div class="row text-center wow animated bounceInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats-item">
+                                <i class="fa fa-cloud-download fa-5x"></i>
+                                <h2><span class="counter"> 1590 </span><span>+</span></h2>
+                                <p style="text-align: center;">دانلود ها</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats-item">
+                                <i class="fa fa-star-o fa-5x"></i>
+                                <h2><span class="counter"> 3500 </span><span>+</span></h2>
+                                <p style="text-align: center;">افتخارات</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats-item">
+                                <i class="fa fa-heart-o fa-5x"></i>
+                                <h2><span class="counter"> 1199 </span><span>+</span></h2>
+                                <p style="text-align: center;">علاقه مندی ها</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats-item">
+                                <i class="fa fa-check fa-5x"></i>
+                                <h2><span class="counter"> 2200 </span><span>+</span></h2>
+                                <p style="text-align: center;">پشنهادات</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Content Box -->
+        </div>
+    </section>
+
+    <!-- Clients -->
+    <section id="clients">
+
+        <div class="content-box">
+            <div class="content-title wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                <h3> شرکت های تحت قرارداد </h3>
+                <div class="content-title-underline"></div>
+            </div>
+
+            <div class="container">
+
+                <div class="row wow animated bounceInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                    <div class="col-md-12">
+
+                        <div id="clients-list" class="owl-carousel owl-theme">
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-1.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-2.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-3.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-4.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-5.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-6.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-7.jpg" class="img-responsive" alt="client">
+                            </div>
+                            <div class="client">
+                                <img src="~/Content/Home/img/client/logos/logo-8.jpg" class="img-responsive" alt="client">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- End Content Box -->
+    </section>
+
+    <footer>
+
+        <div id="contact">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div id="contact-right">
+
+                            <h3>تماس با ما</h3>
+                            <form action="#">
+
+                                <input style="text-align: right;" type="text" name="full-name" placeholder="نام و نام خانوادگی" class="form-control">
+                                <input style="text-align: right;" type="text" name="email" placeholder="آدرس ایمیل" class="form-control">
+                                <textarea style="text-align: right;" rows="5" name="message" placeholder="متن نامه" class="form-control"></textarea>
+
+                                <div id="send-btn">
+                                    <a class="btn btn-lg btn-general btn-white" href="#" role="button">ارسال</a>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="contact-left">
+
+                            <h3>هتل اطلس</h3>
+                            <p>لورم ایپسوم یک متن فرضی و بدون محتوا و هیچ مفهومی ندارد</p>
+
+                            <div id="contact-info">
+
+                                <address>
+                                    <strong style="float: right;">دفتر اصلی</strong><br>
+                                    <p>
+                                        ایران، تهران، پونک،
+                                        میرزابابایی، سردار جنگل شمالی
+                                    </p>
+                                </address>
+                                <div id="phone-fax-email">
+                                    <p style="text-align: right;">
+                                        <strong>تلفن:</strong><span> 982144442012 </span> <br>
+                                        <strong>فکس:</strong><span>  982144442013  </span> <br>
+                                        <span>  info@vesco.com : </span><strong>آدرس ایمیل</strong> <br>
+                                    </p>
+                                </div>
+
+                            </div>
+                            <ul class="social-list" style="float: right;">
+                                <li><a href="#" class="social-icon icon-white"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="social-icon icon-white"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="social-icon icon-white"><i class="fa fa-youtube-play"></i></a></li>
+                                <li><a href="#" class="social-icon icon-white"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div id="footer-copyrights">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 hidden-sm hidden-xs">
+                        <div id="footer-menu">
+                            <ul>
+                                <li><a class="smooth-scroll" href="#home">خانه</a>/</li>
+                                <li><a class="smooth-scroll" href="#services">سرویس ها</a>/</li>
+                                <li><a class="smooth-scroll" href="#work">کار ها</a>/</li>
+                                <li><a class="smooth-scroll" href="#team">تیم مدیریت</a>/</li>
+                                <li><a class="smooth-scroll" href="#testimonials">نظرات</a>/</li>
+                                <li><a class="smooth-scroll" href="#pricing">هزینه</a>/</li>
+                                <li><a class="smooth-scroll" href="#stats">وضعیت</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#home" id="back-to-top" class="btn btn-sm btn-blue btn-back-to-top smooth-scroll hidden-sm hidden-xs" title="home" role="button">
+            <i class="fa fa-angle-up"></i>
+        </a>
+
+    </footer>
+
+    <!-- jQuery -->
+    @*<script src="~/Scripts/Home/js/jquery.js"></script>*@
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+    <!-- bootstrap JS -->
+    <script src="~/Scripts/Home/js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- WOW JS -->
+    <script src="~/Scripts/Home/js/wow/wow.min.js"></script>
+
+    <!-- magnific-popup JS -->
+    <script src="~/Scripts/Home/js/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- owl carousel JS -->
+    <script src="~/Scripts/Home/js/owl-carousel/owl.carousel.min.js"></script>
+
+    <!-- counter -->
+    <script src="~/Scripts/Home/js/counter/jquery.waypoints.min.js"></script>
+    <script src="~/Scripts/Home/js/counter/jquery.counterup.min.js"></script>
+
+    <!-- easing -->
+    <script src="~/Scripts/Home/js/easing/jquery.easing.1.3.js"></script>
+
+
+    <!-- custom JS -->
+    <script src="~/Scripts/Home/js/custom.js"></script>
+</body>
+
+
+
+</html>

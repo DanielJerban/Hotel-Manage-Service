@@ -13,6 +13,23 @@
     <link rel="icon" type="image/png" sizes="16x16" href="~/Dashboard/assets/images/favicon.png">
     <title>ورود به سایت</title>
     <link href="~/Dashboard/dist/css/style.min.css" rel="stylesheet">
+
+
+
+    <style>
+
+        @@font-face {
+            font-family: 'Iran Sans';
+            src: url('/fonts/IranSans/IRANSansWeb.eot');
+            src: url('/fonts/IranSans/IRANSansWeb.woff') format('woff'), url('/fonts/IranSans/IRANSansWeb.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Iran Sans' !important;
+        }
+    </style>
+
+
 </head>
 <body>
     <div class="main-wrapper">
@@ -54,48 +71,12 @@
                                     @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;" })
                                 </div>
 
-                                @*@Html.ValidationMessageFor(c => c.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
-                                    </div>
-                                    @Html.TextBoxFor(c => c.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;" })
-                                    
-                                </div>
-
-                                @Html.ValidationMessageFor(c => c.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
-                                    </div>
-                                    @Html.TextBoxFor(c => c.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;" })
-                                    
-                                </div>*@
-
-                                @*@Html.ValidationMessageFor(c => c.TelNo, null, new { @class = "text-danger", style = "float:right;" })
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
-                                    </div>
-                                    @Html.TextBoxFor(c => c.TelNo, new { @class = "form-control form-control-lg", placeholder = "شماره تلفن", style = "text-align:right;" })
-                                    
-                                </div>
-
-                                @Html.ValidationMessageFor(c => c.Address, null, new { @class = "text-danger", style = "float:right;" })
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
-                                    </div>
-                                    @Html.TextBoxFor(c => c.Address, new { @class = "form-control form-control-lg", placeholder = "آدرس", style = "text-align:right;" })
-                                    
-                                </div>*@
-
                                 @Html.ValidationMessageFor(c => c.Email, null, new { @class = "text-danger", style = "float:right;" })
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "ایمیل", style = "text-align:right;" })
+                                    @Html.TextBoxFor(c => c.Email, new { @class = "form-control form-control-lg", placeholder = "  ایمیل", style = "text-align:right;" })
                                     
                                 </div>
 
