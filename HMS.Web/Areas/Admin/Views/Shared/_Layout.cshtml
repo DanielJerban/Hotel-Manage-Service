@@ -33,18 +33,8 @@
 
 
 
-    <script src="~/Scripts/Dashboard/jquery.min.js"></script>
 
-
-    <!-- /Kendo -->
-    @*<link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.rtl.min.css")" rel="stylesheet" type="text/css" />
-        <link href="~/Content/kendo/2019.2.619/kendo.common.min.css" rel="stylesheet" />
-        <link href="~/Content/kendo/2019.2.619/kendo.default.min.css" rel="stylesheet" />
-        <link href="~/Content/kendo/2019.2.619/kendo.default.mobile.min.css" rel="stylesheet" />
-        <link href="~/Content/kendo/2019.2.619/kendo.flat.min.css" rel="stylesheet" />*@
-
-    <script src="@Url.Content("~/Scripts/kendo/2019.2.619/kendo.all.min.js")"></script>
-
+    <!-- fontAwesom -->
     <link href="~/Content/Home/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Izimodal -->
@@ -77,12 +67,10 @@
         }
     </style>
 
-    <link href="~/Content/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
-
     <!--KENDO-->
     <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.material.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2019.2.619/kendo.rtl.min.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/kendo/2019.2.619/jquery.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo/2019.2.619/jszip.min.js")"></script>
@@ -90,7 +78,6 @@
     <script src="@Url.Content("~/Scripts/kendo/2019.2.619/kendo.aspnetmvc.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo/PersianKendo.js")"></script>
-
 
 </head>
 
@@ -165,7 +152,7 @@
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="false" aria-expanded="false">
-                            <img src="~/Content/Dashboard/images/users/team-5.jpg" alt="user" class="rounded-circle"> <span class="mr-1">دانیال جربان<i class="mdi mdi-chevron-down"></i> </span>
+                            <img src="~/Content/Dashboard/images/users/team-5.jpg" alt="user" class="rounded-circle"> <span class="mr-1">@fullName<i class="mdi mdi-chevron-down"></i> </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                             <!-- item-->
@@ -368,7 +355,8 @@
     </div>
     <!-- End #wrapper -->
     <!-- jQuery  -->
-    <script src="~/Scripts/Dashboard/bootstrap.bundle.min.js"></script>
+    @*<script src="~/Scripts/Dashboard/bootstrap.bundle.min.js"></script>*@
+    <script src="~/DatePicker/bootstrap.min.js"></script>
     <script src="~/Scripts/Dashboard/jquery.slimscroll.min.js"></script>
     <script src="~/Scripts/Dashboard/metisMenu.min.js"></script>
 
@@ -401,11 +389,6 @@
             });
         });
     </script>
-
-
-    <!-- Datetime Picker -->
-    <script src="~/Scripts/jquery.Bootstrap-PersianDateTimePicker.js"></script>
-    <script src="~/Scripts/jalaali.js"></script>
 
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

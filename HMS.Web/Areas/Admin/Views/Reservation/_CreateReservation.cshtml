@@ -1,0 +1,216 @@
+﻿<!-- Persian DateTime picker -->
+<script src="~/DatePicker/popper.min.js"></script>
+<script src="~/DatePicker/bootstrap.min.js"></script>
+<link href="~/DatePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+
+
+<div style="margin: 20px 15px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text cursor-pointer fa fa-calendar" id="date4"></span>
+                        <input readonly="readonly" type="text" id="inputDate4" class="form-control" placeholder="از تاریخ" aria-label="date4"
+                               aria-describedby="date4">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text cursor-pointer fa fa-calendar" id="date5"></span>
+                        <input readonly="readonly" type="text" id="inputDate5" class="form-control" placeholder="تا تاریخ" aria-label="date5"
+                               aria-describedby="date5">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control btn" type="button" value="فیلتر" id="btn-filterRooms" style="background-color:#3f51b5; color:rgba(255,255,255,.5); border-color: #e6e6e6;" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <select class="form-control" id="reserveStatus">
+                <option value="0">پرداخت شده</option>
+                <option value="1">موقت</option>
+                <option value="2">قطعی</option>
+            </select>
+        </div>
+    </div>
+
+    <br />
+
+    <div id="FreeRoomsGrid" class="k-rtl"></div>
+</div>
+
+<br />
+<input id="btnCreateReserve" type="button" value="ثبت رزرو" class="btn btn-block" style="background-color:#3f51b5; color:rgb(255,255,255);" />
+
+
+
+
+<!--========== All Free Rooms ==========-->
+<script>
+
+    $(function () {
+
+
+        var selectedRowsId = [];
+
+        function onChange(e) {
+            var rows = e.sender.select();
+            selectedRowsId = [];
+
+            rows.each(function (e) {
+                var grid = $("#FreeRoomsGrid").data("kendoGrid");
+                var dataItem = grid.dataItem(this);
+                selectedRowsId.push(dataItem.Id);
+            })
+        }
+
+        // Free Room Grid
+        $("#FreeRoomsGrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: "/Admin/Reservation/GetAllFreeRooms"
+                },
+                pageSize: 20
+            },
+            filterable: true,
+            height: 550,
+            width: 'auto',
+            groupable: true,
+            sortable: true,
+            selectable: false,
+            change: onChange,
+            pageable: {
+                refresh: true,
+                pageSize: 20,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    selectable: true,
+                    width: "50px"
+                },
+                {
+                    field: "RoomNumber",
+                    title: "شماره اتاق",
+                    width: 180
+                },
+                {
+                    field: "SingleBedCount",
+                    title: "تعداد تخت یک نفره",
+                    width: 180
+                },
+                {
+                    field: "DoubleBedCount",
+                    title: "تعداد تخت دو نفره",
+                    width: 180
+                },
+                {
+                    field: "Rate",
+                    title: "امتیاز",
+                    width: 180
+                },
+                {
+                    field: "Entertainment",
+                    title: "سرگرمی",
+                    width: 180
+                },
+                {
+                    field: "Description",
+                    title: "توضیحات",
+                    width: 180
+                }
+            ]
+        });
+        // \Free Room Grid
+
+        // Send an ajax to controller to create a reservation
+        $("#btnCreateReserve").click(function(){
+            $.ajax({
+                url: "/Admin/Reservation/CreateNewReservation",
+                type: "POST",
+                data: {
+                        model:{
+                            Status: $("#reserveStatus option:selected").val(),
+                            fromDate: $("#inputDate4").val(),
+                            toDate: $("#inputDate5").val(),
+                            roomsId: selectedRowsId,
+                            customerId: $("#customerId").val()
+                        }
+                },
+                success: function (result) {
+                        if (result === true) {
+                            iziToast.success({
+                                position: "bottomRight",
+                                pauseOnHover: false,
+                                timeout: 2000,
+                                displayMode: 1,
+                                rtl: true,
+                                title: "بسیار عالی",
+                                message: "رزروی دیگر اضافه شد."
+                            });
+
+                            // refresh the customer grid
+                            $("#FreeRoomsGrid").data("kendoGrid").dataSource.read();
+
+                            // Clear the create customer modal
+
+
+                            // close the create customer modal
+                            $("#createCustomerModal").iziModal("close");
+
+                        } else {
+                            iziToast.warning({
+                                position: "bottomRight",
+                                timeout: 2000,
+                                rtl: true,
+                                title: "متاسفانه",
+                                message: "مشکلی رخ داده است!"
+                            });
+                        }
+                    }
+            })
+        });
+        // \Send an ajax to controller to create a reservation
+
+    });
+
+
+</script>
+
+<script>
+
+    $("#btn-filterRooms").click(function () {
+        alert("TERST");
+    });
+
+</script>
+
+<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+
+<script type="text/javascript">
+
+    $('#date4').MdPersianDateTimePicker({
+        targetTextSelector: '#inputDate4',
+        fromDate: true,
+        enableTimePicker: false,
+        groupId: 'rangeSelector1',
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+    $('#date5').MdPersianDateTimePicker({
+        targetTextSelector: '#inputDate5',
+        toDate: true,
+        groupId: 'rangeSelector1',
+        placement: 'top',
+        enableTimePicker: false,
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+</script>

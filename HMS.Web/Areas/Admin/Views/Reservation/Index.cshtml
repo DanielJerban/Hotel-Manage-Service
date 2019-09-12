@@ -4,5 +4,135 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
+<style>
+
+    #btn-RemoveReservation {
+        background-color: #ff0043;
+        border-color: #daeffd;
+        width: 110px;
+        margin-right: 20px;
+    }
+
+    #btn-selectCustomer {
+        width: 300px;
+        background-color: #3f51b5;
+        border-color: #e6e6e6;
+        color: rgba(255,255,255,.5);
+    }
+</style>
+
+
+
+<input type="button" value="انتخاب مسافر" class="btn " id="btn-selectCustomer" />
+
+<div class="k-rtl">
+    <div id="ReservationGrid"></div>
+</div>
+
+
+
+<!-- Partial views -->
+<div id="selectCustomerModal" hidden>
+    <div id="selectCustomerPartial"></div>
+</div>
+<!-- /Partial views -->
+
+
+
+@section Scripts
+{
+    <!-- All Reservations grid-->
+    <script>
+
+        $(function () {
+            $("#ReservationGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Reservation/GetAllReservations"
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "FromDate",
+                        title: "از تازیخ",
+                        width: 180
+                    },
+                    {
+                        field: "ToDate",
+                        title: "تا تاریخ",
+                        width: 180
+                    },
+                    {
+                        field: "RoomNumber",
+                        title: "شماره اتاق",
+                        width: 180
+                    },
+                    {
+                        field: "CustomerName",
+                        title: "نام مسافر",
+                        width: 180
+                    },
+                    {
+                        field: "ReserveStatus",
+                        title: "وضعیت رزرو",
+                        width: 180
+                    },
+                    {
+                        field: "Id",
+                        title: " ",
+                        filterable: false,
+                        sortable: false,
+                        groupable: false,
+                        template: '<button id="btn-RemoveReservation" class="btn btn-primary" onClick="removeReservation(' + "'#=Id#'" + ')">حذف</button>',
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+    </script>
+
+    <!-- Open Select Customer izimodal -->
+    <script>
+
+        $("#btn-selectCustomer").click(function () {
+
+            $("#selectCustomerModal").iziModal({
+                title: "مسافران",
+                subtitle: "انتخاب یک مسافر",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: true,
+                width: 800,
+                zindex: 2000
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Reservation/_CustomerPanel",
+                success: function (result) {
+                    $("#selectCustomerPartial").html(result);
+                }
+            });
+
+            $("#selectCustomerModal").iziModal("open");
+            $("#selectCustomerModal").removeAttr("hidden");
+
+        });
+
+    </script>
+
+}

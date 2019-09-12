@@ -12,25 +12,50 @@ namespace HMS.Web.Areas.Admin.Controllers
 {
     public class ReservationController : BaseController
     {
+
+        //========================================================
+        // NOTE: 
+        // 1. To get all customer send a request to Customer/Customer_Read
+        //========================================================
+
+
+
+
         // GET: Admin/Reservation
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult GetFreeRooms(string fromDate, string toDate)
+        public ActionResult FilterFreeRooms(string fromDate, string toDate)
         {
-            DateTime date1 = Convert.ToDateTime(fromDate);
-            DateTime date2 = Convert.ToDateTime(toDate);
-
-            var freeRoomInTheTime = uow.Reservation.GetEmptyRoom(date1, date2).ToList();
+            var freeRoomInTheTime = uow.Reservation
+                .GetEmptyRoom(Convert.ToDateTime(fromDate), Convert.ToDateTime(toDate))
+                .ToList();
 
             return Json(freeRoomInTheTime, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetAllFreeRooms()
         {
-            return Json(uow.Reservation.GetAllFreeRooms().ToList(), JsonRequestBehavior.AllowGet);
+            var rooms = uow.Reservation.GetAllFreeRooms().ToList();
+            List<Room_FacilityViewModel> roomsVM = new List<Room_FacilityViewModel>();
+
+            foreach (var room in rooms)
+            {
+                roomsVM.Add(new Room_FacilityViewModel()
+                {
+                    RoomNumber = room.RoomNumber,
+                    Rate = room.Rate,
+                    Description = room.Description,
+                    SingleBedCount = room.Facility.SingleBedCount,
+                    DoubleBedCount = room.Facility.DoubleBedCount,
+                    Entertainment = room.Facility.Entertainment,
+                    Id = room.Id
+                });
+            }
+
+            return Json(roomsVM, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CreateNewReservation(CreateReserveDto model)
@@ -41,8 +66,9 @@ namespace HMS.Web.Areas.Admin.Controllers
             {
                 List<Room> selectedRooms = new List<Room>();
                 foreach (var Id in model.roomsId)
-                {
-                    selectedRooms.Add(uow.Room.Find(Id));
+                { 
+                    var guid = Guid.Parse(Id);
+                    selectedRooms.Add(uow.Room.Find(guid));
                 }
 
                 var customer = uow.Customer.Find(model.customerId);
@@ -90,12 +116,12 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
-        #region PartailViews 
-
-        public PartialViewResult _CreateReserve()
+        public ActionResult GetAllReservations()
         {
-            return PartialView();
+            return Json(uow.Reservation.GetAllReservation(), JsonRequestBehavior.AllowGet);
         }
+
+        #region PartailViews 
 
         public PartialViewResult _ResreveDetail(Guid Id)
         {
@@ -129,6 +155,16 @@ namespace HMS.Web.Areas.Admin.Controllers
             };
 
             return PartialView(vm);
+        }
+
+        public PartialViewResult _CustomerPanel()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult _CreateReservation(Guid Id)
+        {
+            return PartialView(Id);
         }
 
         #endregion

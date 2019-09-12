@@ -11,7 +11,7 @@ namespace HMS.Model.Core.DTOs.Reservation
     public class CreateReserveDto
     {
         public Guid customerId { get; set; }
-        public List<Guid> roomsId { get; set; }
+        public List<string> roomsId { get; set; }
 
         [Required (ErrorMessage = "")]
         public string fromDate { get; set; }

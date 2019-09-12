@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using HMS.Model.Core.ViewModels;
+using System.Globalization;
 
 namespace HMS.Service.Persistance.Repositories
 {
@@ -18,9 +20,58 @@ namespace HMS.Service.Persistance.Repositories
 
         public List<Room> GetAllFreeRooms()
         {
-            var rooms = context.Rooms.Where(c => c.Reservation == null).ToList();
+            var rooms = context.Rooms.Include(c => c.Facility).Where(c => c.Reservation == null && c.VerbalRoomRent == null).ToList();
 
-            return rooms; 
+            return rooms;
+        }
+
+        /// <summary>
+        /// Gets all Reservations till now
+        /// </summary>
+        public List<ReservationViewModel> GetAllReservation()
+        {
+            var reservation = context.Reservations.Include(c => c.Customer).ToList();
+
+            List<ReservationViewModel> VMs = new List<ReservationViewModel>();
+
+            foreach (var item in reservation)
+            {
+                List<string> roomsNumber = new List<string>();
+                foreach (var room in item.Rooms)
+                {
+                    roomsNumber.Add(room.RoomNumber);
+                }
+
+                string status;
+
+                switch (item.Status)
+                {
+                    case ReserveStatus.Payed:
+                        status = "پرداخت شده";
+                        break;
+                    case ReserveStatus.Temporary:
+                        status = "موقت";
+                        break;
+                    case ReserveStatus.Absolute:
+                        status = "قطعی";
+                        break;
+                    default:
+                        status = "پرداخت شده";
+                        break;
+                }
+
+                VMs.Add(new ReservationViewModel()
+                {
+                    FromDate = item.FromDate,
+                    ToDate = item.ToDate,
+                    RoomsNumber = roomsNumber,
+                    CustomerName = item.Customer.FirstName + ' ' + item.Customer.LastName,
+                    ReserveStatus = status,
+                    Id = item.Id
+                });
+            }
+
+            return VMs;
         }
 
         public List<Room> GetEmptyRoom(DateTime fromDate, DateTime toDate)
@@ -40,7 +91,20 @@ namespace HMS.Service.Persistance.Repositories
                 }
             }
 
-            return rooms;
+            //return rooms;
+
+            // Filter the checkin time for customer 
+            var verbalRoomRent = context.VerbalRoomRents.Where(c => c.CheckIn < fromDate && c.CheckOut > toDate).ToList();
+
+            foreach (var item in verbalRoomRent)
+            {
+                foreach (var roomRent in item.Rooms)
+                {
+                    rooms.Remove(roomRent); 
+                }
+            }
+
+            return rooms; 
         }
 
         public string GetReservationCustomerName(Guid Id)

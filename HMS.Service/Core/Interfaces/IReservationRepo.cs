@@ -1,4 +1,5 @@
 ﻿using HMS.Model.Core.DomainModels;
+using HMS.Model.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,9 @@ namespace HMS.Service.Core.Interfaces
         string GetReservationCustomerName(Guid Id);
         List<string> GetReservationCustomerRooms(Guid Id);
 
+        /// <summary>
+        /// Get All Reservation
+        /// </summary>
+        List<ReservationViewModel> GetAllReservation();
     }
 }
