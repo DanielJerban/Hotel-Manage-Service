@@ -10,9 +10,24 @@ namespace HMS.Service.Core.Interfaces
 {
     public interface IReservationRepo : IRepository<Reservation>
     {
-        List<Room> GetEmptyRoom(DateTime fromDate, DateTime toDate);
+        /// <summary>
+        /// Filters all free rooms between a time 
+        /// </summary>
+        List<Room> GetEmptyRooms(DateTime fromDate, DateTime toDate);
+
+        /// <summary>
+        /// Returns all free rooms without any filtering
+        /// </summary>
         List<Room> GetAllFreeRooms();
+
+        /// <summary>
+        /// Returns the name of the parent customer of a reservation
+        /// </summary>
         string GetReservationCustomerName(Guid Id);
+
+        /// <summary>
+        /// Returns the number of a reservation's rooms that has been reserved by a customer 
+        /// </summary>
         List<string> GetReservationCustomerRooms(Guid Id);
 
         /// <summary>

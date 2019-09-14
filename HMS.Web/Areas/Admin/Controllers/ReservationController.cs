@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -30,10 +31,26 @@ namespace HMS.Web.Areas.Admin.Controllers
         public ActionResult FilterFreeRooms(string fromDate, string toDate)
         {
             var freeRoomInTheTime = uow.Reservation
-                .GetEmptyRoom(Convert.ToDateTime(fromDate), Convert.ToDateTime(toDate))
+                .GetEmptyRooms(Convert.ToDateTime(fromDate), Convert.ToDateTime(toDate))
                 .ToList();
 
-            return Json(freeRoomInTheTime, JsonRequestBehavior.AllowGet);
+            List<Room_FacilityViewModel> roomsVM = new List<Room_FacilityViewModel>();
+
+            foreach (var room in freeRoomInTheTime)
+            {
+                roomsVM.Add(new Room_FacilityViewModel()
+                {
+                    RoomNumber = room.RoomNumber,
+                    Rate = room.Rate,
+                    Description = room.Description,
+                    SingleBedCount = room.Facility.SingleBedCount,
+                    DoubleBedCount = room.Facility.DoubleBedCount,
+                    Entertainment = room.Facility.Entertainment,
+                    Id = room.Id
+                });
+            }
+
+            return Json(roomsVM, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetAllFreeRooms()
@@ -62,17 +79,24 @@ namespace HMS.Web.Areas.Admin.Controllers
         {
             var result = false;
 
+            if (model.roomsId == null)
+            {
+                return Json("model", JsonRequestBehavior.AllowGet);
+            }
+
             if (ModelState.IsValid)
             {
                 List<Room> selectedRooms = new List<Room>();
+
                 foreach (var Id in model.roomsId)
-                { 
+                {
                     var guid = Guid.Parse(Id);
                     selectedRooms.Add(uow.Room.Find(guid));
                 }
 
                 var customer = uow.Customer.Find(model.customerId);
 
+                // Convert string Enum to real Enum
                 ReserveStatus status = ToReserveStatus(model.Status);
 
                 Reservation reservation = new Reservation()
@@ -193,7 +217,7 @@ namespace HMS.Web.Areas.Admin.Controllers
                     break;
             }
 
-            return status; 
+            return status;
         }
 
         #endregion

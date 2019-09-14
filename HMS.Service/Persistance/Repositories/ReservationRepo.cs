@@ -18,6 +18,9 @@ namespace HMS.Service.Persistance.Repositories
         {
         }
 
+        /// <summary>
+        /// Returns all free rooms without any filtering
+        /// </summary>
         public List<Room> GetAllFreeRooms()
         {
             var rooms = context.Rooms.Include(c => c.Facility).Where(c => c.Reservation == null && c.VerbalRoomRent == null).ToList();
@@ -74,39 +77,63 @@ namespace HMS.Service.Persistance.Repositories
             return VMs;
         }
 
-        public List<Room> GetEmptyRoom(DateTime fromDate, DateTime toDate)
+        /// <summary>
+        /// Filters all free rooms in a time 
+        /// </summary>
+        public List<Room> GetEmptyRooms(DateTime fromDate, DateTime toDate)
         {
-            // First Filter => not reserved rooms 
-            var rooms = context.Rooms.ToList();
+            // All Rooms 
+            var rooms = context.Rooms.Include(c => c.Facility).ToList();
 
             // All reservations in a specific time 
-            var reservations = context.Reservations.Where(c => c.FromDate < fromDate && c.ToDate > toDate).ToList();
+            var reservations = context.Reservations
+                .Include(c => c.Rooms)
+                .Where(c =>
+                c.FromDate >= fromDate && c.ToDate >= toDate || /* 1 */
+                c.FromDate <= fromDate && c.ToDate <= toDate || /* 2 */
+                c.FromDate <= fromDate && c.ToDate >= toDate || /* 3 */
+                c.FromDate >= fromDate && c.ToDate <= toDate    /* 4 */
+                )
+                .ToList();
 
-            // Remove the full rooms from all rooms 
+
+            // Filter by reserved Rooms 
             foreach (var reserv in reservations)
             {
                 foreach (var reserveredRoom in reserv.Rooms)
                 {
+                    // Remove the full rooms from all rooms 
                     rooms.Remove(reserveredRoom);
                 }
             }
 
-            //return rooms;
+            var rents = context.VerbalRoomRents
+                .Include(c => c.Rooms)
+                .Where(c =>
+                c.CheckIn >= fromDate && c.CheckOut >= toDate || /* 1 */
+                c.CheckIn <= fromDate && c.CheckOut <= toDate || /* 2 */
+                c.CheckIn <= fromDate && c.CheckOut >= toDate || /* 3 */
+                c.CheckIn >= fromDate && c.CheckOut <= toDate    /* 4 */
+                )
+                .ToList();
 
-            // Filter the checkin time for customer 
-            var verbalRoomRent = context.VerbalRoomRents.Where(c => c.CheckIn < fromDate && c.CheckOut > toDate).ToList();
-
-            foreach (var item in verbalRoomRent)
+            // Filter by Verbal Room Rent 
+            foreach (var rent in rents)
             {
-                foreach (var roomRent in item.Rooms)
+                foreach (var rentedRoom in rent.Rooms)
                 {
-                    rooms.Remove(roomRent); 
+                    // Remove the full rooms from all rooms 
+                    rooms.Remove(rentedRoom);
                 }
             }
 
-            return rooms; 
+            // Return All Left Rooms
+            return rooms;
         }
 
+        /// <summary>
+        /// Returns the name of the parent customer of a reservation
+        /// </summary>
         public string GetReservationCustomerName(Guid Id)
         {
             var customerReserve = context.Reservations.Include(c => c.Customer).FirstOrDefault(c => c.Id == Id);
@@ -114,6 +141,9 @@ namespace HMS.Service.Persistance.Repositories
             return customerReserve.Customer.FirstName + ' ' + customerReserve.Customer.LastName;
         }
 
+        /// <summary>
+        /// Returns the number of a reservation's rooms that has been reserved by a customer 
+        /// </summary>
         public List<string> GetReservationCustomerRooms(Guid Id)
         {
             var customerReservedRooms = context.Reservations.Include(c => c.Customer).FirstOrDefault(c => c.Id == Id).Rooms;

@@ -55,7 +55,6 @@
 
     $(function () {
 
-
         var selectedRowsId = [];
 
         function onChange(e) {
@@ -130,68 +129,71 @@
 
         // Send an ajax to controller to create a reservation
         $("#btnCreateReserve").click(function(){
+            debugger;
+            var reserv = { 
+                    Status: $("#reserveStatus option:selected").val(),
+                    fromDate: $("#inputDate4").val(),
+                    toDate: $("#inputDate5").val(),
+                    customerId: $("#customerId").val(),
+                    roomsId: selectedRowsId
+            }
+
             $.ajax({
                 url: "/Admin/Reservation/CreateNewReservation",
                 type: "POST",
                 data: {
-                        model:{
-                            Status: $("#reserveStatus option:selected").val(),
-                            fromDate: $("#inputDate4").val(),
-                            toDate: $("#inputDate5").val(),
-                            roomsId: selectedRowsId,
-                            customerId: $("#customerId").val()
-                        }
+                    model:{
+                        Status: $("#reserveStatus option:selected").val(),
+                        fromDate: $("#inputDate4").val(),
+                        toDate: $("#inputDate5").val(),
+                        customerId: $("#customerId").val()
+                        roomsId: selectedRowsId
+                    },
                 },
                 success: function (result) {
+                        if (result === "model")
+                        {
+                            alert("Rooms Id is null");
+                        }
                         if (result === true) {
                             iziToast.success({
                                 position: "bottomRight",
                                 pauseOnHover: false,
-                                timeout: 2000,
+                                timeout: 3000,
                                 displayMode: 1,
                                 rtl: true,
                                 title: "بسیار عالی",
                                 message: "رزروی دیگر اضافه شد."
                             });
 
-                            // refresh the customer grid
+                            // refresh grids
                             $("#FreeRoomsGrid").data("kendoGrid").dataSource.read();
+                            $("#ReservationGrid").data("kendoGrid").dataSource.read();
 
-                            // Clear the create customer modal
-
-
-                            // close the create customer modal
+                            // close and dispose modal
                             $("#createCustomerModal").iziModal("close");
-
+                            $("#createCustomerModal").iziModal("setContent" , "");
+                
                         } else {
                             iziToast.warning({
                                 position: "bottomRight",
-                                timeout: 2000,
+                                timeout: 3000,
                                 rtl: true,
                                 title: "متاسفانه",
                                 message: "مشکلی رخ داده است!"
                             });
                         }
                     }
-            })
+            });
         });
         // \Send an ajax to controller to create a reservation
-
     });
-
-
 </script>
 
-<script>
 
-    $("#btn-filterRooms").click(function () {
-        alert("TERST");
-    });
 
-</script>
-
+<!-- Persian Date picker initialization -->
 <script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
-
 <script type="text/javascript">
 
     $('#date4').MdPersianDateTimePicker({
