@@ -3,7 +3,7 @@ namespace HMS.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -184,12 +184,27 @@ namespace HMS.DataAccess.Migrations
                         Id = c.Guid(nullable: false),
                         CheckIn = c.DateTime(nullable: false),
                         CheckOut = c.DateTime(nullable: false),
-                        AbsoluteCheckOut = c.DateTime(nullable: false),
+                        AbsoluteCheckOut = c.DateTime(),
                         CustomerId = c.Guid(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Customer", t => t.CustomerId)
+                .Index(t => t.CustomerId);
+            
+            CreateTable(
+                "dbo.Passengers",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        VerbalRoomRentID = c.Guid(),
+                        CustomerId = c.Guid(),
+                        CreatedDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.VerbalRoomRents", t => t.VerbalRoomRentID)
+                .ForeignKey("dbo.Customer", t => t.CustomerId)
+                .Index(t => t.VerbalRoomRentID)
                 .Index(t => t.CustomerId);
             
             CreateTable(
@@ -241,8 +256,10 @@ namespace HMS.DataAccess.Migrations
             DropForeignKey("dbo.Customer", "Hotel_Id", "dbo.HotelDatas");
             DropForeignKey("dbo.Customer", "Id", "dbo.People");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Passengers", "CustomerId", "dbo.Customer");
             DropForeignKey("dbo.Rooms", "HotelId", "dbo.HotelDatas");
             DropForeignKey("dbo.Rooms", "VerbalRoomRent_Id", "dbo.VerbalRoomRents");
+            DropForeignKey("dbo.Passengers", "VerbalRoomRentID", "dbo.VerbalRoomRents");
             DropForeignKey("dbo.VerbalRoomRents", "CustomerId", "dbo.Customer");
             DropForeignKey("dbo.Rooms", "Reservation_Id", "dbo.Reservations");
             DropForeignKey("dbo.Reservations", "Customer_Id", "dbo.Customer");
@@ -258,6 +275,8 @@ namespace HMS.DataAccess.Migrations
             DropIndex("dbo.Customer", new[] { "Hotel_Id" });
             DropIndex("dbo.Customer", new[] { "Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Passengers", new[] { "CustomerId" });
+            DropIndex("dbo.Passengers", new[] { "VerbalRoomRentID" });
             DropIndex("dbo.VerbalRoomRents", new[] { "CustomerId" });
             DropIndex("dbo.Reservations", new[] { "Customer_Id" });
             DropIndex("dbo.RoomImages", new[] { "Room_Id" });
@@ -275,6 +294,7 @@ namespace HMS.DataAccess.Migrations
             DropTable("dbo.Employee");
             DropTable("dbo.Customer");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Passengers");
             DropTable("dbo.VerbalRoomRents");
             DropTable("dbo.Reservations");
             DropTable("dbo.RoomImages");

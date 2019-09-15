@@ -54,15 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfig\CustomerConfig.cs" />
     <Compile Include="EntityConfig\HotelConfig.cs" />
     <Compile Include="EntityConfig\PersonConfig.cs" />
     <Compile Include="EntityConfig\ReservationConfig.cs" />
     <Compile Include="EntityConfig\RoomConfig.cs" />
     <Compile Include="EntityConfig\VerbalRoomRentConfig.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\201909080655117_initial.cs" />
-    <Compile Include="Migrations\201909080655117_initial.Designer.cs">
-      <DependentUpon>201909080655117_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201909150644439_init.cs" />
+    <Compile Include="Migrations\201909150644439_init.Designer.cs">
+      <DependentUpon>201909150644439_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,8 +79,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909080655117_initial.resx">
-      <DependentUpon>201909080655117_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909150644439_init.resx">
+      <DependentUpon>201909150644439_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

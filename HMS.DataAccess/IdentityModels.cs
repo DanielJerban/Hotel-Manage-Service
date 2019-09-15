@@ -25,7 +25,6 @@ namespace HMS.Web.Models
                 .WithMany(w => w.User).HasForeignKey(d => d.PersonId).WillCascadeOnDelete(true);
 
             // TPT(Table Per Type) inheritance from person 
-            modelBuilder.Entity<Customer>().ToTable("Customer");
             modelBuilder.Entity<Employee>().ToTable("Employee");
 
             // Add Reference to config classes 
@@ -33,6 +32,7 @@ namespace HMS.Web.Models
             modelBuilder.Configurations.Add(new HotelConfig());
             modelBuilder.Configurations.Add(new ReservationConfig());
             modelBuilder.Configurations.Add(new VerbalRoomRentConfig());
+            modelBuilder.Configurations.Add(new CustomerConfig());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -47,5 +47,6 @@ namespace HMS.Web.Models
         public DbSet<RoomImage> RoomImages { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<VerbalRoomRent> VerbalRoomRents { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
     }
 }

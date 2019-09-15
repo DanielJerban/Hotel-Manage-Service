@@ -20,6 +20,10 @@ namespace HMS.DataAccess.EntityConfig
             this.HasMany(c => c.Rooms)
                 .WithOptional(c => c.VerbalRoomRent)
                 .WillCascadeOnDelete(false);
+
+            this.HasMany(c => c.Passengers)
+                .WithOptional(c => c.verbalRoomRent)
+                .HasForeignKey(c => c.VerbalRoomRentID);
         }
     }
 }

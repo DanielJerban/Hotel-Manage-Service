@@ -71,7 +71,8 @@ namespace HMS.Web.Areas.Admin.Controllers
         //    {
         //        CheckIn = Convert.ToDateTime(model.CheckinDate),
         //        CheckOut = Convert.ToDateTime(model.CheckoutDate),
-        //        CustomerId = 
+        //        AbsoluteCheckOut = null,
+
         //    }
         //}
 

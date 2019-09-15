@@ -61,6 +61,7 @@
     <Compile Include="Core\DomainModels\Customer.cs" />
     <Compile Include="Core\DomainModels\Employee.cs" />
     <Compile Include="Core\DomainModels\HotelData.cs" />
+    <Compile Include="Core\DomainModels\Passenger.cs" />
     <Compile Include="Core\DomainModels\Person.cs" />
     <Compile Include="Core\DomainModels\Reservation.cs" />
     <Compile Include="Core\DomainModels\Room.cs" />

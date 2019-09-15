@@ -19,7 +19,6 @@ namespace HMS.Model.Core.DomainModels
         [DisplayName("مسافر همراه")]
         public Guid? ParentId { get; set; }
 
-        //public virtual Customer CustomerParent { get; set; }
-        //public List<Customer> CustomerChild { get; set; }
+        public ICollection<Passenger> Passengers { get; set; }
     }
 }

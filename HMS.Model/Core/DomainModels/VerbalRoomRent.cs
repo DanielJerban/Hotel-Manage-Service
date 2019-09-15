@@ -13,13 +13,13 @@ namespace HMS.Model.Core.DomainModels
     {
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
-        public DateTime AbsoluteCheckOut { get; set; }
-
-        [NotMapped]
-        public List<Customer> ChildCustomer { get; set; }
+        public DateTime? AbsoluteCheckOut { get; set; }
 
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
+
         public List<Room> Rooms { get; set; }
+
+        public ICollection<Passenger> Passengers { get; set; }
     }
 }
