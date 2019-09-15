@@ -128,7 +128,7 @@ namespace HMS.Service.Persistance.Repositories
             }
 
             // Return All Left Rooms
-            return rooms;
+            return rooms.ToList();
         }
 
         /// <summary>

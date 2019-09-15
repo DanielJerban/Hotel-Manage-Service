@@ -76,6 +76,7 @@
     <Compile Include="Core\DTOs\Reservation\CreateReserveDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
+    <Compile Include="Core\ViewModels\CreateVerbalRentViewModel.cs" />
     <Compile Include="Core\ViewModels\DetailReserveViewModel.cs" />
     <Compile Include="Core\ViewModels\ReservationViewModel.cs" />
     <Compile Include="Core\ViewModels\Room_FacilityViewModel.cs" />

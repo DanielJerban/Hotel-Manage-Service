@@ -260,6 +260,7 @@
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReservationController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VerbalRentController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -374,6 +375,8 @@
     <Content Include="Content\Home\img\work\7.jpg" />
     <Content Include="Content\Home\img\work\8.jpg" />
     <Content Include="Content\Home\img\world-map.png" />
+    <Content Include="Content\img\DDA1om1 - Imgur.gif" />
+    <Content Include="Content\img\uRZfmji - Imgur.gif" />
     <Content Include="Content\iziModal.min.css" />
     <Content Include="Content\iziToast.min.css" />
     <Content Include="Content\jquery.Bootstrap-PersianDateTimePicker.css" />
@@ -713,6 +716,7 @@
     <Content Include="Content\kendo\2019.2.619\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\2019.2.619\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\MdBootstrapPersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.css" />
+    <Content Include="Content\Tab.css" />
     <Content Include="Dashboard\assets\bootstrap.min.js" />
     <Content Include="Dashboard\assets\images\auth-bg.jpg" />
     <Content Include="Dashboard\assets\images\favicon.png" />
@@ -1319,6 +1323,8 @@
     <Content Include="Content\fonts\materialdesignicons-webfont.woff2" />
     <Content Include="Areas\Admin\Views\Reservation\_CustomerPanel.cshtml" />
     <Content Include="Areas\Admin\Views\Reservation\_CreateReservation.cshtml" />
+    <Content Include="Areas\Admin\Views\VerbalRent\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VerbalRent\_RentModal.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />
@@ -3237,6 +3243,7 @@
     <Content Include="Scripts\MdBootstrapPersianDateTimePicker\jalaali.js" />
     <Content Include="Scripts\MdBootstrapPersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Tab.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

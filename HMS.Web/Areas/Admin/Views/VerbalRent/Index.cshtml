@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Tab.css" rel="stylesheet" />
+
+<input type="button" value="نمایش اجاره ها" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:300px;" class="btn" />
+<div id="customerGrid" class="k-rtl"></div>
+
+
+<!-- Izimodals -->
+<div id="RentModal" hidden></div>
+<!-- /Izimodals -->
+
+<input type="hidden" id="CustomerId-Hidden"/>
+
+
+@section Scripts
+{
+
+    <!--============ Customer Grid ============-->
+    <script>
+
+        // this is same as (document).ready(function(){})
+        $(function () {
+            $("#" + "customerGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Customer/Customer_Read"
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "FirstName",
+                        title: "نام",
+                        width: 180
+                    },
+                    {
+                        field: "LastName",
+                        title: "نام خانوادگی",
+                        width: 180
+                    },
+                    {
+                        field: "NationalNo",
+                        title: "کد ملی",
+                        width: 180
+                    },
+                    {
+                        field: "PassportNo",
+                        title: "شماره پاسپورت",
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+    </script>
+    <!--============ /Customer Grid ============-->
+    <!--============ Customer grid double click ============-->
+    <script>
+        $("#customerGrid").on("dblclick",
+            "tr.k-state-selected",
+            function (e) {
+
+                $("#RentModal").iziModal({
+                    title: "اجاره",
+                    subtitle: "اجاره چندین تاق برای مسافر",
+                    headerColor: '#494f5c',
+                    rtl: true,
+                    fullscreen: false,
+                    width: 800,
+                    zindex: 2000
+                });
+
+
+                var grid = $("#customerGrid").data("kendoGrid");
+                var row = grid.dataItem(grid.select());
+                var rowId = row.Id;
+
+                $("#CustomerId-Hidden").val(rowId);
+                
+                $.ajax({
+                    dataType: "HTML",
+                    url: "/Admin/VerbalRent/_RentModal",
+                    success: function (result) {
+                        $("#RentModal").iziModal('setContent',result);
+                        
+                        $("#RentModal").iziModal('open');
+                        $("#RentModal").removeAttr("hidden", "hidden");
+                    }
+                });
+            });
+    </script>
+    <!--============ /Kendo grid double click ============-->
+   
+    <script src="~/Scripts/Tab.js"></script>
+}
