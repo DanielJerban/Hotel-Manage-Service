@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
+using MD.PersianDateTime;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -22,7 +24,8 @@ namespace HMS.Web.Areas.Admin.Controllers
             // Filter Room
             if (checkIn != null && checkOut != null)
             {
-                var filterRoom = uow.Reservation.GetEmptyRooms(Convert.ToDateTime(checkIn), Convert.ToDateTime(checkOut));
+                var filterRoom = uow.Reservation
+                    .GetEmptyRooms(PersianDateTime.Parse(checkIn).ToDateTime(), PersianDateTime.Parse(checkOut).ToDateTime());
 
                 List<Room_FacilityViewModel> roomsVM = new List<Room_FacilityViewModel>();
 
@@ -65,16 +68,53 @@ namespace HMS.Web.Areas.Admin.Controllers
             }
         }
 
-        //public JsonResult CreateVerbalRent(CreateVerbalRentViewModel model)
-        //{
-        //    VerbalRoomRent newRent = new VerbalRoomRent()
-        //    {
-        //        CheckIn = Convert.ToDateTime(model.CheckinDate),
-        //        CheckOut = Convert.ToDateTime(model.CheckoutDate),
-        //        AbsoluteCheckOut = null,
+        public JsonResult CreateVerbalRent(CreateVerbalRentViewModel model)
+        {
+            var parentId = Guid.Parse(model.ParentId);
 
-        //    }
-        //}
+            var passengers = new List<Passenger>();
+
+            // Create the passengers 
+            foreach (var Id in model.FelowCustomer)
+            {
+                var customerId = Guid.Parse(Id);
+                Passenger newPassenger = new Passenger()
+                {
+                    CustomerId = customerId
+                };
+
+                uow.Passenger.Add(newPassenger);
+            }
+
+            var room = new List<Room>();
+
+            // Get Room Entity
+            foreach (var roomId in model.Rooms)
+            {
+                var guid = Guid.Parse(roomId);
+
+                room.Add(uow.Room.Get(c => c.Id == guid).SingleOrDefault());
+            }
+
+            var checkinDate = PersianDateTime.Parse(model.CheckinDate).ToDateTime();
+            var checkoutDate = PersianDateTime.Parse(model.CheckoutDate);
+
+            VerbalRoomRent newRent = new VerbalRoomRent()
+            {
+                CheckIn = checkinDate,
+                CheckOut = checkoutDate,
+                AbsoluteCheckOut = null,
+                Passengers = passengers,
+                CustomerId = parentId,
+                Rooms = room
+            };
+
+            uow.VerbalRent.Add(newRent);
+
+            uow.Complete();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult GetFelowCustomers(string customerId)
         {
@@ -86,6 +126,11 @@ namespace HMS.Web.Areas.Admin.Controllers
         #region Partial
 
         public PartialViewResult _RentModal()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult _ShowRentModal()
         {
             return PartialView();
         }

@@ -45,12 +45,9 @@
 </div>
 
 <br />
-<input type="button" value="ثبت" class="btn btn-block" style="background-color:#3f51b5; color:rgba(255,255,255,.5); border-color: #e6e6e6;" />
+<input id="btnCreateVerbalRent" type="button" value="ثبت" class="btn btn-block" style="background-color:#3f51b5; color:rgb(255,255,255); border-color: #e6e6e6;" />
 
 
-<!-- Hidden Inputs -->
-@*<input type="hidden" value="@Model" id="CustomerId-Hidden" />*@
-<!-- /Hidden Inputs -->
 <!--============ Room grid ============-->
 <script>
 
@@ -58,13 +55,12 @@
             freeRoomGrid("#FreeRoomsGrid");
         });
 
+        var selectedRoomRowsId = [];
         function freeRoomGrid(ID){
-            var selectedRoomRowsId = [];
 
             function onChangeRoom(e) {
                 var rows = e.sender.select();
                 selectedRoomRowsId = [];
-
                 rows.each(function (e) {
                     var grid = $(ID).data("kendoGrid");
                     var dataItem = grid.dataItem(this);
@@ -210,7 +206,7 @@
             if(FromDate === "" || ToDate === "")
             {
                 iziToast.warning({
-                    position: "center",
+                    position: "bottomRight",
                     timeout: 3000,
                     rtl: true,
                     message: "لطفا فیلدهای تاریخ ورود و خروج را مشخص کنید!"
@@ -219,13 +215,94 @@
             else{
                 $("#FreeRoomsGrid").remove();
                 $("#FreeRoomGridParentDiv").html("<div id='newFreeRoomsGrid' class='k-rtl'></div>");
-                
+
                 freeRoomGrid("#newFreeRoomsGrid");
             }
         }
 
 </script>
 <!--============ /Filter Room Grid ============-->
+
+
+<!--============ Create Verbal Rent ============-->
+<script>
+
+    $("#btnCreateVerbalRent").click(function(){
+    
+        // alert("Felow customer Ids \n" + selectedFelowRowsId);
+        // alert("Room Ids \n" + selectedRoomRowsId);
+
+        var FromDate = $("#inputDate4").val();
+        var ToDate = $("#inputDate5").val();
+
+        if((FromDate === "" || ToDate === "") && selectedRoomRowsId.length === 0)
+        {
+            iziToast.warning({
+                    position: "bottomRight",
+                    timeout: 3000,
+                    rtl: true,
+                    message: "شما هیچ اطلاعاتی وارد نکردید \nلطفا دوباره سعی کنید!"
+                });
+        }else if(FromDate === "" || ToDate === "")
+        {
+            iziToast.warning({
+                position: "bottomRight",
+                timeout: 3000,
+                rtl: true,
+                message: "لطفا فیلدهای تاریخ ورود و خروج را مشخص کنید!"
+            });
+        }else if(selectedRoomRowsId.length === 0)
+        {
+            iziToast.warning({
+                position: "bottomRight",
+                timeout: 3000,
+                rtl: true,
+                message: "حداقل یک اتاق باید انتخاب شود!"
+            });
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "/Admin/VerbalRent/CreateVerbalRent",
+                data: {
+                    model: {
+                        ParentId : $("#CustomerId-Hidden").val(),
+                        CheckinDate : FromDate,
+                        CheckoutDate : ToDate,
+                        Rooms : selectedRoomRowsId,
+                        FelowCustomer : selectedFelowRowsId
+                    }
+                },
+                success: function(result){
+
+                    if(result === true)
+                    {
+                        iziToast.success({
+                            position: "bottomRight",
+                            timeout: 3000,
+                            rtl: true,
+                            title: "بسیار عالی",
+                            message: "عملیات با موفقیت انجام شد."
+                        });
+                        
+                        // Refresh the free room grid
+                        if($("#newFreeRoomsGrid") != null)
+                        {
+                            $("#newFreeRoomsGrid").data("kendoGrid").dataSource.read();
+                        }
+                        else if($("#FreeRoomsGrid") != null)
+                        {
+                            $("#FreeRoomsGrid").data("kendoGrid").dataSource.read();
+                        }
+
+                    }
+                }
+            })
+        }
+    })
+
+
+</script>
+<!--============ /Create Verbal Rent ============-->
 <!-- Persian Date picker initialization -->
 <script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
 <script type="text/javascript">

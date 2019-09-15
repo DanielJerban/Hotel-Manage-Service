@@ -4,12 +4,13 @@
 }
 <link href="~/Content/Tab.css" rel="stylesheet" />
 
-<input type="button" value="نمایش اجاره ها" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:300px;" class="btn" />
+<input id="btnShowRents" type="button" value="نمایش اجاره ها" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:300px;" class="btn" />
 <div id="customerGrid" class="k-rtl"></div>
 
 
 <!-- Izimodals -->
 <div id="RentModal" hidden></div>
+<div id="ShowRentModal" hidden></div>
 <!-- /Izimodals -->
 
 <input type="hidden" id="CustomerId-Hidden"/>
@@ -104,6 +105,37 @@
             });
     </script>
     <!--============ /Kendo grid double click ============-->
+
+    <script>
+
+        $("#btnShowRents").click(function(){
+
+            $("#ShowRentModal").iziModal({
+                    title: "نمایش",
+                    subtitle: "نمایش تمام اجاره ها",
+                    headerColor: '#494f5c',
+                    rtl: true,
+                    fullscreen: false,
+                    width: 800,
+                    zindex: 2000
+                });
+
+            $.ajax({
+                    dataType: "HTML",
+                    url: "/Admin/VerbalRent/_RentModal",
+                    success: function (result) {
+                        $("#RentModal").iziModal('setContent',result);
+                        
+                        $("#RentModal").iziModal('open');
+                        $("#RentModal").removeAttr("hidden", "hidden");
+                    }
+                });
+
+            
+            
+        })
+
+    </script>
    
     <script src="~/Scripts/Tab.js"></script>
 }

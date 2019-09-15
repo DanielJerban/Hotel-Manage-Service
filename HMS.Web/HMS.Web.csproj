@@ -53,6 +53,9 @@
       <HintPath>..\lib\KENDOUIMVC\2019.2.619.545\export\binaries\net40\Kendo.Mvc.Export.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MD.PersianDateTime, Version=3.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MD.PersianDateTime.3.8.3\lib\MD.PersianDateTime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
