@@ -79,6 +79,7 @@
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateVerbalRentViewModel.cs" />
     <Compile Include="Core\ViewModels\DetailReserveViewModel.cs" />
+    <Compile Include="Core\ViewModels\GetVerbalRentViewModel.cs" />
     <Compile Include="Core\ViewModels\ReservationViewModel.cs" />
     <Compile Include="Core\ViewModels\Room_FacilityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,8 +88,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\DTOs\Room\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

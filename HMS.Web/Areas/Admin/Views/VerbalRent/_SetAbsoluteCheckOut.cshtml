@@ -1,0 +1,77 @@
+﻿
+@model List<string>
+
+
+<!-- Persian DateTime picker -->
+<script src="~/DatePicker/popper.min.js"></script>
+<script src="~/DatePicker/bootstrap.min.js"></script>
+<link href="~/DatePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+
+
+<div>
+    <h4>شماره اتاق های اجاره شده</h4>
+    <ul>
+        @foreach (var number in Model)
+        {
+            <li>@number</li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h4>ثبت تاریخ خروج قطعی مسافر</h4>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text cursor-pointer fa fa-calendar" id="absolutecheckoutDate"></span>
+            <input readonly="readonly" type="text" id="absolutecheckoutDateText" class="form-control" placeholder="تاریخ خروج قطعی" aria-label="date4"
+                   aria-describedby="date4">
+        </div>
+    </div>
+</div>
+<div>
+    <input id="btnSetAbsolutecheckout" type="button" value="ثبت" class="btn btn-block" style="background-color:#3f51b5; color:rgb(255,255,255); border-color: #e6e6e6;"/>
+</div>
+
+
+<script>
+
+    $("#btnSetAbsolutecheckout").click(function(){
+    
+        $.ajax({
+            type: "JSON",
+            url: "/Admin/VerbalRent/SetAbsoluteCheckout",
+            data: {
+                AbsoluteCheckoutDate: $("#absolutecheckoutDate").val(),
+                RentId: $("#RentId-Hidden").val()
+            },
+            success: function(){
+                
+                iziToast.success({
+                    position: "bottomRight",
+                    timeout: 3000,
+                    rtl: true,
+                    title: "بسیار عالی",
+                    message: "تاریخ خروج ثبت شد."
+                });
+
+            }
+        })
+
+    })
+
+</script>
+
+<!-- Persian Date picker initialization -->
+<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+<script type="text/javascript">
+
+    $('#absolutecheckoutDate').MdPersianDateTimePicker({
+        targetTextSelector: '#absolutecheckoutDateText',
+        fromDate: false,
+        enableTimePicker: false,
+        groupId: 'rangeSelector1',
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+</script>

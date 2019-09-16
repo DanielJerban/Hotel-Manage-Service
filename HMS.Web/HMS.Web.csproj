@@ -1328,6 +1328,8 @@
     <Content Include="Areas\Admin\Views\Reservation\_CreateReservation.cshtml" />
     <Content Include="Areas\Admin\Views\VerbalRent\Index.cshtml" />
     <Content Include="Areas\Admin\Views\VerbalRent\_RentModal.cshtml" />
+    <Content Include="Areas\Admin\Views\VerbalRent\_ShowRentModal.cshtml" />
+    <Content Include="Areas\Admin\Views\VerbalRent\_SetAbsoluteCheckOut.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />

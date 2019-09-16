@@ -123,6 +123,26 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(uow.Customer.GetlFelowCustomers(paretnId), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetAllRents()
+        {
+            return Json(uow.VerbalRent.GetAllRents().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SetAbsoluteCheckout(string AbsoluteCheckoutDate, string RentId)
+        {
+            var rentGuid = Guid.Parse(RentId);
+            var rent = uow.VerbalRent.Find(rentGuid);
+
+            var absoluteCheckoutDate = PersianDateTime.Parse(AbsoluteCheckoutDate).ToDateTime();
+
+            rent.AbsoluteCheckOut = absoluteCheckoutDate;
+
+            uow.VerbalRent.Update(rent);
+            uow.Complete();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         #region Partial
 
         public PartialViewResult _RentModal()
@@ -133,6 +153,20 @@ namespace HMS.Web.Areas.Admin.Controllers
         public PartialViewResult _ShowRentModal()
         {
             return PartialView();
+        }
+
+        public PartialViewResult _SetAbsoluteCheckOut(Guid? RentId)
+        {
+            List<string> RoomsNumber = new List<string>();
+
+            var RentedRooms = uow.Room.Get(c => c.VerbalRoomRent.Id == RentId).ToList();
+
+            foreach (var item in RentedRooms)
+            {
+                RoomsNumber.Add(item.RoomNumber);
+            }
+
+            return PartialView(RoomsNumber);
         }
 
         #endregion

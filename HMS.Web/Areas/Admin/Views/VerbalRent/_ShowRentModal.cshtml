@@ -1,0 +1,87 @@
+﻿<div id="VerbalRentGrid" class="k-rtl"></div>
+
+<input type="hidden" id="RentId-Hidden"/>
+
+<div id="setAbsoluteCheckoutModal" hidden></div>
+
+<script>
+
+    $(function () {
+            $("#VerbalRentGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/VerbalRent/GetAllRents"
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "CheckIn",
+                        title: "تاریخ ورود",
+                        width: 180
+                    },
+                    {
+                        field: "CheckOut",
+                        title: "تاریخ خروج",
+                        width: 180
+                    },
+                    {
+                        field: "AbsoluteCheckOut",
+                        title: "تاریخ خروج قطعی",
+                        width: 180
+                    },
+                    {
+                        field: "ParentCustomerName",
+                        title: "نام مسافر",
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+</script>
+<script>
+    $("#VerbalRentGrid").on("dblclick",
+            "tr.k-state-selected",
+            function (e) {
+
+                $("#setAbsoluteCheckoutModal").iziModal({
+                    title: "خروج قطعی",
+                    subtitle: "ثبت خروج قطعی مسافر",
+                    headerColor: '#494f5c',
+                    rtl: true,
+                    fullscreen: false,
+                    width: 800,
+                    zindex: 2000
+                });
+
+
+                var grid = $("#VerbalRentGrid").data("kendoGrid");
+                var row = grid.dataItem(grid.select());
+                var rowId = row.Id;
+
+                $("#RentId-Hidden").val(rowId);
+
+                $.ajax({
+                    dataType: "HTML",
+                    url: "/Admin/VerbalRent/_SetAbsoluteCheckOut/" + rowId,
+                    success: function (result) {
+                        $("#setAbsoluteCheckoutModal").iziModal('setContent',result);
+
+                        $("#setAbsoluteCheckoutModal").iziModal('open');
+                        $("#setAbsoluteCheckoutModal").removeAttr("hidden", "hidden");
+                    }
+                });
+            });
+</script>

@@ -1,6 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/Tab.css" rel="stylesheet" />
 
@@ -13,7 +15,7 @@
 <div id="ShowRentModal" hidden></div>
 <!-- /Izimodals -->
 
-<input type="hidden" id="CustomerId-Hidden"/>
+<input type="hidden" id="CustomerId-Hidden" />
 
 
 @section Scripts
@@ -91,13 +93,13 @@
                 var rowId = row.Id;
 
                 $("#CustomerId-Hidden").val(rowId);
-                
+
                 $.ajax({
                     dataType: "HTML",
                     url: "/Admin/VerbalRent/_RentModal",
                     success: function (result) {
                         $("#RentModal").iziModal('setContent',result);
-                        
+
                         $("#RentModal").iziModal('open');
                         $("#RentModal").removeAttr("hidden", "hidden");
                     }
@@ -105,14 +107,14 @@
             });
     </script>
     <!--============ /Kendo grid double click ============-->
-
+    <!--============ btnShowRents izimodal ============-->
     <script>
 
         $("#btnShowRents").click(function(){
 
             $("#ShowRentModal").iziModal({
-                    title: "نمایش",
-                    subtitle: "نمایش تمام اجاره ها",
+                    title: "اجاره ها",
+                    subtitle: "نمایش تمام اجاره های انجام شده",
                     headerColor: '#494f5c',
                     rtl: true,
                     fullscreen: false,
@@ -122,20 +124,21 @@
 
             $.ajax({
                     dataType: "HTML",
-                    url: "/Admin/VerbalRent/_RentModal",
+                    url: "/Admin/VerbalRent/_ShowRentModal",
                     success: function (result) {
-                        $("#RentModal").iziModal('setContent',result);
-                        
-                        $("#RentModal").iziModal('open');
-                        $("#RentModal").removeAttr("hidden", "hidden");
+                        $("#ShowRentModal").iziModal('setContent',result);
+
+                        $("#ShowRentModal").iziModal('open');
+                        $("#ShowRentModal").removeAttr("hidden", "hidden");
                     }
                 });
 
-            
-            
+
+
         })
 
     </script>
-   
+    <!--============ btnShowRents izimodal ============-->
+
     <script src="~/Scripts/Tab.js"></script>
 }
