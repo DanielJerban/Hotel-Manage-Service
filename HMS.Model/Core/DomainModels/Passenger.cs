@@ -10,7 +10,6 @@ namespace HMS.Model.Core.DomainModels
     public class Passenger : ObjectModel
     {
         public Guid? VerbalRoomRentID { get; set; }
-        public VerbalRoomRent verbalRoomRent { get; set; }
 
         public Guid? CustomerId { get; set; }
         public Customer Customer { get; set; }

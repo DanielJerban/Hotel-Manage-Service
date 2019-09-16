@@ -30,8 +30,6 @@ namespace HMS.Web.Models
             // Add Reference to config classes 
             modelBuilder.Configurations.Add(new PersonConfig());
             modelBuilder.Configurations.Add(new HotelConfig());
-            modelBuilder.Configurations.Add(new ReservationConfig());
-            modelBuilder.Configurations.Add(new VerbalRoomRentConfig());
             modelBuilder.Configurations.Add(new CustomerConfig());
 
             base.OnModelCreating(modelBuilder);
@@ -45,8 +43,6 @@ namespace HMS.Web.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomImage> RoomImages { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<VerbalRoomRent> VerbalRoomRents { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
     }
 }

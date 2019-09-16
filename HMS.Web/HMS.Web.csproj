@@ -261,9 +261,7 @@
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ReservationController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomController.cs" />
-    <Compile Include="Areas\Admin\Controllers\VerbalRentController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -1293,7 +1291,6 @@
     <Content Include="Areas\Admin\Views\Hotel\_UpdateHotel.cshtml" />
     <Content Include="Areas\Admin\Views\Room\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Room\_CreateRoom.cshtml" />
-    <Content Include="Areas\Admin\Views\Reservation\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomerCheckin\Index.cshtml" />
     <Content Include="Content\Home\css\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Home\css\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -1324,12 +1321,6 @@
     <Content Include="Content\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="Content\fonts\materialdesignicons-webfont.woff" />
     <Content Include="Content\fonts\materialdesignicons-webfont.woff2" />
-    <Content Include="Areas\Admin\Views\Reservation\_CustomerPanel.cshtml" />
-    <Content Include="Areas\Admin\Views\Reservation\_CreateReservation.cshtml" />
-    <Content Include="Areas\Admin\Views\VerbalRent\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\VerbalRent\_RentModal.cshtml" />
-    <Content Include="Areas\Admin\Views\VerbalRent\_ShowRentModal.cshtml" />
-    <Content Include="Areas\Admin\Views\VerbalRent\_SetAbsoluteCheckOut.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />

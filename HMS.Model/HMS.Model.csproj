@@ -63,24 +63,17 @@
     <Compile Include="Core\DomainModels\HotelData.cs" />
     <Compile Include="Core\DomainModels\Passenger.cs" />
     <Compile Include="Core\DomainModels\Person.cs" />
-    <Compile Include="Core\DomainModels\Reservation.cs" />
     <Compile Include="Core\DomainModels\Room.cs" />
     <Compile Include="Core\DomainModels\RoomFacility.cs" />
     <Compile Include="Core\DomainModels\RoomImage.cs" />
-    <Compile Include="Core\DomainModels\VerbalRoomRent.cs" />
     <Compile Include="Core\DTOs\ContactInfo\ContactInfoDto.cs" />
     <Compile Include="Core\DTOs\Customer\CreateCustomerDto.cs" />
     <Compile Include="Core\DTOs\Customer\CustomerFelowDto.cs" />
     <Compile Include="Core\DTOs\Customer\GetCustomerDto.cs" />
     <Compile Include="Core\DTOs\Hotel\CreateHotelDto.cs" />
     <Compile Include="Core\DTOs\Hotel\GetHotelsDto.cs" />
-    <Compile Include="Core\DTOs\Reservation\CreateReserveDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
-    <Compile Include="Core\ViewModels\CreateVerbalRentViewModel.cs" />
-    <Compile Include="Core\ViewModels\DetailReserveViewModel.cs" />
-    <Compile Include="Core\ViewModels\GetVerbalRentViewModel.cs" />
-    <Compile Include="Core\ViewModels\ReservationViewModel.cs" />
     <Compile Include="Core\ViewModels\Room_FacilityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
