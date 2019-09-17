@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using HMS.DataAccess.EntityConfig;
 using HMS.Model.Core;
 using HMS.Model.Core.DomainModels;
@@ -31,6 +32,13 @@ namespace HMS.Web.Models
             modelBuilder.Configurations.Add(new PersonConfig());
             modelBuilder.Configurations.Add(new HotelConfig());
             modelBuilder.Configurations.Add(new CustomerConfig());
+            modelBuilder.Configurations.Add(new Reserve_RoomConfig());
+            modelBuilder.Configurations.Add(new ReserveConfig());
+            modelBuilder.Configurations.Add(new FellowConfig());
+            modelBuilder.Configurations.Add(new CheckingConfig());
+            modelBuilder.Configurations.Add(new RoomConfig());
+
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             base.OnModelCreating(modelBuilder);
         }
@@ -44,5 +52,10 @@ namespace HMS.Web.Models
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomImage> RoomImages { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<Reserve> Reserves { get; set; }
+        public DbSet<Reserve_Room> Reserve_Rooms { get; set; }
+        public DbSet<Fellow> Fellows { get; set; }
+        public DbSet<Checking> Checkings { get; set; }
+        public DbSet<RoomPrice> RoomPrices { get; set; }
     }
 }

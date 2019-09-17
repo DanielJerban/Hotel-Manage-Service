@@ -54,14 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfig\CheckingConfig.cs" />
     <Compile Include="EntityConfig\CustomerConfig.cs" />
+    <Compile Include="EntityConfig\FellowConfig.cs" />
     <Compile Include="EntityConfig\HotelConfig.cs" />
     <Compile Include="EntityConfig\PersonConfig.cs" />
+    <Compile Include="EntityConfig\ReserveConfig.cs" />
+    <Compile Include="EntityConfig\Reserve_RoomConfig.cs" />
     <Compile Include="EntityConfig\RoomConfig.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\201909150644439_init.cs" />
-    <Compile Include="Migrations\201909150644439_init.Designer.cs">
-      <DependentUpon>201909150644439_init.cs</DependentUpon>
+    <Compile Include="Migrations\201909161248433_Initialize.cs" />
+    <Compile Include="Migrations\201909161248433_Initialize.Designer.cs">
+      <DependentUpon>201909161248433_Initialize.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,8 +81,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909150644439_init.resx">
-      <DependentUpon>201909150644439_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909161248433_Initialize.resx">
+      <DependentUpon>201909161248433_Initialize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

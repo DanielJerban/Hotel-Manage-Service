@@ -16,9 +16,7 @@ namespace HMS.Service.Persistance
         public IPersonRepo Person { get; }
         public IContactInfoRepo ContactInfo { get; }
         public IUserRepo User { get; }
-        public IReservationRepo Reservation { get; }
         public IPassengerRepo Passenger { get; }
-        public IVerbalRentRepo VerbalRent { get; }
 
         private ApplicationDbContext db;
 
@@ -34,9 +32,7 @@ namespace HMS.Service.Persistance
             Person = new PersonRepo(db);
             ContactInfo = new ContactInfoRepo(db);
             User = new UserRepo(db);
-            Reservation = new ReservationRepo(db);
             Passenger = new PassengerRepo(db);
-            VerbalRent = new VerbalRentRepo(db);
         }
 
         public int Complete()

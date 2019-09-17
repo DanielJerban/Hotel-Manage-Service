@@ -14,10 +14,8 @@ namespace HMS.Service.Core
         IPersonRepo Person { get; }
         IContactInfoRepo ContactInfo { get; }
         IUserRepo User { get; }
-        IReservationRepo Reservation { get; }
         IPassengerRepo Passenger { get; }
-        IVerbalRentRepo VerbalRent { get; }
-
+        
         /// <summary>
         /// Save changes on database 
         /// </summary>

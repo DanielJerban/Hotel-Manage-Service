@@ -9,9 +9,10 @@ namespace HMS.Model.Core.DomainModels
 {
     public class Passenger : ObjectModel
     {
-        public Guid? VerbalRoomRentID { get; set; }
-
         public Guid? CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
+
+        public Guid CheckingId { get; set; }
+        public virtual Checking Checking { get; set; }
     }
 }

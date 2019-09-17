@@ -21,13 +21,16 @@ namespace HMS.Model.Core.DomainModels
         public string Description { get; set; }
 
 
-        public Guid FacilityId { get; set; }
+        public Guid? FacilityId { get; set; }
         public RoomFacility Facility { get; set; }
 
         public Guid HotelId { get; set; }
         public HotelData Hotel { get; set; }
 
-
         public List<RoomImage> Images { get; set; }
+
+        public ICollection<Reserve_Room> Room_Reserve_Rooms { get; set; }
+        public ICollection<Checking> Checkings { get; set; }
+        public ICollection<RoomPrice> RoomPrices { get; set; }
     }
 }

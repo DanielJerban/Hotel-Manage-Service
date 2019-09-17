@@ -9,12 +9,13 @@ namespace HMS.DataAccess.EntityConfig
         {
             // Room * ------------ 0-1 Facility
             this.HasOptional(c => c.Facility)
-                .WithMany(c => c.Rooms);
+                .WithMany(c => c.Rooms).HasForeignKey(c => c.FacilityId);
 
             // Room 0-1 ------------ * Image
             this.HasMany(c => c.Images)
                 .WithOptional(c => c.Room);
 
+            this.HasMany(c => c.RoomPrices).WithRequired(c => c.Room).HasForeignKey(c => c.RoomId).WillCascadeOnDelete(true);
         }
     }
 }

@@ -57,15 +57,20 @@
   <ItemGroup>
     <Compile Include="Core\DomainModels\ApplicationUser.cs" />
     <Compile Include="Core\DomainModels\Base\ObjectModel.cs" />
+    <Compile Include="Core\DomainModels\Checking.cs" />
     <Compile Include="Core\DomainModels\ContactInfo.cs" />
     <Compile Include="Core\DomainModels\Customer.cs" />
     <Compile Include="Core\DomainModels\Employee.cs" />
+    <Compile Include="Core\DomainModels\Fellow.cs" />
     <Compile Include="Core\DomainModels\HotelData.cs" />
     <Compile Include="Core\DomainModels\Passenger.cs" />
     <Compile Include="Core\DomainModels\Person.cs" />
+    <Compile Include="Core\DomainModels\Reserve_Room.cs" />
+    <Compile Include="Core\DomainModels\Reserve.cs" />
     <Compile Include="Core\DomainModels\Room.cs" />
     <Compile Include="Core\DomainModels\RoomFacility.cs" />
     <Compile Include="Core\DomainModels\RoomImage.cs" />
+    <Compile Include="Core\DomainModels\RoomPrice.cs" />
     <Compile Include="Core\DTOs\ContactInfo\ContactInfoDto.cs" />
     <Compile Include="Core\DTOs\Customer\CreateCustomerDto.cs" />
     <Compile Include="Core\DTOs\Customer\CustomerFelowDto.cs" />
