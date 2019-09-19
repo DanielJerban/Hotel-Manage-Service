@@ -1,0 +1,105 @@
+﻿
+<style>
+    #btnUpdateReserve {
+        background-color: #d3d3d3;
+        color: black;
+        width: 170px;
+        text-align: center;
+        margin-left: auto;
+    }
+</style>
+
+<div id="ReservesGrid" class="k-rtl"></div>
+
+<input type="hidden" id="HiddenReserveId"/>
+<div id="DetailReserveModel" hidden></div>
+
+<script>
+
+    $(function() {
+        $("#ReservesGrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: "/Admin/Reserve/GetReserves"
+                },
+                pageSize: 20
+            },
+            filterable: true,
+            height: 550,
+            width: 'auto',
+            groupable: true,
+            sortable: true,
+            selectable: true,
+            pageable: {
+                refresh: true,
+                pageSize: 20,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    field: "Number",
+                    title: "شماره رزرو",
+                    width: 180
+                },
+                {
+                    field: "CustomerName",
+                    title: "نام مسافر",
+                    width: 180
+                },
+                {
+                    field: "FromDate",
+                    title: "از تاریخ",
+                    width: 180
+                },
+                {
+                    field: "ToDate",
+                    title: "تا تاریخ",
+                    width: 180
+                },
+                {
+                    field: "Status",
+                    title: "وضعیت رزرو",
+                    width: 180
+                },
+                {
+                    field: "ReserveId",
+                    title: " ",
+                    filterable: false,
+                    sortable: false,
+                    groupable: false,
+                    template: '<button id="btnUpdateReserve" class="btn" onClick="UpdateReserve(' + "'#=ReserveId#'" + ')">ویرایش</button>',
+                    width: 180
+                }
+            ]
+        });
+    });
+
+
+    function UpdateReserve(ID) {
+
+        $("#HiddenReserveId").val(ID);
+
+        $("#DetailReserveModel").iziModal({
+            title: "رزرواسیون",
+            subtitle: "تمامی اتاق های رزرو شده ی مختص این رزرو",
+            headerColor: '#494f5c',
+            rtl: true,
+            fullscreen: false,
+            width: 800,
+            zindex: 2100
+        });
+
+        $.ajax({
+            dataType: "HTML",
+            url: "/Admin/Reserve/_ReserveDetail",
+            success: function(result) {
+                $("#DetailReserveModel").iziModal('setContent', result);
+
+                $("#DetailReserveModel").iziModal('open');
+                $("#DetailReserveModel").removeAttr("hidden", "hidden");
+            }
+        });
+
+    }
+
+</script>

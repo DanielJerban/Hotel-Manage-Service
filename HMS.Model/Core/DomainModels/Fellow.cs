@@ -9,8 +9,8 @@ namespace HMS.Model.Core.DomainModels
 {
     public class Fellow : ObjectModel
     {
-        public Guid ParentId { get; set; }
-        public virtual Customer Parent { get; set; }
+        public Guid CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public Guid ReserveId { get; set; }
         public virtual Reserve Reserve { get; set; }

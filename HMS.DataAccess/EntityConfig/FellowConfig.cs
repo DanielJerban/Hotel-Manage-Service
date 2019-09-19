@@ -12,7 +12,7 @@ namespace HMS.DataAccess.EntityConfig
     {
         public FellowConfig()
         {
-            this.HasRequired(c => c.Parent).WithMany(c => c.Fellows).HasForeignKey(c => c.ParentId);
+            this.HasRequired(c => c.Customer).WithMany(c => c.Fellows).HasForeignKey(c => c.CustomerId);
             this.HasRequired(c => c.Reserve).WithMany(c => c.Fellows).HasForeignKey(c => c.ReserveId);
         }
     }

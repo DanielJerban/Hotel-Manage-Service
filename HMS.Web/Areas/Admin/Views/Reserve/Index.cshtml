@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!--==================== References =====================-->
+<link href="~/Content/Tab.css" rel="stylesheet" />
+<!--==================== /References =====================-->
+
+<input id="btnShowReserves" type="button" value="نمایش رزرو های انجام شده" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:300px;" class="btn" />
+<div id="customerGrid" class="k-rtl"></div>
+
+
+
+<!--==================== Modals =====================-->
+<div id="ReserveModal" hidden></div>
+<div id="GetReservesModal" hidden></div>
+<!--==================== Modals =====================-->
+<!--==================== Hidden Inputs =====================-->
+<input type="hidden" id="CustomerId" />
+<!--==================== /Hidden Inputs =====================-->
+
+
+
+
+
+@section Scripts
+{
+    <!--==================== Customer Grid =====================-->
+    <script>
+
+        $(function() {
+            $("#customerGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Customer/Customer_Read"
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 550,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "FirstName",
+                        title: "نام",
+                        width: 180
+                    },
+                    {
+                        field: "LastName",
+                        title: "نام خانوادگی",
+                        width: 180
+                    },
+                    {
+                        field: "NationalNo",
+                        title: "کد ملی",
+                        width: 180
+                    },
+                    {
+                        field: "PassportNo",
+                        title: "شماره پاسپورت",
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+
+        @* Customer Grid Double click event *@
+
+        $("#customerGrid").on("dblclick",
+            "tr.k-state-selected",
+            function(e) {
+
+                $("#ReserveModal").iziModal({
+                    title: "رزرواسیون",
+                    subtitle: "رزرو اتاق",
+                    headerColor: '#494f5c',
+                    rtl: true,
+                    fullscreen: false,
+                    width: 800,
+                    zindex: 2000
+                });
+
+
+                var grid = $("#customerGrid").data("kendoGrid");
+                var row = grid.dataItem(grid.select());
+                var rowId = row.Id;
+
+                $("#CustomerId").val(rowId);
+
+                $.ajax({
+                    dataType: "HTML",
+                    url: "/Admin/Reserve/_ReserveModal",
+                    success: function(result) {
+                        $("#ReserveModal").iziModal('setContent', result);
+
+                        $("#ReserveModal").iziModal('open');
+                        $("#ReserveModal").removeAttr("hidden", "hidden");
+                    }
+                });
+            });
+
+    </script>
+    <!--==================== /Customer Grid =========n============-->
+    <!--==================== Fellow Customer =====================-->
+    <script>
+        $(function() {
+            $(function() {
+                $("#fellowCustomerGrid").kendoGrid({
+                    dataSource: {
+                        transport: {
+                            data: {
+                                FirstName: "TEST",
+                                LastName: "TESTING",
+                                NationalNo: "123321",
+                                PassportNo: "654654654"
+                            }
+                        },
+                        pageSize: 20
+                    },
+                    filterable: true,
+                    height: 550,
+                    width: 'auto',
+                    groupable: true,
+                    sortable: true,
+                    selectable: true,
+                    pageable: {
+                        refresh: true,
+                        pageSize: 20,
+                        buttonCount: 5
+                    },
+                    columns: [
+                        {
+                            field: "FirstName",
+                            title: "نام",
+                            width: 180
+                        },
+                        {
+                            field: "LastName",
+                            title: "نام خانوادگی",
+                            width: 180
+                        },
+                        {
+                            field: "NationalNo",
+                            title: "کد ملی",
+                            width: 180
+                        },
+                        {
+                            field: "PassportNo",
+                            title: "شماره پاسپورت",
+                            width: 180
+                        }
+                    ]
+                });
+            });
+        })
+    </script>
+    <!--==================== /Fellow Customer =====================-->
+    <!--==================== Show Reserves =====================-->
+    <script>
+
+        $("#btnShowReserves").click(function() {
+
+            $("#GetReservesModal").iziModal({
+                title: "رزرواسیون",
+                subtitle: "نمایش تمامی رزرو های انجام شده",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 800,
+                zindex: 2000
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Reserve/_GetReserves",
+                success: function(result) {
+                    $("#GetReservesModal").iziModal('setContent', result);
+
+                    $("#GetReservesModal").iziModal('open');
+                    $("#GetReservesModal").removeAttr("hidden", "hidden");
+                }
+            });
+        });
+
+    </script>
+    <!--==================== /Show Reserves =====================-->
+    <!--==================== References =====================-->
+    <script src="~/Scripts/Tab.js"></script>
+    <!--==================== /References =====================-->
+}

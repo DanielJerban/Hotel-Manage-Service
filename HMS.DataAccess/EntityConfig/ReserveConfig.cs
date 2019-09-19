@@ -1,6 +1,7 @@
 ﻿using HMS.Model.Core.DomainModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace HMS.DataAccess.EntityConfig
         public ReserveConfig()
         {
             this.HasRequired(c => c.Customer).WithMany(c => c.Reserves).HasForeignKey(c => c.CustomerId);
+            this.Property(c => c.Number).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

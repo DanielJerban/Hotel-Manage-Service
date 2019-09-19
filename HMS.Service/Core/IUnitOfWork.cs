@@ -15,6 +15,9 @@ namespace HMS.Service.Core
         IContactInfoRepo ContactInfo { get; }
         IUserRepo User { get; }
         IPassengerRepo Passenger { get; }
+        IReserveRepo Reserve { get; }
+        IFellowRepo Fellow { get; }
+        IReserve_RoomRepo Reserve_Room { get; }
         
         /// <summary>
         /// Save changes on database 

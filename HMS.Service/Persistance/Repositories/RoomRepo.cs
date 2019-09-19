@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HMS.Model.Core.DomainModels;
 using HMS.Model.Core.ViewModels;
 using HMS.Service.Core.Interfaces;
 using HMS.Web.Models;
 using System.Data.Entity;
+using System.Globalization;
+using System.Web.Mvc;
+using MD.PersianDateTime;
 
 namespace HMS.Service.Persistance.Repositories
 {
@@ -35,5 +39,79 @@ namespace HMS.Service.Persistance.Repositories
 
             return roomsVM;
         }
+
+
+        public List<Room> AllFreeRoomsInDateRange(DateTime fromDate, DateTime toDate)
+        {
+            List<Room> rooms = context.Rooms.Include(c => c.Facility).ToList();
+
+            var reserves = context.Reserves
+                .Where(c =>
+                    c.FromDate >= fromDate && c.ToDate >= toDate ||
+                    c.FromDate <= fromDate && c.ToDate >= toDate ||
+                    c.FromDate <= fromDate && c.ToDate <= toDate ||
+                    c.FromDate >= fromDate && c.ToDate <= toDate
+                ).ToList();
+
+            var checkings = context.Checkings
+                .Where(c =>
+                    c.FromDate >= fromDate && c.ToDate >= toDate ||
+                    c.FromDate <= fromDate && c.ToDate >= toDate ||
+                    c.FromDate <= fromDate && c.ToDate <= toDate ||
+                    c.FromDate >= fromDate && c.ToDate <= toDate
+                ).ToList();
+
+            // Remove taken rooms from checking 
+            foreach (var item in checkings)
+            {
+                rooms.Remove(item.Room);
+            }
+
+            // Remove taken rooms from reserves 
+            foreach (var item in reserves)
+            {
+                // Get Reserve_Room Junction by Id 
+                var reserveRooms = context.Reserve_Rooms.Where(c => c.ReserveId == item.Id).ToList();
+                foreach (var reserveRoom in reserveRooms)
+                {
+                    rooms.Remove(reserveRoom.Room);
+                }
+            }
+
+            return rooms; 
+        }
+
+        public List<Room> GetAllFreeRooms()
+        {
+            List<Room> rooms = context.Rooms.Include(c => c.Facility).ToList();
+            List<Room> freeRooms = new List<Room>();
+
+            var reserveRoom = context.Reserve_Rooms.ToList();
+            foreach (var item in reserveRoom)
+            {
+                foreach (var room in rooms)
+                {
+                    if (item.RoomId == room.Id)
+                    {
+                        freeRooms.Add(room);
+                    }
+                }
+            }
+
+            var checkings= context.Checkings.ToList();
+            foreach (var item in checkings)
+            {
+                foreach (var room in rooms)
+                {
+                    if (item.RoomId == room.Id)
+                    {
+                        freeRooms.Add(room);
+                    }
+                }
+            }
+
+            return freeRooms;
+        }
+
     }
 }

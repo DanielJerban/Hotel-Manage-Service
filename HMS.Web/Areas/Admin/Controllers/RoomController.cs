@@ -146,6 +146,4 @@ namespace HMS.Web.Areas.Admin.Controllers
     {
         public static List<HttpPostedFileBase> PostedFiles = new List<HttpPostedFileBase>();
     }
-
-
 }

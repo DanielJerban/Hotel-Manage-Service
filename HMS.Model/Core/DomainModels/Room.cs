@@ -29,8 +29,8 @@ namespace HMS.Model.Core.DomainModels
 
         public List<RoomImage> Images { get; set; }
 
-        public ICollection<Reserve_Room> Room_Reserve_Rooms { get; set; }
-        public ICollection<Checking> Checkings { get; set; }
+        public List<Reserve_Room> Room_Reserve_Rooms { get; set; }
+        public List<Checking> Checkings { get; set; }
         public ICollection<RoomPrice> RoomPrices { get; set; }
     }
 }

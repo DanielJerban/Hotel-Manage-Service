@@ -1,0 +1,171 @@
+﻿
+<style>
+    #btnRemoveReservedRoom {
+        background-color: #ff0043;
+        border-color: #daeffd;
+        width: 170px;
+        margin-left: auto;
+    }
+</style>
+
+<div style="padding: 20px 20px">
+    <div>
+        <select id="Detail-ReserveStatus" class="form-control">
+            <option value="0">پرداخت شده</option>
+            <option value="1">قطعی</option>
+            <option value="2">موقت</option>
+            <option value="3">کنسل</option>
+        </select>
+    </div>
+    <div style="padding-top: 20px;">
+        <div id="ReservedRoomPerReserve" class="k-rtl"></div>
+    </div>
+</div>
+
+<div style="padding-top: 40px;">
+    <input id="btnUpdateReserveStatus" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6;" />
+</div>
+
+
+
+
+<script>
+
+    $("#ReservedRoomPerReserve").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Reserve/GetReservedRoom?Id=" + $("#HiddenReserveId").val()
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 400,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "RoomNumber",
+                        title: "شماره اتاق",
+                        width: 180
+                    },
+                    {
+                        field: "SingleBedCount",
+                        title: "تعداد تخت خواب یک نفره",
+                        width: 180
+                    },
+                    {
+                        field: "DoubleBedCount",
+                        title: "تعداد تخت خواب دو نفره",
+                        width: 180
+                    },
+                    {
+                        field: "Rate",
+                        title: "امتیاز",
+                        width: 180
+                    },
+                    {
+                        field: "Entertainment",
+                        title: "سرگرمی",
+                        width: 180
+                    },
+                    {
+                        field: "Description",
+                        title: "توضیحات",
+                        width: 180
+                    },
+                    {
+                        field: "Id",
+                        title: " ",
+                        filterable: false,
+                        sortable: false,
+                        groupable: false,
+                        template: '<button id="btnRemoveReservedRoom" class="btn btn-primary" onClick="remove_reservedRoom(' + "'#=Id#'" + ')">حذف</button>',
+                        width: 180
+                    }
+                ]
+            });
+
+    $("#btnUpdateReserveStatus").click(function() {
+
+      
+
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Reserve/UpdateReserveStatus",
+            data: {
+                    reserveId : $("#HiddenReserveId").val(),
+                    status : $("#Detail-ReserveStatus :selected").val()
+            },
+            success: function() {
+                iziToast.success({
+                    position: "bottomRight",
+                    timeout: 3000,
+                    rtl: true,
+                    title: "بسیار عالی",
+                    message: "عملیات با موفقیت انجام شد."
+                });
+
+                $("#ReservesGrid").data("kendoGrid").dataSource.read();
+                $("#DetailReserveModel").iziModal('close');
+            }
+        });
+
+    });
+
+    function remove_reservedRoom(RoomId) {
+
+        iziToast.question({
+                timeout: 20000,
+                color: 'red',
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 2500,
+                title: 'حذف',
+                message: 'آیا از حذف این اتاق از رزرو مطمن هستید؟',
+                rtl: true,
+                position: 'center',
+                buttons: [
+                    ['<button><b>بلی</b></button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Reserve/RemoveReserveRoom",
+                            data: {
+                                reserveId: $("#HiddenReserveId").val(),
+                                roomId: RoomId
+                            },
+                            success: function() {
+                                iziToast.success({
+                                    position: "bottomRight",
+                                    timeout: 3000,
+                                    rtl: true,
+                                    title: "بسیار عالی",
+                                    message: "عملیات با موفقیت انجام شد."
+                                });
+
+                                $("#ReservedRoomPerReserve").data("kendoGrid").dataSource.read();
+                            }
+                        });
+
+                    }, true],
+                    ['<button>خیر</button>', function (instance, toast) {
+
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }],
+                ]
+            });
+    }
+
+</script>

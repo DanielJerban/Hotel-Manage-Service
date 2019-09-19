@@ -7,6 +7,8 @@ namespace HMS.Model.Core.DTOs.Customer
     {
         public Guid Id { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         [DisplayName("نام")]
         public string FirstName { get; set; }
 

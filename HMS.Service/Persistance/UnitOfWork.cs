@@ -17,6 +17,9 @@ namespace HMS.Service.Persistance
         public IContactInfoRepo ContactInfo { get; }
         public IUserRepo User { get; }
         public IPassengerRepo Passenger { get; }
+        public IReserveRepo Reserve { get; }
+        public IFellowRepo Fellow { get; }
+        public IReserve_RoomRepo Reserve_Room { get; }
 
         private ApplicationDbContext db;
 
@@ -33,6 +36,9 @@ namespace HMS.Service.Persistance
             ContactInfo = new ContactInfoRepo(db);
             User = new UserRepo(db);
             Passenger = new PassengerRepo(db);
+            Reserve = new ReserveRepo(db);
+            Fellow = new FellowRepo(db);
+            Reserve_Room = new Reserve_RoomRepo(db);
         }
 
         public int Complete()

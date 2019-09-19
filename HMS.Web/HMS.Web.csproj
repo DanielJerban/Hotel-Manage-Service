@@ -260,6 +260,7 @@
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReserveController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
@@ -320,6 +321,7 @@
     <Content Include="Content\Dashboard\images\users\team-5.jpg" />
     <Content Include="Content\Dashboard\jqvmap.min.css" />
     <Content Include="Content\Dashboard\materialdesignicons.min.css" />
+    <Content Include="Content\fontawesome.min.css" />
     <Content Include="Content\Home\css\animate\animate.css" />
     <Content Include="Content\Home\css\bootstrap\bootstrap.min.css" />
     <Content Include="Content\Home\css\font-awesome\css\font-awesome.min.css" />
@@ -1320,6 +1322,11 @@
     <Content Include="Content\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="Content\fonts\materialdesignicons-webfont.woff" />
     <Content Include="Content\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Areas\Admin\Views\Reserve\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Reserve\_ReserveModal.cshtml" />
+    <Content Include="Areas\Admin\Views\Reserve\_CreateFellowCustomer.cshtml" />
+    <Content Include="Areas\Admin\Views\Reserve\_GetReserves.cshtml" />
+    <Content Include="Areas\Admin\Views\Reserve\_ReserveDetail.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />
@@ -1334,6 +1341,7 @@
     <Content Include="Scripts\Dashboard\jquery.vmap.min.js" />
     <Content Include="Scripts\Dashboard\metisMenu.min.js" />
     <Content Include="Scripts\Dashboard\responsive.bootstrap4.min.js" />
+    <Content Include="Scripts\fontawesome.min.js" />
     <Content Include="Scripts\Home\js\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Home\js\counter\jquery.counterup.min.js" />
     <Content Include="Scripts\Home\js\counter\jquery.waypoints.min.js" />

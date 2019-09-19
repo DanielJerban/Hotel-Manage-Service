@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace HMS.Model.Core.DomainModels
 {
+    public enum Status
+    {
+        Payed,
+        Absolute,
+        Temporary,
+        Canceled 
+    }
+
     public class Reserve : ObjectModel
     {
-        [Index("U!_ReservationNumber" , IsUnique = true)]
-        public long Number { get; set; }
+        public int Number { get; set; }
+        public Status Status { get; set; }
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
