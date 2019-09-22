@@ -1,0 +1,98 @@
+﻿<div style="margin: 20px 20px;">
+    <div id="ReservedRoomPerReserve" class="k-rtl"></div>
+</div>
+
+<div hidden id="CheckingForReserveModal"></div>
+
+<input type="hidden" id="hiddenReservedRoomId"/>
+
+<script>
+
+    $("#ReservedRoomPerReserve").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Reserve/GetReservedRoom?Id=" + $("#HiddenReserveId").val()
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 400,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "RoomNumber",
+                        title: "شماره اتاق",
+                        width: 180
+                    },
+                    {
+                        field: "SingleBedCount",
+                        title: "تعداد تخت خواب یک نفره",
+                        width: 180
+                    },
+                    {
+                        field: "DoubleBedCount",
+                        title: "تعداد تخت خواب دو نفره",
+                        width: 180
+                    },
+                    {
+                        field: "Rate",
+                        title: "امتیاز",
+                        width: 180
+                    },
+                    {
+                        field: "Entertainment",
+                        title: "سرگرمی",
+                        width: 180
+                    },
+                    {
+                        field: "Description",
+                        title: "توضیحات",
+                        width: 180
+                    }
+                ]
+            });
+
+
+    $("#ReservedRoomPerReserve").on("dblclick",
+        "tr.k-state-selected",
+        function(e) {
+
+            $("#CheckingForReserveModal").iziModal({
+                title: "ورود و خروج",
+                subtitle: "ثبت ورود و خروج برای یک اتاق رزرو شده از قبل",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 800,
+                zindex: 2300
+            });
+
+
+            var grid = $("#ReservedRoomPerReserve").data("kendoGrid");
+            var row = grid.dataItem(grid.select());
+            var rowId = row.Id;
+
+            $("#hiddenReservedRoomId").val(rowId);
+
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Checking/_CheckingForReserve",
+                success: function(result) {
+                    $("#CheckingForReserveModal").iziModal('setContent', result);
+            
+                    $("#CheckingForReserveModal").iziModal('open');
+                    $("#CheckingForReserveModal").removeAttr("hidden", "hidden");
+                }
+            });
+        });
+
+</script>

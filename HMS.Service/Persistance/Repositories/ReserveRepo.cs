@@ -6,6 +6,7 @@ using HMS.Web.Models;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
+using System.Runtime.Remoting;
 using HMS.Model.Core.DTOs.Customer;
 
 namespace HMS.Service.Persistance.Repositories
@@ -33,7 +34,39 @@ namespace HMS.Service.Persistance.Repositories
                 reservedRooms.Add(room);
             }
 
-            return reservedRooms; 
+            return reservedRooms;
+        }
+
+        public IQueryable<Reserve> Include()
+        {
+            return context.Reserves.Include(c => c.Fellows).Include(c => c.Customer);
+        }
+
+        public Customer GetHost(Guid reserveId)
+        {
+            var reserve = context.Reserves.Include(c => c.Customer).SingleOrDefault(c => c.Id == reserveId);
+            Customer customer = reserve.Customer;
+
+            return customer;
+        }
+
+        public List<Customer> FelowCustomersByReserve(Guid reserveId)
+        {
+            var reserve = context.Reserves.Include(c => c.Fellows).SingleOrDefault(c => c.Id == reserveId);
+
+            List<Customer> fellowCustomers = new List<Customer>();
+
+            foreach (var item in reserve.Fellows)
+            {
+                if (reserve.CustomerId == item.CustomerId)
+                {
+                    continue;
+                }
+
+                fellowCustomers.Add(item.Customer);
+            }
+
+            return fellowCustomers;
         }
     }
 }

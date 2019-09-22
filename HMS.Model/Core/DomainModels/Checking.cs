@@ -10,8 +10,7 @@ namespace HMS.Model.Core.DomainModels
 {
     public class Checking : ObjectModel
     {
-        [Index("U!_ReservationNumber", IsUnique = true)]
-        public long Number { get; set; }
+        public int Number { get; set; }
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -21,6 +20,9 @@ namespace HMS.Model.Core.DomainModels
 
         public Guid RoomId { get; set; }
         public virtual Room Room { get; set; }
+
+        public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         public virtual ICollection<Passenger> Passengers { get; set; }
     }

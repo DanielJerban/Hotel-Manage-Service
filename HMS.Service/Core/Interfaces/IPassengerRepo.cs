@@ -9,5 +9,6 @@ namespace HMS.Service.Core.Interfaces
 {
     public interface IPassengerRepo : IRepository<Passenger>
     {
+        List<string> CheckingPassengers(Guid CheckingId);
     }
 }

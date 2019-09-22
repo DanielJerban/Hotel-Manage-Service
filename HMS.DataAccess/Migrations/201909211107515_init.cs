@@ -3,7 +3,7 @@ namespace HMS.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initialize : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -12,34 +12,21 @@ namespace HMS.DataAccess.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        Number = c.Long(nullable: false),
+                        Number = c.Int(nullable: false, identity: true),
                         FromDate = c.DateTime(nullable: false),
                         ToDate = c.DateTime(nullable: false),
                         ReserveId = c.Guid(),
                         RoomId = c.Guid(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Reserve", t => t.ReserveId)
-                .ForeignKey("dbo.Room", t => t.RoomId, cascadeDelete: true)
-                .Index(t => t.Number, unique: true, name: "U!_ReservationNumber")
-                .Index(t => t.ReserveId)
-                .Index(t => t.RoomId);
-            
-            CreateTable(
-                "dbo.Passenger",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        CustomerId = c.Guid(),
-                        CheckingId = c.Guid(nullable: false),
+                        CustomerId = c.Guid(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Customer", t => t.CustomerId)
-                .ForeignKey("dbo.Checking", t => t.CheckingId, cascadeDelete: true)
-                .Index(t => t.CustomerId)
-                .Index(t => t.CheckingId);
+                .ForeignKey("dbo.Reserve", t => t.ReserveId)
+                .ForeignKey("dbo.Room", t => t.RoomId, cascadeDelete: true)
+                .Index(t => t.ReserveId)
+                .Index(t => t.RoomId)
+                .Index(t => t.CustomerId);
             
             CreateTable(
                 "dbo.Person",
@@ -251,6 +238,21 @@ namespace HMS.DataAccess.Migrations
                 .Index(t => t.RoomId);
             
             CreateTable(
+                "dbo.Passenger",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CustomerId = c.Guid(),
+                        CheckingId = c.Guid(nullable: false),
+                        CreatedDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Customer", t => t.CustomerId)
+                .ForeignKey("dbo.Checking", t => t.CheckingId, cascadeDelete: true)
+                .Index(t => t.CustomerId)
+                .Index(t => t.CheckingId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -302,6 +304,7 @@ namespace HMS.DataAccess.Migrations
             DropForeignKey("dbo.Checking", "RoomId", "dbo.Room");
             DropForeignKey("dbo.Checking", "ReserveId", "dbo.Reserve");
             DropForeignKey("dbo.Passenger", "CheckingId", "dbo.Checking");
+            DropForeignKey("dbo.Checking", "CustomerId", "dbo.Customer");
             DropForeignKey("dbo.Passenger", "CustomerId", "dbo.Customer");
             DropForeignKey("dbo.Fellow", "ReserveId", "dbo.Reserve");
             DropForeignKey("dbo.Reserve_Room", "RoomId", "dbo.Room");
@@ -322,6 +325,8 @@ namespace HMS.DataAccess.Migrations
             DropIndex("dbo.Customer", new[] { "Hotel_Id" });
             DropIndex("dbo.Customer", new[] { "Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Passenger", new[] { "CheckingId" });
+            DropIndex("dbo.Passenger", new[] { "CustomerId" });
             DropIndex("dbo.RoomPrice", new[] { "RoomId" });
             DropIndex("dbo.RoomImage", new[] { "Room_Id" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -338,14 +343,13 @@ namespace HMS.DataAccess.Migrations
             DropIndex("dbo.Reserve", new[] { "CustomerId" });
             DropIndex("dbo.Fellow", new[] { "ReserveId" });
             DropIndex("dbo.Fellow", new[] { "CustomerId" });
-            DropIndex("dbo.Passenger", new[] { "CheckingId" });
-            DropIndex("dbo.Passenger", new[] { "CustomerId" });
+            DropIndex("dbo.Checking", new[] { "CustomerId" });
             DropIndex("dbo.Checking", new[] { "RoomId" });
             DropIndex("dbo.Checking", new[] { "ReserveId" });
-            DropIndex("dbo.Checking", "U!_ReservationNumber");
             DropTable("dbo.Employee");
             DropTable("dbo.Customer");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Passenger");
             DropTable("dbo.RoomPrice");
             DropTable("dbo.RoomImage");
             DropTable("dbo.AspNetUserRoles");
@@ -360,7 +364,6 @@ namespace HMS.DataAccess.Migrations
             DropTable("dbo.Reserve");
             DropTable("dbo.Fellow");
             DropTable("dbo.Person");
-            DropTable("dbo.Passenger");
             DropTable("dbo.Checking");
         }
     }

@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Core\Interfaces\IContactInfoRepo.cs" />
     <Compile Include="Core\Interfaces\ICustomerRepo.cs" />
+    <Compile Include="Core\Interfaces\ICheckingRepo.cs" />
     <Compile Include="Core\Interfaces\IReserve_RoomRepo.cs" />
     <Compile Include="Core\Interfaces\IFellowRepo.cs" />
     <Compile Include="Core\Interfaces\IReserveRepo.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Core\Interfaces\IUserRepo.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistance\Repositories\ContactInfoRepo.cs" />
+    <Compile Include="Persistance\Repositories\CheckingRepo.cs" />
     <Compile Include="Persistance\Repositories\Reserve_RoomRepo.cs" />
     <Compile Include="Persistance\Repositories\FellowRepo.cs" />
     <Compile Include="Persistance\Repositories\ReserveRepo.cs" />

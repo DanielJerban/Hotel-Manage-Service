@@ -8,14 +8,19 @@
 <link href="~/Content/Tab.css" rel="stylesheet" />
 <!--==================== /References =====================-->
 
-<input id="btnShowReserves" type="button" value="نمایش رزرو های انجام شده" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:300px;" class="btn" />
+
+<div class="row" style="padding: 0px 15px;">
+    <input id="btnShowCheckings" type="button" value="تمام ورودی خروجی های ثبت شده" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:50%;" class="btn" />
+    <input id="btnCheckLastReserve" type="button" value="بررسی رزرو قبلی" style="background-color: #3f51b5; color: #fff ; border-color:#e6e6e6; width:50%;" class="btn" />
+</div>
 <div id="customerGrid" class="k-rtl"></div>
 
 
 
 <!--==================== Modals =====================-->
-<div id="ReserveModal" hidden></div>
-<div id="GetReservesModal" hidden></div>
+<div id="CheckingModal" hidden="hidden"></div>
+<div id="ShowCheckingModal" hidden="hidden"></div>
+<div id="GetReservesModal" hidden="hidden"></div>
 <!--==================== Modals =====================-->
 <!--==================== Hidden Inputs =====================-->
 <input type="hidden" id="CustomerId" />
@@ -76,14 +81,13 @@
 
 
         @* Customer Grid Double click event *@
-
         $("#customerGrid").on("dblclick",
             "tr.k-state-selected",
             function(e) {
 
-                $("#ReserveModal").iziModal({
-                    title: "رزرواسیون",
-                    subtitle: "رزرو اتاق",
+                $("#CheckingModal").iziModal({
+                    title: "ورود و خروج",
+                    subtitle: "ثبت ورود و خروج",
                     headerColor: '#494f5c',
                     rtl: true,
                     fullscreen: false,
@@ -100,26 +104,25 @@
 
                 $.ajax({
                     dataType: "HTML",
-                    url: "/Admin/Reserve/_ReserveModal",
+                    url: "/Admin/Checking/_CheckingModal",
                     success: function(result) {
-                        $("#ReserveModal").iziModal('setContent', result);
+                        $("#CheckingModal").iziModal('setContent', result);
 
-                        $("#ReserveModal").iziModal('open');
-                        $("#ReserveModal").removeAttr("hidden", "hidden");
+                        $("#CheckingModal").iziModal('open');
+                        $("#CheckingModal").removeAttr("hidden", "hidden");
                     }
                 });
             });
 
     </script>
-    <!--==================== /Customer Grid =====================-->
-    <!--==================== Show Reserves =====================-->
+    <!--==================== /Customer Grid ======================-->
+    <!--==================== Show Checkings ======================-->
     <script>
 
-        $("#btnShowReserves").click(function() {
-
-            $("#GetReservesModal").iziModal({
-                title: "رزرواسیون",
-                subtitle: "نمایش تمامی رزرو های انجام شده",
+        $("#btnShowCheckings").click(function() {
+            $("#ShowCheckingModal").iziModal({
+                title: "ورود و خروج",
+                subtitle: "نمایش تمامی ورود ها و خروج های ثبت شده.",
                 headerColor: '#494f5c',
                 rtl: true,
                 fullscreen: false,
@@ -129,7 +132,36 @@
 
             $.ajax({
                 dataType: "HTML",
-                url: "/Admin/Reserve/_GetReserves",
+                url: "/Admin/Checking/_ShowCheckings",
+                success: function(result) {
+                    $("#ShowCheckingModal").iziModal('setContent', result);
+
+                    $("#ShowCheckingModal").iziModal('open');
+                    $("#ShowCheckingModal").removeAttr("hidden", "hidden");
+                }
+            });
+        })
+
+    </script>
+    <!--==================== /Show Checkings ======================-->
+    <!--==================== Check last reserve ======================-->
+    <script>
+
+        $("#btnCheckLastReserve").click(function() {
+
+            $("#GetReservesModal").iziModal({
+                title: "رزرو قبلی",
+                subtitle: "نمایش تمامی رزرو ها از قبل ثبت شده",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 800,
+                zindex: 2000
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Checking/_CheckLastReserve",
                 success: function(result) {
                     $("#GetReservesModal").iziModal('setContent', result);
 
@@ -137,10 +169,11 @@
                     $("#GetReservesModal").removeAttr("hidden", "hidden");
                 }
             });
+
         });
 
     </script>
-    <!--==================== /Show Reserves =====================-->
+    <!--==================== /Check last reserve ======================-->
     <!--==================== References =====================-->
     <script src="~/Scripts/Tab.js"></script>
     <!--==================== /References =====================-->

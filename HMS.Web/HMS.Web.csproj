@@ -257,6 +257,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CheckingController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
@@ -1327,6 +1328,14 @@
     <Content Include="Areas\Admin\Views\Reserve\_CreateFellowCustomer.cshtml" />
     <Content Include="Areas\Admin\Views\Reserve\_GetReserves.cshtml" />
     <Content Include="Areas\Admin\Views\Reserve\_ReserveDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_CheckingModal.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_CreateFellowCustomer.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_ShowCheckings.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_CheckingFellowCustomers.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_CheckLastReserve.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_ReservedRooms.cshtml" />
+    <Content Include="Areas\Admin\Views\Checking\_CheckingForReserve.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />

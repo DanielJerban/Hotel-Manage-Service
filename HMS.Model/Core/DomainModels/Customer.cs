@@ -16,6 +16,7 @@ namespace HMS.Model.Core.DomainModels
 
         public virtual ICollection<Fellow> Fellows { get; set; }
         public virtual ICollection<Reserve> Reserves { get; set; }
+        public virtual ICollection<Checking> Checkings { get; set; }
         public virtual ICollection<Passenger> Passengers { get; set; }
     }
 }

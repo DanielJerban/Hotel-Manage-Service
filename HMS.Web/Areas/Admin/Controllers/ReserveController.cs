@@ -90,35 +90,9 @@ namespace HMS.Web.Areas.Admin.Controllers
         {
             Guid hostId = Guid.Parse(HostId);
 
-            var allCustomers = uow.Customer.GetAll().ToList();
-            var customers = new List<Model.Core.DomainModels.Customer>();
+            var customers = uow.Customer.AllCustomersExceptHost(hostId);
 
-            foreach (var customer in allCustomers)
-            {
-                if (customer.Id == hostId)
-                {
-                    continue;
-                }
-                else
-                {
-                    customers.Add(customer);
-                }
-            }
-
-            List<GetCustomerDto> customerDtos = new List<GetCustomerDto>();
-
-            foreach (var customer in customers)
-            {
-                customerDtos.Add(new GetCustomerDto()
-                {
-                    CreatedDate = customer.CreatedDate,
-                    FirstName = customer.FirstName ?? "",
-                    LastName = customer.LastName ?? "",
-                    NationalNo = customer.NationalNo ?? "",
-                    PassportNo = customer.PassportNo ?? "",
-                    Id = customer.Id
-                });
-            }
+            var customerDtos = uow.Customer.MapList(customers);
 
             return Json(customerDtos.OrderByDescending(c => c.CreatedDate), JsonRequestBehavior.AllowGet);
         }

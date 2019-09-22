@@ -5,16 +5,16 @@
 
 <div class="tab">
     <button class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab2')">مسافرین همراه</button>
-    <button id="btnInformation" class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab1')">اطلاعات رزرو</button>
+    <button id="btnInformation" class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab1')">اطلاعات اولیه</button>
 </div>
 
 <div id="Tab1" class="tabcontent">
-    <div class="row">
+    <div class="row" style="padding-bottom: 10px;">
         <div class="col-md-4">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text cursor-pointer fa fa-calendar" id="date4"></span>
-                    <input readonly="readonly" type="text" id="inputDate4" class="form-control" placeholder="از تاریخ" aria-label="date4"
+                    <span class="input-group-text cursor-pointer fa fa-calendar" id="fromDate"></span>
+                    <input readonly="readonly" type="text" id="inputFromDate" class="form-control" placeholder="از تاریخ" aria-label="date4"
                            aria-describedby="date4">
                 </div>
             </div>
@@ -22,8 +22,8 @@
         <div class="col-md-4">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text cursor-pointer fa fa-calendar" id="date5"></span>
-                    <input readonly="readonly" type="text" id="inputDate5" class="form-control" placeholder="تا تاریخ" aria-label="date5"
+                    <span class="input-group-text cursor-pointer fa fa-calendar" id="toDate"></span>
+                    <input readonly="readonly" type="text" id="inputToDate" class="form-control" placeholder="تا تاریخ" aria-label="date5"
                            aria-describedby="date5">
                 </div>
             </div>
@@ -31,13 +31,6 @@
         <div class="col-md-4">
             <input class="form-control btn" type="button" value="فیلتر" id="btnFilterRooms" style="background-color:#3f51b5; color:rgb(255,255,255); border-color: #e6e6e6;" />
         </div>
-    </div>
-    <div style="margin: 20px 0px;">
-        <select class="form-control" id="ReserveStatus">
-            <option value="0">پرداخت شده</option>
-            <option value="1">قطعی</option>
-            <option value="2">موقت</option>
-        </select>
     </div>
     <div id="FreeRoomGridParentDiv">
         <div id="FreeRoomsGrid" class="k-rtl"></div>
@@ -52,7 +45,7 @@
 </div>
 
 <br />
-<input id="btnCreateReserve" type="button" value="ثبت" class="btn btn-block" style="background-color:#3f51b5; color:rgb(255,255,255); border-color: #e6e6e6;" />
+<input id="btnCreateChecking" type="button" value="ثبت" class="btn btn-block" style="background-color:#3f51b5; color:rgb(255,255,255); border-color: #e6e6e6;" />
 
 
 <!--============= IziModal ===============-->
@@ -63,12 +56,9 @@
 
 <!--==================== Fellow Customer =====================-->
 <script>
-    var selectedFellowId = [];
     $(function () {
 
         //<!--==================== /Fellow Customer =====================-->
-
-
         function onChangeFellow(e) {
             var rows = e.sender.select();
             selectedFellowId = [];
@@ -82,7 +72,7 @@
         $("#fellowCustomerGrid").kendoGrid({
             dataSource: {
                 transport: {
-                    read: "/Admin/Reserve/GetCustomersExceptHost?HostId=" + $("#CustomerId").val()
+                    read: "/Admin/Checking/GetCustomers?hostId=" + $("#CustomerId").val()
                 },
                 pageSize: 20
             },
@@ -142,7 +132,7 @@
 
         $.ajax({
             dataType: "HTML",
-            url: "/Admin/Reserve/_CreateFellowCustomer",
+            url: "/Admin/Checking/_CreateFellowCustomer",
             success: function (result) {
                 $("#CreateFellowModal").iziModal('setContent',result);
 
@@ -156,22 +146,13 @@
     //<!--==================== Free Rooms =====================-->
     freeRoomGrid("#FreeRoomsGrid");
 
-    var selectedRoomRowsId = [];
-    function freeRoomGrid(ID){
-        function onChangeRoom(e) {
-            var rows = e.sender.select();
-            selectedRoomRowsId = [];
-            rows.each(function(e) {
-                var grid = $(ID).data("kendoGrid");
-                var dataItem = grid.dataItem(this);
-                selectedRoomRowsId.push(dataItem.Id);
-            });
-        }
+    var selectedRoomId;
+    function freeRoomGrid(ID) {
 
         $(ID).kendoGrid({
             dataSource: {
                 transport: {
-                    read: "/Admin/Reserve/GetRooms?fromDate=" + $("#inputDate4").val() + "&toDate=" + $("#inputDate5").val()
+                    read: "/Admin/Checking/GetRooms?fromDate=" + $("#inputFromDate").val() + "&toDate=" + $("#inputToDate").val()
                 },
                 pageSize: 20
             },
@@ -180,18 +161,13 @@
             width: 'auto',
             groupable: true,
             sortable: true,
-            change: onChangeRoom,
-            selectable: false,
+            selectable: true,
             pageable: {
                 refresh: true,
                 pageSize: 20,
                 buttonCount: 5
             },
             columns: [
-                {
-                    selectable: true,
-                    width: '50px'
-                },
                 {
                     field: "RoomNumber",
                     title: "شماره اتاق",
@@ -227,8 +203,8 @@
 
         $("#btnFilterRooms").click(function() {
 
-            $("#FreeRoomGrid").remove();
-            $("#FreeRoomGridParentDiv").html("<div id='NewFreeRoomGrid' class='k-rtl'></div>");
+            $("#FreeRoomsGrid").remove();
+            $("#FreeRoomGridParentDiv").html("<div id='NewFreeRoomsGrid' class='k-rtl'></div>");
 
             freeRoomGrid("#NewFreeRoomGrid");
         });
@@ -236,14 +212,16 @@
     //<!--==================== /Free Rooms =====================-->
 
     //<!--==================== Create Reserve =====================-->
-    $("#btnCreateReserve").click(function() {
+    $("#btnCreateChecking").click(function() {
 
-        debugger;
+        var FromDate = $("#inputFromDate").val();
+        var ToDate = $("#inputToDate").val();
 
-        var FromDate = $("#inputDate4").val();
-        var ToDate = $("#inputDate5").val();
+        var grid2 = $("#FreeRoomsGrid").data("kendoGrid");
+        var selectedItem = grid2.dataItem(grid2.select());
 
-        if ((FromDate === "" || ToDate === "") && selectedRoomRowsId.length === 0) {
+
+        if ((FromDate === "" || ToDate === "") && selectedItem.Id === null) {
             iziToast.warning({
                 position: "bottomRight",
                 timeout: 3000,
@@ -257,7 +235,7 @@
                 rtl: true,
                 message: "لطفا فیلدهای تاریخ ورود و خروج را مشخص کنید!"
             });
-        } else if (selectedRoomRowsId.length === 0) {
+        } else if (selectedItem.Id === null) {
             iziToast.warning({
                 position: "bottomRight",
                 timeout: 3000,
@@ -265,21 +243,21 @@
                 message: "حداقل یک اتاق باید انتخاب شود!"
             });
         } else {
+
             $.ajax({
                 type: "POST",
-                url: "/Admin/Reserve/CreateReserve",
+                url: "/Admin/Checking/CreateChecking",
                 data: {
                     model: {
                         HostId: $("#CustomerId").val(),
                         FromDate: FromDate,
                         ToDate: ToDate,
-                        RoomsId: selectedRoomRowsId,
-                        FellowsId: selectedFellowId,
-                        Status: $("#ReserveStatus :selected").val()
+                        RoomId: selectedItem.Id,
+                        PassengersId: selectedFellowId
                     }
                 },
                 success: function(result) {
-
+            
                     if (result === true) {
                         iziToast.success({
                             position: "bottomRight",
@@ -289,15 +267,8 @@
                             message: "عملیات با موفقیت انجام شد."
                         });
 
-                        // Refresh the free room grid
-                        if ($("#NewFreeRoomGrid") != null) {
-                            $("#NewFreeRoomGrid").data("kendoGrid").dataSource.read();
-                        } else if ($("#FreeRoomGrid") != null) {
-                            $("#FreeRoomGrid").data("kendoGrid").dataSource.read();
-                        }
-
-                        $("#ReserveModal").iziModal('close');
-
+                        $("#CheckingModal").iziModal('close');
+            
                     }
                 }
             });
@@ -311,8 +282,8 @@
 
 <script type="text/javascript">
 
-    $('#date4').MdPersianDateTimePicker({
-        targetTextSelector: '#inputDate4',
+    $('#fromDate').MdPersianDateTimePicker({
+        targetTextSelector: '#inputFromDate',
         fromDate: true,
         enableTimePicker: false,
         groupId: 'rangeSelector1',
@@ -320,8 +291,8 @@
         textFormat: 'yyyy-MM-dd',
         disableBeforeToday: true,
     });
-    $('#date5').MdPersianDateTimePicker({
-        targetTextSelector: '#inputDate5',
+    $('#toDate').MdPersianDateTimePicker({
+        targetTextSelector: '#inputToDate',
         toDate: true,
         groupId: 'rangeSelector1',
         placement: 'top',

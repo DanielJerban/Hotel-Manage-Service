@@ -20,6 +20,7 @@ namespace HMS.Service.Persistance
         public IReserveRepo Reserve { get; }
         public IFellowRepo Fellow { get; }
         public IReserve_RoomRepo Reserve_Room { get; }
+        public ICheckingRepo Checking { get; }
 
         private ApplicationDbContext db;
 
@@ -39,6 +40,7 @@ namespace HMS.Service.Persistance
             Reserve = new ReserveRepo(db);
             Fellow = new FellowRepo(db);
             Reserve_Room = new Reserve_RoomRepo(db);
+            Checking = new CheckingRepo(db);
         }
 
         public int Complete()

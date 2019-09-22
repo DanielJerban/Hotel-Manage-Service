@@ -47,18 +47,19 @@ namespace HMS.Service.Persistance.Repositories
 
             var reserves = context.Reserves
                 .Where(c =>
-                    c.FromDate >= fromDate && c.ToDate >= toDate ||
-                    c.FromDate <= fromDate && c.ToDate >= toDate ||
-                    c.FromDate <= fromDate && c.ToDate <= toDate ||
-                    c.FromDate >= fromDate && c.ToDate <= toDate
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
+                    c.Status == Status.Canceled
                 ).ToList();
 
             var checkings = context.Checkings
                 .Where(c =>
-                    c.FromDate >= fromDate && c.ToDate >= toDate ||
-                    c.FromDate <= fromDate && c.ToDate >= toDate ||
-                    c.FromDate <= fromDate && c.ToDate <= toDate ||
-                    c.FromDate >= fromDate && c.ToDate <= toDate
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate
                 ).ToList();
 
             // Remove taken rooms from checking 
@@ -84,7 +85,7 @@ namespace HMS.Service.Persistance.Repositories
         public List<Room> GetAllFreeRooms()
         {
             List<Room> rooms = context.Rooms.Include(c => c.Facility).ToList();
-            List<Room> freeRooms = new List<Room>();
+            List<Room> freeRooms = new List<Room>(rooms);
 
             var reserveRoom = context.Reserve_Rooms.ToList();
             foreach (var item in reserveRoom)
@@ -93,7 +94,7 @@ namespace HMS.Service.Persistance.Repositories
                 {
                     if (item.RoomId == room.Id)
                     {
-                        freeRooms.Add(room);
+                        freeRooms.Remove(room);
                     }
                 }
             }
@@ -105,7 +106,7 @@ namespace HMS.Service.Persistance.Repositories
                 {
                     if (item.RoomId == room.Id)
                     {
-                        freeRooms.Add(room);
+                        freeRooms.Remove(room);
                     }
                 }
             }

@@ -19,5 +19,22 @@ namespace HMS.Service.Core.Interfaces
         /// </summary>
         /// <param name="Id">The Id of the Reserve</param>
         List<Room> GetReservedRooms(Guid Id);
+
+        /// <summary>
+        /// Gets all reserve Include Fellows and customer
+        /// </summary>
+        IQueryable<Reserve> Include();
+
+        /// <summary>
+        /// Gets host customer using the reserve Id
+        /// </summary>
+        Customer GetHost(Guid reserveId);
+
+        /// <summary>
+        /// Gets all fellow customers by reserveId except host 
+        /// </summary>
+        /// <param name="reserveId"></param>
+        /// <returns></returns>
+        List<Customer> FelowCustomersByReserve(Guid reserveId);
     }
 }

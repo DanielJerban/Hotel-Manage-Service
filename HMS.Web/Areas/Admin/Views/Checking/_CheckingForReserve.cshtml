@@ -1,0 +1,150 @@
+﻿<!-- Persian DateTime picker -->
+<script src="~/DatePicker/popper.min.js"></script>
+<script src="~/DatePicker/bootstrap.min.js"></script>
+<link href="~/DatePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+
+<div class="row d-flex justify-content-center" style="padding-bottom: 10px;">
+    <div class="col-md-6 p-3">
+        <div class="input-group">
+            <div class="input-group-prepend" style="margin-left: auto; width: 100%">
+                <span class="input-group-text cursor-pointer fa fa-calendar" id="fromDate2"></span>
+                <input style="width: 100%" readonly="readonly" type="text" id="inputFromDate2" class="form-control" placeholder="از تاریخ" aria-label="date4"
+                       aria-describedby="date4">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 p-3">
+        <div class="input-group">
+            <div class="input-group-prepend" style="margin-left: auto; width: 100%">
+                <span class="input-group-text cursor-pointer fa fa-calendar" id="toDate2"></span>
+                <input style="width: 100%" readonly="readonly" type="text" id="inputToDate2" class="form-control" placeholder="تا تاریخ" aria-label="date5"
+                       aria-describedby="date5">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin: 0 5px;">
+    <div id="fellowCustomerGrid2" class="k-rtl"></div>
+</div>
+
+<br />
+<input id="btnCreateCheckingByReserve" type="button" value="ثبت" class="btn btn-block" style="background-color:#3f51b5; color:rgb(255,255,255); border-color: #e6e6e6;" />
+
+
+<!--============= IziModal ===============-->
+<div id="CreateFellowModal" hidden></div>
+<!--============= /IziModal===============-->
+
+
+
+
+<script>
+    
+    //<!--==================== /Fellow Customer =====================-->
+    var selectedFellowId2 = [];
+
+    function onChangeFellow(e) {
+        var rows = e.sender.select();
+        selectedFellowId2 = [];
+        rows.each(function(e) {
+            var grid = $("#fellowCustomerGrid2").data("kendoGrid");
+            var dataItem = grid.dataItem(this);
+            selectedFellowId2.push(dataItem.Id);
+        });
+    }
+
+    $("#fellowCustomerGrid2").kendoGrid({
+        dataSource: {
+            transport: {
+                read: "/Admin/Checking/GetFelowCustomersByReserve?reserveId=" + $("#HiddenReserveId").val()
+            },
+            pageSize: 20
+        },
+        filterable: true,
+        height: 400,
+        width: 'auto',
+        groupable: true,
+        sortable: true,
+        change: onChangeFellow,
+        selectable: false,
+        pageable: {
+            refresh: true,
+            pageSize: 20,
+            buttonCount: 5
+        },
+        columns: [
+            {
+                selectable: true,
+                width: '50px'
+            },
+            {
+                field: "FirstName",
+                title: "نام",
+                width: 180
+            },
+            {
+                field: "LastName",
+                title: "نام خانوادگی",
+                width: 180
+            },
+            {
+                field: "NationalNo",
+                title: "کد ملی",
+                width: 180
+            },
+            {
+                field: "PassportNo",
+                title: "شماره پاسپورت",
+                width: 180
+            }
+        ]
+    });
+
+    $("#btnCreateCheckingByReserve").click(function() {
+
+        $.ajax({
+            url: "/Admin/Checking/CreateCheckingByReserve",
+            type: "JSON",
+            data: {
+                reserveId : $("#HiddenReserveId").val(),
+                model: {
+                    RoomId : $("#hiddenReservedRoomId").val(),
+                    PassengersId : selectedFellowId2,
+                    FromDate : $("#inputFromDate2").val(),
+                    ToDate : $("#inputToDate2").val(),
+                }
+            },
+            success: function() {
+                alert("Horraaaaaaaaaaaaaaaaaaaaay");
+            }
+        });
+
+    });
+</script>
+
+
+<!-- Persian Date picker initialization -->
+<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+<script type="text/javascript">
+
+    $('#fromDate2').MdPersianDateTimePicker({
+        targetTextSelector: '#inputFromDate2',
+        fromDate: true,
+        enableTimePicker: false,
+        groupId: 'rangeSelector2',
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+    $('#toDate2').MdPersianDateTimePicker({
+        targetTextSelector: '#inputToDate2',
+        toDate: true,
+        groupId: 'rangeSelector2',
+        placement: 'top',
+        enableTimePicker: false,
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+</script>

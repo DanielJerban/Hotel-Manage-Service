@@ -1,0 +1,105 @@
+﻿
+<style>
+    #btnUpdateReserve {
+        background-color: #d3d3d3;
+        color: black;
+        width: 170px;
+        text-align: center;
+        margin-left: auto;
+    }
+</style>
+
+<div id="CheckingGrid" class="k-rtl"></div>
+
+<input type="hidden" id="CheckingId" />
+
+<div id="CheckingFellowsModal" hidden></div>
+
+<script>
+
+    $(function() {
+        $("#CheckingGrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: "/Admin/Checking/GetCheckings"
+                },
+                pageSize: 20
+            },
+            filterable: true,
+            height: 550,
+            width: 'auto',
+            groupable: true,
+            sortable: true,
+            selectable: true,
+            pageable: {
+                refresh: true,
+                pageSize: 20,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    field: "Number",
+                    title: "شماره ثبت",
+                    width: 180
+                },
+                {
+                    field: "CustomerName",
+                    title: "نام مسافر",
+                    width: 180
+                },
+                {
+                    field: "FromDate",
+                    title: "از تاریخ",
+                    width: 180
+                },
+                {
+                    field: "ToDate",
+                    title: "تا تاریخ",
+                    width: 180
+                },
+                {
+                    field: "RoomNumber",
+                    title: "شماره اتاق",
+                    width: 180
+                }
+            ]
+        });
+    });
+
+
+    $("#CheckingGrid").on("dblclick",
+        "tr.k-state-selected",
+        function(e) {
+
+            var grid = $("#CheckingGrid").data("kendoGrid");
+            var row = grid.dataItem(grid.select());
+            // Checking Id
+            var rowId = row.Id;
+
+            $("#CheckingFellowsModal").iziModal({
+                title: "ورود و خروج",
+                subtitle: "نمایش تمامی مسافرین همراه.",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 500,
+                zindex: 2100
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Checking/_CheckingFellowCustomers",
+                data: {
+                    CheckingId: rowId
+                },
+                success: function(result) {
+                    $("#CheckingFellowsModal").iziModal('setContent', result);
+
+                    $("#CheckingFellowsModal").iziModal('open');
+                    $("#CheckingFellowsModal").removeAttr("hidden", "hidden");
+                }
+            });
+
+        });
+
+</script>

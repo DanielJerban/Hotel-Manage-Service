@@ -1,0 +1,93 @@
+﻿
+<div id="ReservesGrid" class="k-rtl"></div>
+
+<input type="hidden" id="HiddenReserveId"/>
+
+<div id="ReservedRooms" hidden></div>
+
+<script>
+
+    $(function() {
+        $("#ReservesGrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: "/Admin/Reserve/GetReserves"
+                },
+                pageSize: 20
+            },
+            filterable: true,
+            height: 550,
+            width: 'auto',
+            groupable: true,
+            sortable: true,
+            selectable: true,
+            pageable: {
+                refresh: true,
+                pageSize: 20,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    field: "Number",
+                    title: "شماره رزرو",
+                    width: 180
+                },
+                {
+                    field: "CustomerName",
+                    title: "نام مسافر",
+                    width: 180
+                },
+                {
+                    field: "FromDate",
+                    title: "از تاریخ",
+                    width: 180
+                },
+                {
+                    field: "ToDate",
+                    title: "تا تاریخ",
+                    width: 180
+                },
+                {
+                    field: "Status",
+                    title: "وضعیت رزرو",
+                    width: 180
+                }
+            ]
+        });
+    });
+
+    $("#ReservesGrid").on("dblclick",
+        "tr.k-state-selected",
+        function(e) {
+
+            $("#ReservedRooms").iziModal({
+                title: "رزرو قبلی",
+                subtitle: "نمایش اتاق های رزرو شده از قبل",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 800,
+                zindex: 2200
+            });
+
+
+            var grid = $("#ReservesGrid").data("kendoGrid");
+            var row = grid.dataItem(grid.select());
+            var rowId = row.ReserveId;
+
+            $("#HiddenReserveId").val(rowId);
+
+
+            $.ajax({
+                dataType: "HTML",
+                url: "/Admin/Checking/_ReservedRooms",
+                success: function(result) {
+                    $("#ReservedRooms").iziModal('setContent', result);
+            
+                    $("#ReservedRooms").iziModal('open');
+                    $("#ReservedRooms").removeAttr("hidden", "hidden");
+                }
+            });
+        });
+
+</script>

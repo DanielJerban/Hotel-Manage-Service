@@ -36,5 +36,45 @@ namespace HMS.Service.Persistance.Repositories
 
             return customerDtos; 
         }
+
+        public List<Customer> AllCustomersExceptHost(Guid hostId)
+        {
+            var allCustomers = context.Customers.ToList();
+            var customers = new List<Customer>();
+
+            foreach (var customer in allCustomers)
+            {
+                if (customer.Id == hostId)
+                {
+                    continue;
+                }
+                else
+                {
+                    customers.Add(customer);
+                }
+            }
+
+            return customers;
+        }
+
+        public List<GetCustomerDto> MapList(List<Customer> customers)
+        {
+            List<GetCustomerDto> customerDtos = new List<GetCustomerDto>();
+
+            foreach (var customer in customers)
+            {
+                customerDtos.Add(new GetCustomerDto()
+                {
+                    CreatedDate = customer.CreatedDate,
+                    FirstName = customer.FirstName ?? "",
+                    LastName = customer.LastName ?? "",
+                    NationalNo = customer.NationalNo ?? "",
+                    PassportNo = customer.PassportNo ?? "",
+                    Id = customer.Id
+                });
+            }
+
+            return customerDtos;
+        }
     }
 }
