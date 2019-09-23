@@ -12,6 +12,7 @@ using MD.PersianDateTime;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CheckingController : BaseController
     {
         // GET: Admin/Checking

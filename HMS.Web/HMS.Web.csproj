@@ -284,6 +284,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Dashboard\app.css" />
+    <Content Include="Content\Dashboard\Greeva.txt" />
     <Content Include="Content\Dashboard\images\attached-files\img-1.jpg" />
     <Content Include="Content\Dashboard\images\attached-files\img-2.jpg" />
     <Content Include="Content\Dashboard\images\attached-files\img-3.jpg" />
@@ -721,6 +722,7 @@
     <Content Include="Content\MdBootstrapPersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.css" />
     <Content Include="Content\Tab.css" />
     <Content Include="Dashboard\assets\bootstrap.min.js" />
+    <Content Include="Dashboard\assets\Chart.bundle.min.js" />
     <Content Include="Dashboard\assets\images\auth-bg.jpg" />
     <Content Include="Dashboard\assets\images\favicon.png" />
     <Content Include="Dashboard\assets\images\logo-icon.png" />
@@ -1031,6 +1033,7 @@
     <Content Include="Dashboard\dist\js\custom.js" />
     <Content Include="Dashboard\dist\js\sidebarmenu.js" />
     <Content Include="Dashboard\dist\js\waves.js" />
+    <Content Include="Dashboard\NiceAdmin.txt" />
     <Content Include="DatePicker\bootstrap.min.css" />
     <Content Include="DatePicker\bootstrap.min.js" />
     <Content Include="DatePicker\jquery.md.bootstrap.datetimepicker.js" />
@@ -1336,6 +1339,9 @@
     <Content Include="Areas\Admin\Views\Checking\_CheckLastReserve.cshtml" />
     <Content Include="Areas\Admin\Views\Checking\_ReservedRooms.cshtml" />
     <Content Include="Areas\Admin\Views\Checking\_CheckingForReserve.cshtml" />
+    <Content Include="Areas\Customer\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />
@@ -3515,7 +3521,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Areas\Customer\Views\Shared\" />
     <Folder Include="Views\Contact\" />
   </ItemGroup>
   <ItemGroup>

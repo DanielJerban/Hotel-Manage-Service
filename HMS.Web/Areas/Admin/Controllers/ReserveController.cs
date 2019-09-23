@@ -14,6 +14,7 @@ using System.Globalization;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ReserveController : BaseController
     {
         // GET: Admin/Reserve

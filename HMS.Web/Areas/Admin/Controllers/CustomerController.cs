@@ -15,6 +15,7 @@ using Telerik.Windows.Documents.Flow.Model.Lists;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
+    [System.Web.Mvc.Authorize(Roles = "Admin")]
     public class CustomerController : BaseController
     {
         // GET: Admin/Customer

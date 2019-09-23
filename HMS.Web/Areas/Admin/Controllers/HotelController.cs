@@ -9,6 +9,7 @@ using HMS.Web.Controllers.Base;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HotelController : BaseController
     {
         // GET: Admin/Hotel

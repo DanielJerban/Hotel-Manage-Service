@@ -7562,9 +7562,9 @@ body {
       margin-left: 0; }
 
 #sidebar-menu > ul > li > a.active {
-  color: #343b4a;
-  background-color: #f8f9fa;
-  border-left-color: #343b4a; }
+  color: #fff;
+  background-color: #343b4a;
+  border-left-color: #fff; }
 
 #sidebar-menu .menu-arrow {
   -webkit-transition: -webkit-transform .15s;

@@ -10,6 +10,7 @@ using HMS.Web.Controllers.Base;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RoomController : BaseController
     {
         // GET: Admin/Room

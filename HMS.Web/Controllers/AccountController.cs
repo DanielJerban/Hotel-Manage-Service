@@ -88,13 +88,13 @@ namespace HMS.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (userManager.IsInRole(user.Id , "Admin"))
+                    if (userManager.IsInRole(user.Id, "Admin"))
                     {
-                        return RedirectToAction("Index", "Home", new {area = "Admin"});
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
                     }
-                    else if (userManager.IsInRole(user.Id , "User"))
+                    else if (userManager.IsInRole(user.Id, "User"))
                     {
-                        return RedirectToAction("Index", "Home", new {area = "Customer"});
+                        return RedirectToAction("Index", "Home", new { area = "Customer" });
                     }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -224,7 +224,15 @@ namespace HMS.Web.Controllers
 
                 SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
-                return RedirectToAction("Index", "Home", new {area = "Customer"});
+                if (userManager.IsInRole(user.Id, "Admin"))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+                else if (userManager.IsInRole(user.Id , "User"))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Customer" });
+                }
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             return View(model);
