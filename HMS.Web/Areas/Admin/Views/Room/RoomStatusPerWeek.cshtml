@@ -198,8 +198,15 @@
 
     <script>
 
+        debugger;
+
         var weekIndex = 0;
         var currentDay = 0;
+
+        var firstDayOfWeek;
+        var lastDayOfWeek;
+        var month;
+        var year;
 
         $(function() {
 
@@ -248,11 +255,19 @@
                     $("#thursday-date").text(result.weekHeaderDate[5]);
                     $("#friday-date").text(result.weekHeaderDate[6]);
 
+
+                    // =================== first day of week, last day of week, year and month====================
+                    firstDayOfWeek = $("#saturday-date").text();
+                    lastDayOfWeek = $("#friday-date").text();
+                    year = $("#child-flex-calender-week > input").val();
+                    month = $("#monthName").text();
+
                 }
             });
 
         });
 
+        // Get next week details 
         $("#btnNextWeek").click(function() {
             weekIndex = weekIndex + 1;
 
@@ -313,19 +328,33 @@
                     }
 
                 // ================== Set week header date =====================
-                $("#saturday-date").text(result3[0]);
-                $("#sunday-date").text(result3[1]);
-                $("#monday-date").text(result3[2]);
-                $("#tuesday-date").text(result3[3]);
-                $("#wendsday-date").text(result3[4]);
-                $("#thursday-date").text(result3[5]);
-                $("#friday-date").text(result3[6]);
+                $("#saturday-date").text(result3.weekHeaderDate[0]);
+                $("#sunday-date").text(result3.weekHeaderDate[1]);
+                $("#monday-date").text(result3.weekHeaderDate[2]);
+                $("#tuesday-date").text(result3.weekHeaderDate[3]);
+                $("#wendsday-date").text(result3.weekHeaderDate[4]);
+                $("#thursday-date").text(result3.weekHeaderDate[5]);
+                $("#friday-date").text(result3.weekHeaderDate[6]);
 
-        }
+                // ================== Set month name =====================
+                $("#monthName").text(result3.monthName);
+
+                // ================== Set Year =====================
+                $("#child-flex-calender-week > input").val(result3.year);
+
+
+                // =================== first day of week, last day of week, year and month====================
+                firstDayOfWeek = $("#saturday-date").text();
+                lastDayOfWeek = $("#friday-date").text();
+                year = $("#child-flex-calender-week > input").val();
+                month = $("#monthName").text();
+
+                }
+            });
         });
 
-    });
 
+        // Get Previous week Detail
         $("#btnPreviosWeek").click(function() {
             weekIndex = weekIndex - 1;
 
@@ -386,13 +415,26 @@
                     }
 
                     // ================== Set week header date =====================
-                    $("#saturday-date").text(result3[0]);
-                    $("#sunday-date").text(result3[1]);
-                    $("#monday-date").text(result3[2]);
-                    $("#tuesday-date").text(result3[3]);
-                    $("#wendsday-date").text(result3[4]);
-                    $("#thursday-date").text(result3[5]);
-                    $("#friday-date").text(result3[6]);
+                    $("#saturday-date").text(result3.weekHeaderDate[0]);
+                    $("#sunday-date").text(result3.weekHeaderDate[1]);
+                    $("#monday-date").text(result3.weekHeaderDate[2]);
+                    $("#tuesday-date").text(result3.weekHeaderDate[3]);
+                    $("#wendsday-date").text(result3.weekHeaderDate[4]);
+                    $("#thursday-date").text(result3.weekHeaderDate[5]);
+                    $("#friday-date").text(result3.weekHeaderDate[6]);
+
+                    // ================== Set month name =====================
+                    $("#monthName").text(result3.monthName);
+
+                    // ================== Set Year =====================
+                    $("#child-flex-calender-week > input").val(result3.year);
+
+                    
+                    // =================== first day of week, last day of week, year and month====================
+                    firstDayOfWeek = $("#saturday-date").text();
+                    lastDayOfWeek = $("#friday-date").text();
+                    year = $("#child-flex-calender-week > input").val();
+                    month = $("#monthName").text();
 
                 }
             });

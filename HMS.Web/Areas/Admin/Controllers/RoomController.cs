@@ -14,6 +14,8 @@ namespace HMS.Web.Areas.Admin.Controllers
     // [Authorize(Roles = "Admin")]
     public class RoomController : BaseController
     {
+        #region Views
+        
         // GET: Admin/Room
         public ActionResult Index()
         {
@@ -25,12 +27,14 @@ namespace HMS.Web.Areas.Admin.Controllers
             return View();
         }
 
+        #endregion
+
+        #region Room Operations
+
         public ActionResult Room_Read()
         {
             return Json(uow.Room.GetRooms(), JsonRequestBehavior.AllowGet);
         }
-
-        #region Room Operations
 
         public ActionResult Room_Create(Room_FacilityViewModel model , Guid hotelId)
         {
@@ -138,20 +142,38 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         #region Weekly Persian Calender
 
-        public JsonResult GetCurrentDay()
+        public JsonResult GetCurrentDay(int index = 0)
         {
-            string monthName = MyCalender.getMonthName();
-            string year = MyCalender.getYear();
+            string year = MyCalender.getYearFromHeader(index);
+
             int currentDay = MyCalender.getCurrentDay();
-            List<string> weekHeaderDate = MyCalender.weekHeaderDate();
+
+            List<string> weekHeaderDate = MyCalender.getDayFromHeader(index);
+
+            string monthNameInNumber = MyCalender.getMonthFromHeader(index);
+            string monthName = MyCalender.ConvertMonth(monthNameInNumber);
+
 
             return Json(new {monthName, year, currentDay, weekHeaderDate}, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetWeekHeader(int index = 0)
         {
-            return Json(MyCalender.weekHeaderDate(index), JsonRequestBehavior.AllowGet);
+            string monthNameInNumber = MyCalender.getMonthFromHeader(index);
+            string monthName = MyCalender.ConvertMonth(monthNameInNumber);
+
+            string year = MyCalender.getYearFromHeader(index);
+
+            List<string> weekHeaderDate = MyCalender.getDayFromHeader(index);
+
+            return Json(new { monthName, year, weekHeaderDate }, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// Get All Reserved and checked in rooms and their status 
+        /// </summary>
+        /// <returns>List of WeeklyRoom ViewModel</returns>
+
 
         #endregion
 
