@@ -1,16 +1,17 @@
-﻿using System;
+﻿using HMS.Model.Core.DomainModels;
+using HMS.Model.Core.ViewModels;
+using HMS.Web.Controllers.Base;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using HMS.Model.Core.DomainModels;
-using HMS.Model.Core.ViewModels;
-using HMS.Web.Controllers.Base;
+using HMS.Library.Helpers;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public class RoomController : BaseController
     {
         // GET: Admin/Room
@@ -19,10 +20,17 @@ namespace HMS.Web.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult RoomStatusPerWeek()
+        {
+            return View();
+        }
+
         public ActionResult Room_Read()
         {
             return Json(uow.Room.GetRooms(), JsonRequestBehavior.AllowGet);
         }
+
+        #region Room Operations
 
         public ActionResult Room_Create(Room_FacilityViewModel model , Guid hotelId)
         {
@@ -126,6 +134,26 @@ namespace HMS.Web.Areas.Admin.Controllers
             return roomImage;
         }
 
+        #endregion
+
+        #region Weekly Persian Calender
+
+        public JsonResult GetCurrentDay()
+        {
+            string monthName = MyCalender.getMonthName();
+            string year = MyCalender.getYear();
+            int currentDay = MyCalender.getCurrentDay();
+            List<string> weekHeaderDate = MyCalender.weekHeaderDate();
+
+            return Json(new {monthName, year, currentDay, weekHeaderDate}, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetWeekHeader(int index = 0)
+        {
+            return Json(MyCalender.weekHeaderDate(index), JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #region Partial Views 
 
@@ -136,8 +164,6 @@ namespace HMS.Web.Areas.Admin.Controllers
         }
 
         #endregion
-
-
     }
 
 

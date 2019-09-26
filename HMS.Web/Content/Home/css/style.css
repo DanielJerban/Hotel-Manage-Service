@@ -13,18 +13,23 @@
 
 
 @font-face {
-    font-family: 'Iran Sans';
+    font-family: 'Iran-Sans';
     src: url('/fonts/IranSans/IRANSansWeb.eot');
     src: url('/fonts/IranSans/IRANSansWeb.woff') format('woff'), url('/fonts/IranSans/IRANSansWeb.ttf') format('truetype');
 }
-
+@font-face {
+    font-family: 'Iran-Sans-fa';
+    src: url('/fonts/IranSans/IRANSansWeb(FaNum).eot');
+    src: url('/fonts/IranSans/IRANSansWeb(FaNum).woff') format('woff'), url('/fonts/IranSans/IRANSansWeb(FaNum).ttf') format('truetype');
+}
 
 /* General CSS */
 
 html,
 body {
     height: 100%;
-    font-family: "Iran" !important;
+    /*font-family: "Iran-Sans" !important;*/
+    font-family: "Iran-Sans-fa" !important;
 }
 
 p {

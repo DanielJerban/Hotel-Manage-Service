@@ -116,7 +116,13 @@
                 }
             },
             success: function() {
-                alert("Horraaaaaaaaaaaaaaaaaaaaay");
+                iziToast.success({
+                    position: "bottomRight",
+                    timeout: 3000,
+                    rtl: true,
+                    title: "بسیار عالی",
+                    message: "عملیات با موفقیت انجام شد."
+                });
             }
         });
 

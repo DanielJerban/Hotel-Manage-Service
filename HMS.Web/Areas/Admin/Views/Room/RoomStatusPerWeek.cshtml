@@ -1,0 +1,404 @@
+﻿
+@{
+    ViewBag.Title = "RoomStatusPerWeek";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+
+    @@font-face {
+        font-family: 'Iran-Sans-fa';
+        src: url('/fonts/IranSans/IRANSansWeb(FaNum).eot');
+        src: url('/fonts/IranSans/IRANSansWeb(FaNum).woff') format('woff'), url('/fonts/IranSans/IRANSansWeb(FaNum).ttf') format('truetype');
+    }
+
+    /* General CSS */
+
+    html,
+    body {
+        height: 100%;
+        /*font-family: "Iran-Sans" !important;*/
+        font-family: "Iran-Sans-fa" !important;
+    }
+
+    #parent-flex-calender-week {
+        margin: 0 0 0 0 !important;
+    }
+
+    #child-flex-calender-week > input {
+        text-align: center;
+        font-size: 20px;
+    }
+
+    #weekly-table {
+        font-size: 20px;
+    }
+
+        #weekly-table > tbody > tr > td {
+            padding: 10px 30px;
+            text-align: center;
+            background-color: #e9ecef;
+        }
+
+    #parent-flex-calender-table-thead-day > th {
+        padding: 20px 30px 0 30px;
+        background-color: #494f5c;
+        color: #e9ecef;
+    }
+
+    #parent-flex-calender-table-thead-date > th {
+        text-align: center !important;
+        color: #d33e30;
+        background-color: #494f5c;
+        font-size: 50px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    #monthName {
+        text-align: center;
+        color: #d33e30;
+        font-size: 30px;
+        margin-bottom: 0;
+    }
+</style>
+
+
+
+<div class="d-flex justify-content-center mb-3" id="parent-flex-calender-week">
+
+    <div class="p-2">
+        <input id="btnPreviosWeek" type="button" value="<- &nbsp;  قبلی" class="btn btn-primary" style="background-color: #d33e30; border-color: #ffffff; width: 10em; height: 40px; padding-right: 0; margin-top: 54px;" />
+    </div>
+
+    <div class="p-2" id="child-flex-calender-week">
+        <p id="monthName">شهریور</p>
+        <input type="text" value="1399" class="form-control" readonly="readonly" style="height: 40px;" />
+    </div>
+
+    <div class="p-2">
+        <input id="btnNextWeek" type="button" value="بعدی &nbsp; ->" class="btn btn-primary" style="background-color: #d33e30; border-color: #ffffff; width: 10em; height: 40px; padding-left: 0; margin-top: 54px;" />
+    </div>
+</div>
+
+<div class="d-flex justify-content-center" id="parent-flex-calender-table">
+    <div class="p-6">
+        <table class="table table-borderless" id="weekly-table">
+            <thead>
+                <tr id="parent-flex-calender-table-thead-day">
+                    <th id="saturday">شنبه</th>
+                    <th id="sunday">یک شنبه</th>
+                    <th id="monday">دو شنبه</th>
+                    <th id="tuesday">سه شنبه</th>
+                    <th id="wendsday">چهار شنبه</th>
+                    <th id="thursday">پنج شنبه</th>
+                    <th id="friday">جمعه</th>
+                </tr>
+                <tr id="parent-flex-calender-table-thead-date">
+                    <th id="saturday-date">16</th>
+                    <th id="sunday-date">17</th>
+                    <th id="monday-date">18</th>
+                    <th id="tuesday-date">19</th>
+                    <th id="wendsday-date">20</th>
+                    <th id="thursday-date">21</th>
+                    <th id="friday-date">22</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>100</td>
+                    <td>101</td>
+                    <td>102</td>
+                    <td></td>
+                    <td>104</td>
+                    <td>105</td>
+                    <td>106</td>
+                </tr>
+                <tr>
+                    <td>200</td>
+                    <td>201</td>
+                    <td>202</td>
+                    <td>203</td>
+                    <td>204</td>
+                    <td></td>
+                    <td>206</td>
+                </tr>
+                <tr>
+                    <td>300</td>
+                    <td></td>
+                    <td>302</td>
+                    <td>303</td>
+                    <td>304</td>
+                    <td>305</td>
+                    <td>306</td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>401</td>
+                    <td></td>
+                    <td>403</td>
+                    <td>404</td>
+                    <td>405</td>
+                    <td>406</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>501</td>
+                    <td>502</td>
+                    <td></td>
+                    <td>504</td>
+                    <td>505</td>
+                    <td>506</td>
+                </tr>
+                <tr>
+                    <td>600</td>
+                    <td>601</td>
+                    <td>602</td>
+                    <td>603</td>
+                    <td>604</td>
+                    <td>605</td>
+                    <td>606</td>
+                </tr>
+                <tr>
+                    <td>700</td>
+                    <td></td>
+                    <td>702</td>
+                    <td>703</td>
+                    <td>704</td>
+                    <td>705</td>
+                    <td>706</td>
+                </tr>
+                <tr>
+                    <td>800</td>
+                    <td>801</td>
+                    <td>802</td>
+                    <td>803</td>
+                    <td>804</td>
+                    <td>805</td>
+                    <td>806</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>901</td>
+                    <td>902</td>
+                    <td>903</td>
+                    <td>904</td>
+                    <td>905</td>
+                    <td>906</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts
+{
+
+    <script>
+
+        var weekIndex = 0;
+        var currentDay = 0;
+
+        $(function() {
+
+            $.ajax({
+                type: "JSON",
+                url: "/Admin/Room/GetCurrentDay",
+                success: function(result) {
+
+                    currentDay = result.currentDay;
+
+                    // ================== High light the current day =====================
+                    if (result.currentDay === 0) {
+                        $("#saturday").css("color", "#fb897e");
+                        $("#saturday-date").css("color", "#fb897e");
+                    } else if (result.currentDay === 1) {
+                        $("#sunday").css("color", "#fb897e");
+                        $("#sunday-date").css("color", "#fb897e");
+                    } else if (result.currentDay === 2) {
+                        $("#monday").css("color", "#fb897e");
+                        $("#monday-date").css("color", "#fb897e");
+                    } else if (result.currentDay === 3) {
+                        $("#tuesday").css("color", "#fb897e");
+                        $("#tuesday-date").css("color", "#fb897e");
+                    } else if (result.currentDay === 4) {
+                        $("#wendsday").css("color", "#fb897e");
+                        $("#wendsday-date").css("color", "#fb897e");
+                    } else if (result.currentDay === 5) {
+                        $("#thursday").css("color", "#fb897e");
+                        $("#thursday-date").css("color", "#fb897e");
+                    } else if (result.currentDay === 6) {
+                        $("#friday").css("color", "#fb897e");
+                        $("#friday-date").css("color", "#fb897e");
+                    }
+                    // ================== Set Year =====================
+                    $("#child-flex-calender-week > input").val(result.year);
+
+                    // ================== Set Month =====================
+                    $("#monthName").text(result.monthName);
+
+                    // ================== Set week header date =====================
+                    $("#saturday-date").text(result.weekHeaderDate[0]);
+                    $("#sunday-date").text(result.weekHeaderDate[1]);
+                    $("#monday-date").text(result.weekHeaderDate[2]);
+                    $("#tuesday-date").text(result.weekHeaderDate[3]);
+                    $("#wendsday-date").text(result.weekHeaderDate[4]);
+                    $("#thursday-date").text(result.weekHeaderDate[5]);
+                    $("#friday-date").text(result.weekHeaderDate[6]);
+
+                }
+            });
+
+        });
+
+        $("#btnNextWeek").click(function() {
+            weekIndex = weekIndex + 1;
+
+            $.ajax({
+                type: "JSON",
+                url: "/Admin/Room/GetWeekHeader",
+                data: {
+                    index: weekIndex
+                },
+                success: function(result3) {
+
+                    if(weekIndex === 0){
+                        if (currentDay === 0) {
+                            $("#saturday").css("color", "#fb897e");
+                            $("#saturday-date").css("color", "#fb897e");
+                        } else if (currentDay === 1) {
+                            $("#sunday").css("color", "#fb897e");
+                            $("#sunday-date").css("color", "#fb897e");
+                        } else if (currentDay === 2) {
+                            $("#monday").css("color", "#fb897e");
+                            $("#monday-date").css("color", "#fb897e");
+                        } else if (currentDay === 3) {
+                            $("#tuesday").css("color", "#fb897e");
+                            $("#tuesday-date").css("color", "#fb897e");
+                        } else if (currentDay === 4) {
+                            $("#wendsday").css("color", "#fb897e");
+                            $("#wendsday-date").css("color", "#fb897e");
+                        } else if (currentDay === 5) {
+                            $("#thursday").css("color", "#fb897e");
+                            $("#thursday-date").css("color", "#fb897e");
+                        } else if (currentDay === 6) {
+                            $("#friday").css("color", "#fb897e");
+                            $("#friday-date").css("color", "#fb897e");
+                        }
+                    } else {
+                        if (currentDay === 0) {
+                            $("#saturday").css("color", "#e9ecef");
+                            $("#saturday-date").css("color", "#d33e30");
+                        } else if (currentDay === 1) {
+                            $("#sunday").css("color", "#e9ecef");
+                            $("#sunday-date").css("color", "#d33e30");
+                        } else if (currentDay === 2) {
+                            $("#monday").css("color", "#e9ecef");
+                            $("#monday-date").css("color", "#d33e30");
+                        } else if (currentDay === 3) {
+                            $("#tuesday").css("color", "#e9ecef");
+                            $("#tuesday-date").css("color", "#d33e30");
+                        } else if (currentDay === 4) {
+                            $("#wendsday").css("color", "#e9ecef");
+                            $("#wendsday-date").css("color", "#d33e30");
+                        } else if (currentDay === 5) {
+                            $("#thursday").css("color", "#e9ecef");
+                            $("#thursday-date").css("color", "#d33e30");
+                        } else if (currentDay === 6) {
+                            $("#friday").css("color", "#e9ecef");
+                            $("#friday-date").css("color", "#d33e30");
+                        }
+                    }
+
+                // ================== Set week header date =====================
+                $("#saturday-date").text(result3[0]);
+                $("#sunday-date").text(result3[1]);
+                $("#monday-date").text(result3[2]);
+                $("#tuesday-date").text(result3[3]);
+                $("#wendsday-date").text(result3[4]);
+                $("#thursday-date").text(result3[5]);
+                $("#friday-date").text(result3[6]);
+
+        }
+        });
+
+    });
+
+        $("#btnPreviosWeek").click(function() {
+            weekIndex = weekIndex - 1;
+
+            $.ajax({
+                type: "JSON",
+                url: "/Admin/Room/GetWeekHeader",
+                data: {
+                    index: weekIndex
+                },
+                success: function(result3) {
+
+                    if(weekIndex === 0){
+                        if (currentDay === 0) {
+                            $("#saturday").css("color", "#fb897e");
+                            $("#saturday-date").css("color", "#fb897e");
+                        } else if (currentDay === 1) {
+                            $("#sunday").css("color", "#fb897e");
+                            $("#sunday-date").css("color", "#fb897e");
+                        } else if (currentDay === 2) {
+                            $("#monday").css("color", "#fb897e");
+                            $("#monday-date").css("color", "#fb897e");
+                        } else if (currentDay === 3) {
+                            $("#tuesday").css("color", "#fb897e");
+                            $("#tuesday-date").css("color", "#fb897e");
+                        } else if (currentDay === 4) {
+                            $("#wendsday").css("color", "#fb897e");
+                            $("#wendsday-date").css("color", "#fb897e");
+                        } else if (currentDay === 5) {
+                            $("#thursday").css("color", "#fb897e");
+                            $("#thursday-date").css("color", "#fb897e");
+                        } else if (currentDay === 6) {
+                            $("#friday").css("color", "#fb897e");
+                            $("#friday-date").css("color", "#fb897e");
+                        }
+                    } else {
+                        if (currentDay === 0) {
+                            $("#saturday").css("color", "#e9ecef");
+                            $("#saturday-date").css("color", "#d33e30");
+                        } else if (currentDay === 1) {
+                            $("#sunday").css("color", "#e9ecef");
+                            $("#sunday-date").css("color", "#d33e30");
+                        } else if (currentDay === 2) {
+                            $("#monday").css("color", "#e9ecef");
+                            $("#monday-date").css("color", "#d33e30");
+                        } else if (currentDay === 3) {
+                            $("#tuesday").css("color", "#e9ecef");
+                            $("#tuesday-date").css("color", "#d33e30");
+                        } else if (currentDay === 4) {
+                            $("#wendsday").css("color", "#e9ecef");
+                            $("#wendsday-date").css("color", "#d33e30");
+                        } else if (currentDay === 5) {
+                            $("#thursday").css("color", "#e9ecef");
+                            $("#thursday-date").css("color", "#d33e30");
+                        } else if (currentDay === 6) {
+                            $("#friday").css("color", "#e9ecef");
+                            $("#friday-date").css("color", "#d33e30");
+                        }
+                    }
+
+                    // ================== Set week header date =====================
+                    $("#saturday-date").text(result3[0]);
+                    $("#sunday-date").text(result3[1]);
+                    $("#monday-date").text(result3[2]);
+                    $("#tuesday-date").text(result3[3]);
+                    $("#wendsday-date").text(result3[4]);
+                    $("#thursday-date").text(result3[5]);
+                    $("#friday-date").text(result3[6]);
+
+                }
+            });
+
+        });
+
+    </script>
+
+}

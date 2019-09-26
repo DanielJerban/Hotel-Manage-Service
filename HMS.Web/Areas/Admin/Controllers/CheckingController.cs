@@ -165,11 +165,6 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult CreateCheckingForReserve(CreateCheckingDto model)
-        {
-            throw new NotImplementedException();
-        }
-
         public ActionResult GetCheckings()
         {
             return Json(uow.Checking.GetCheckings(), JsonRequestBehavior.AllowGet);

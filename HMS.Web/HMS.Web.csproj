@@ -1342,6 +1342,11 @@
     <Content Include="Areas\Customer\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Room\RoomStatusPerWeek.cshtml" />
+    <Content Include="fonts\IranSans\IRANSansWeb%28FaNum%29.eot" />
+    <Content Include="fonts\IranSans\IRANSansWeb%28FaNum%29.ttf" />
+    <Content Include="fonts\IranSans\IRANSansWeb%28FaNum%29.woff" />
+    <Content Include="fonts\IranSans\IRANSansWeb%28FaNum%29.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />
@@ -3540,6 +3545,10 @@
     <ProjectReference Include="..\HMS.DataAccess\HMS.DataAccess.csproj">
       <Project>{7df8a10f-b270-4dc7-ae18-be44d62d54ce}</Project>
       <Name>HMS.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Library\HMS.Library.csproj">
+      <Project>{9033faf1-394d-48ae-9adf-1717a73b937d}</Project>
+      <Name>HMS.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\HMS.Model\HMS.Model.csproj">
       <Project>{95d84e27-d62b-49ef-a06b-78d3612017ca}</Project>
