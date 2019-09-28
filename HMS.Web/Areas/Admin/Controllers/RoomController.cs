@@ -27,6 +27,11 @@ namespace HMS.Web.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult MonthlyCalender()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Room Operations
@@ -173,6 +178,12 @@ namespace HMS.Web.Areas.Admin.Controllers
         /// Get All Reserved and checked in rooms and their status 
         /// </summary>
         /// <returns>List of WeeklyRoom ViewModel</returns>
+
+
+        #endregion
+
+        #region Monthly Persian Calender
+
 
 
         #endregion

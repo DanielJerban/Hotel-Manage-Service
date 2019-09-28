@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "MonthlyCalender";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center mb-1">
+    <div class="p-5">
+        <span>1398</span>
+    </div>
+</div>
+<div class="d-flex justify-content-center mb-3">
+    <div class="p-2">
+        <input id="btnNextMonth" type="button" value="بعدی <-" />
+    </div>
+    <div class="p-2">
+        <input id="txtMonth" type="text" value="مهر" />
+    </div>
+    <div class="p-2">
+        <input id="btnPreviosMonth" type="button" value="قبلی ->" />
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>شنبه</th>
+            <th>یک شنبه</th>
+            <th>دو شنبه</th>
+            <th>سه شنبه</th>
+            <th>چهار شنبه</th>
+            <th>پنج شنبه</th>
+            <th>جمعه</th>
+        </tr>
+    </thead>
+</table>
