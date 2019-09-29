@@ -106,87 +106,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>100</td>
-                    <td>101</td>
-                    <td>102</td>
-                    <td></td>
-                    <td>104</td>
-                    <td>105</td>
-                    <td>106</td>
-                </tr>
-                <tr>
-                    <td>200</td>
-                    <td>201</td>
-                    <td>202</td>
-                    <td>203</td>
-                    <td>204</td>
-                    <td></td>
-                    <td>206</td>
-                </tr>
-                <tr>
-                    <td>300</td>
-                    <td></td>
-                    <td>302</td>
-                    <td>303</td>
-                    <td>304</td>
-                    <td>305</td>
-                    <td>306</td>
-                </tr>
-                <tr>
-                    <td>400</td>
-                    <td>401</td>
-                    <td></td>
-                    <td>403</td>
-                    <td>404</td>
-                    <td>405</td>
-                    <td>406</td>
-                </tr>
-                <tr>
-                    <td>500</td>
-                    <td>501</td>
-                    <td>502</td>
-                    <td></td>
-                    <td>504</td>
-                    <td>505</td>
-                    <td>506</td>
-                </tr>
-                <tr>
-                    <td>600</td>
-                    <td>601</td>
-                    <td>602</td>
-                    <td>603</td>
-                    <td>604</td>
-                    <td>605</td>
-                    <td>606</td>
-                </tr>
-                <tr>
-                    <td>700</td>
-                    <td></td>
-                    <td>702</td>
-                    <td>703</td>
-                    <td>704</td>
-                    <td>705</td>
-                    <td>706</td>
-                </tr>
-                <tr>
-                    <td>800</td>
-                    <td>801</td>
-                    <td>802</td>
-                    <td>803</td>
-                    <td>804</td>
-                    <td>805</td>
-                    <td>806</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>901</td>
-                    <td>902</td>
-                    <td>903</td>
-                    <td>904</td>
-                    <td>905</td>
-                    <td>906</td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
@@ -210,11 +130,14 @@
 
         $(function() {
 
+            debugger;
+
             $.ajax({
                 type: "JSON",
                 url: "/Admin/Room/GetCurrentDay",
                 success: function(result) {
 
+                    debugger;
                     currentDay = result.currentDay;
 
                     // ================== High light the current day =====================

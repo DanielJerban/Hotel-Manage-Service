@@ -84,6 +84,8 @@
     <Compile Include="Core\ViewModels\CreateReserveViewModel.cs" />
     <Compile Include="Core\ViewModels\ReserveViewModel.cs" />
     <Compile Include="Core\ViewModels\Room_FacilityViewModel.cs" />
+    <Compile Include="Core\ViewModels\WeekHeaderRoomsListsViewModel.cs" />
+    <Compile Include="Core\ViewModels\WeeklyRoomViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

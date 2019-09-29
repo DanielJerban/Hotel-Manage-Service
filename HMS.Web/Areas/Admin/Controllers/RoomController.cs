@@ -150,16 +150,18 @@ namespace HMS.Web.Areas.Admin.Controllers
         public JsonResult GetCurrentDay(int index = 0)
         {
             string year = MyCalender.getYearFromHeader(index);
-
             int currentDay = MyCalender.getCurrentDay();
-
             List<string> weekHeaderDate = MyCalender.getDayFromHeader(index);
 
             string monthNameInNumber = MyCalender.getMonthFromHeader(index);
             string monthName = MyCalender.ConvertMonth(monthNameInNumber);
 
+            var roomData = uow.Room.GetRoomsInDateRange(MyCalender.GetCurrentWeekFirstDayDate(),
+                MyCalender.GetCurrentWeekLastDayDate());
 
-            return Json(new {monthName, year, currentDay, weekHeaderDate}, JsonRequestBehavior.AllowGet);
+
+
+            return Json(new {monthName, year, currentDay, weekHeaderDate, roomData}, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetWeekHeader(int index = 0)
@@ -182,11 +184,6 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         #endregion
 
-        #region Monthly Persian Calender
-
-
-
-        #endregion
 
         #region Partial Views 
 

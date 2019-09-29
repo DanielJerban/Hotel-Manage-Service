@@ -12,7 +12,7 @@ using MD.PersianDateTime;
 
 namespace HMS.Service.Persistance.Repositories
 {
-    public class RoomRepo : Repository<Room> , IRoomRepo
+    public class RoomRepo : Repository<Room>, IRoomRepo
     {
         public RoomRepo(ApplicationDbContext context) : base(context)
         {
@@ -40,6 +40,244 @@ namespace HMS.Service.Persistance.Repositories
             return roomsVM;
         }
 
+        public WeekHeaderRoomsListsViewModel GetRoomsInDateRange(DateTime fromDate, DateTime toDate)
+        {
+            List<WeeklyRoomViewModel> rooms = new List<WeeklyRoomViewModel>();
+
+            var reserves = context.Reserves
+                .Where(c =>
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate
+                ).ToList();
+
+            var checkings = context.Checkings.Include(c => c.Room)
+                .Where(c =>
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
+                    c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate
+                ).ToList();
+
+
+            List<WeeklyRoomViewModel> Saturday = new List<WeeklyRoomViewModel>();
+            List<WeeklyRoomViewModel> Sunday = new List<WeeklyRoomViewModel>();
+            List<WeeklyRoomViewModel> Monday = new List<WeeklyRoomViewModel>();
+            List<WeeklyRoomViewModel> Teusday = new List<WeeklyRoomViewModel>();
+            List<WeeklyRoomViewModel> Wendsday = new List<WeeklyRoomViewModel>();
+            List<WeeklyRoomViewModel> Tursday = new List<WeeklyRoomViewModel>();
+            List<WeeklyRoomViewModel> Frieday = new List<WeeklyRoomViewModel>();
+
+
+            // Add checked rooms to list
+            foreach (var item in checkings)
+            {
+
+                PersianDateTime startingDate = new PersianDateTime(item.FromDate);
+                PersianDateTime endingDate = new PersianDateTime(item.ToDate);
+
+
+                var range = item.ToDate.Subtract(item.FromDate).Days + 1;
+                int day = Convert.ToInt32(startingDate.PersianDayOfWeek);
+
+
+                for (int i = 0; i < range; i++)
+                {
+                    var nextDay = startingDate.AddDays(i);
+
+                    switch (day)
+                    {
+                        case 0:
+                            Saturday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                        case 1:
+                            Sunday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                        case 2:
+                            Monday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                        case 3:
+                            Teusday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                        case 4:
+                            Wendsday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                        case 5:
+                            Tursday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                        case 6:
+                            Frieday.Add(new WeeklyRoomViewModel()
+                            {
+                                Id = item.RoomId,
+                                RoomNumber = item.Room.RoomNumber,
+                                RoomStatus = Status.Payed,
+                                Date = nextDay.ToDateTime()
+                            });
+                            break;
+                    }
+
+                    if (day == 6)
+                    {
+                        day = 0;
+                    }
+                    else
+                    {
+                        day++;
+                    }
+                }
+
+            }
+
+            // Add Reserved rooms to list  
+            foreach (var item in reserves)
+            {
+                PersianDateTime startingDate = new PersianDateTime(item.FromDate);
+                PersianDateTime endingDate = new PersianDateTime(item.ToDate);
+
+
+                var range = item.ToDate.Subtract(item.FromDate).Days + 1;
+                int day = Convert.ToInt32(startingDate.PersianDayOfWeek);
+
+                var reserveRooms = context.Reserve_Rooms.Include(c => c.Room).Where(c => c.ReserveId == item.Id).ToList();
+
+                var roomStatus = item.Status;
+
+                foreach (var reserveRoom in reserveRooms)
+                {
+                    for (int i = 0; i < range; i++)
+                    {
+                        var nextDay = startingDate.AddDays(i);
+
+                        switch (day)
+                        {
+                            case 0:
+                                Saturday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                            case 1:
+                                Sunday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                            case 2:
+                                Monday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                            case 3:
+                                Teusday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                            case 4:
+                                Wendsday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                            case 5:
+                                Tursday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                            case 6:
+                                Frieday.Add(new WeeklyRoomViewModel()
+                                {
+                                    Id = reserveRoom.RoomId,
+                                    Date = nextDay,
+                                    RoomNumber = reserveRoom.Room.RoomNumber,
+                                    RoomStatus = roomStatus
+                                });
+                                break;
+                        }
+
+                        if (day == 6)
+                        {
+                            day = 0;
+                        }
+                        else
+                        {
+                            day++;
+                        }
+                    }
+                }
+            }
+
+
+            WeekHeaderRoomsListsViewModel vm = new WeekHeaderRoomsListsViewModel()
+            {
+                Saturday = Saturday,
+                Sunday = Sunday,
+                Monday = Monday,
+                Tuesday = Teusday,
+                Wednesday = Wendsday,
+                Thursday = Tursday,
+                Friday = Frieday
+            };
+
+            return vm;
+        }
 
         public List<Room> AllFreeRoomsInDateRange(DateTime fromDate, DateTime toDate)
         {
@@ -50,8 +288,7 @@ namespace HMS.Service.Persistance.Repositories
                     c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
                     c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate >= toDate && c.ToDate >= fromDate ||
                     c.FromDate <= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
-                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate ||
-                    c.Status == Status.Canceled
+                    c.FromDate >= fromDate && c.FromDate <= toDate && c.ToDate <= toDate && c.ToDate >= fromDate
                 ).ToList();
 
             var checkings = context.Checkings
@@ -79,7 +316,7 @@ namespace HMS.Service.Persistance.Repositories
                 }
             }
 
-            return rooms; 
+            return rooms;
         }
 
         public List<Room> GetAllFreeRooms()
@@ -99,7 +336,7 @@ namespace HMS.Service.Persistance.Repositories
                 }
             }
 
-            var checkings= context.Checkings.ToList();
+            var checkings = context.Checkings.ToList();
             foreach (var item in checkings)
             {
                 foreach (var room in rooms)

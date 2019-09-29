@@ -10,20 +10,20 @@ namespace HMS.Library.Helpers
 {
     public static class MyCalender
     {
-        private static PersianDateTime persianDate = PersianDateTime.Now;
+        private static PersianDateTime Today = PersianDateTime.Now;
         public static string getMonthName()
         {
-            return persianDate.MonthName;
+            return Today.MonthName;
         }
 
         public static string getYear()
         {
-            return persianDate.Year.ToString();
+            return Today.Year.ToString();
         }
 
         public static int getCurrentDay()
         {
-            return Convert.ToInt32(persianDate.PersianDayOfWeek);
+            return Convert.ToInt32(Today.PersianDayOfWeek);
         }
 
         /// <summary>
@@ -40,90 +40,90 @@ namespace HMS.Library.Helpers
             {
                 // شنبه
                 case 0:
-                    saturday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(2 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(3 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(4 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(5 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(6 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(1 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(2 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(3 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(4 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(5 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(6 + (7 * index)).ToShortDateString();
                     break;
 
                 // یک شنبه
                 case 1:
-                    saturday = persianDate.AddDays(-1 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(2 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(3 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(4 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(5 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(-1 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(1 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(2 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(3 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(4 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(5 + (7 * index)).ToShortDateString();
                     break;
 
                 // دو شنبه
                 case 2:
-                    saturday = persianDate.AddDays(-2 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(-1 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(2 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(3 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(4 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(-2 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(-1 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(1 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(2 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(3 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(4 + (7 * index)).ToShortDateString();
                     break;
 
                 // سه شنبه
                 case 3:
-                    saturday = persianDate.AddDays(-3 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(-2 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(-1 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(2 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(3 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(-3 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(-2 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(-1 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(1 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(2 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(3 + (7 * index)).ToShortDateString();
                     break;
 
                 // چهار شنبه
                 case 4:
-                    saturday = persianDate.AddDays(-4 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(-3 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(-2 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(-1 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(2 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(-4 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(-3 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(-2 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(-1 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(1 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(2 + (7 * index)).ToShortDateString();
                     break;
 
                 // پنج شنبه
                 case 5:
-                    saturday = persianDate.AddDays(-5 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(-4 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(-3 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(-2 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(-1 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(-5 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(-4 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(-3 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(-2 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(-1 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(1 + (7 * index)).ToShortDateString();
                     break;
 
                 // جمعه
                 case 6:
-                    saturday = persianDate.AddDays(-6 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(-5 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(-4 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(-3 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(-2 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(-1 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(-6 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(-5 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(-4 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(-3 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(-2 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(-1 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(0 + (7 * index)).ToShortDateString();
                     break;
 
                 // شنبه
                 default:
-                    saturday = persianDate.AddDays(0 + (7 * index)).ToShortDateString();
-                    sunday = persianDate.AddDays(1 + (7 * index)).ToShortDateString();
-                    monday = persianDate.AddDays(2 + (7 * index)).ToShortDateString();
-                    teusday = persianDate.AddDays(3 + (7 * index)).ToShortDateString();
-                    wendsday = persianDate.AddDays(4 + (7 * index)).ToShortDateString();
-                    tuersday = persianDate.AddDays(5 + (7 * index)).ToShortDateString();
-                    friday = persianDate.AddDays(6 + (7 * index)).ToShortDateString();
+                    saturday = Today.AddDays(0 + (7 * index)).ToShortDateString();
+                    sunday = Today.AddDays(1 + (7 * index)).ToShortDateString();
+                    monday = Today.AddDays(2 + (7 * index)).ToShortDateString();
+                    teusday = Today.AddDays(3 + (7 * index)).ToShortDateString();
+                    wendsday = Today.AddDays(4 + (7 * index)).ToShortDateString();
+                    tuersday = Today.AddDays(5 + (7 * index)).ToShortDateString();
+                    friday = Today.AddDays(6 + (7 * index)).ToShortDateString();
                     break;
             }
 
@@ -314,6 +314,88 @@ namespace HMS.Library.Helpers
             }
 
             return monthName;
+        }
+
+        public static PersianDateTime GetCurrentWeekFirstDayDate()
+        {
+            int currentDay = getCurrentDay();
+
+            switch (currentDay)
+            {
+                // شنبه
+                case 0:
+                    return Today.Date;
+
+                // یک شنبه
+                case 1:
+                    return Today.AddDays(-1).Date;
+
+                // دو شنبه
+                case 2:
+                    return Today.AddDays(-2).Date;
+
+                // سه شنبه
+                case 3:
+                    return Today.AddDays(-3).Date;
+
+                // چهار شنبه
+                case 4:
+                    return Today.AddDays(-4).Date;
+
+                // پنج شنبه
+                case 5:
+                    return Today.AddDays(-5).Date;
+
+                // جمعه
+                case 6:
+                    return Today.AddDays(-6).Date;
+
+                // شنبه
+                default:
+                    return Today.Date;
+            }
+
+
+        }
+
+        public static PersianDateTime GetCurrentWeekLastDayDate()
+        {
+            int currentDay = getCurrentDay();
+
+            switch (currentDay)
+            {
+                // شنبه
+                case 0:
+                    return Today.AddDays(6).Date;
+
+                // یک شنبه
+                case 1:
+                    return Today.AddDays(5).Date;
+
+                // دو شنبه
+                case 2:
+                    return Today.AddDays(4).Date;
+
+                // سه شنبه
+                case 3:
+                    return Today.AddDays(3).Date;
+
+                // چهار شنبه
+                case 4:
+                    return Today.AddDays(2).Date;
+
+                // پنج شنبه
+                case 5:
+                    return Today.AddDays(1).Date;
+
+                // جمعه
+                case 6:
+                    return Today.Date;
+
+                // شنبه
+                default:
+                    return Today.Date;
+            }
         }
     }
 }

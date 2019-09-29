@@ -18,5 +18,11 @@ namespace HMS.Service.Core.Interfaces
         /// Gets all free rooms depend on reserve and checking
         /// </summary>
         List<Room> GetAllFreeRooms();
+
+        /// <summary>
+        /// Gets all full rooms in a date range
+        /// </summary>
+        WeekHeaderRoomsListsViewModel GetRoomsInDateRange(DateTime fromDate, DateTime toDate);
+
     }
 }
