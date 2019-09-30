@@ -173,7 +173,6 @@ namespace HMS.Service.Persistance.Repositories
 
 
                 var range = item.ToDate.Subtract(item.FromDate).Days + 1;
-                int day = Convert.ToInt32(startingDate.PersianDayOfWeek);
 
                 var reserveRooms = context.Reserve_Rooms.Include(c => c.Room).Where(c => c.ReserveId == item.Id).ToList();
 
@@ -181,6 +180,8 @@ namespace HMS.Service.Persistance.Repositories
 
                 foreach (var reserveRoom in reserveRooms)
                 {
+                    int day = Convert.ToInt32(startingDate.PersianDayOfWeek);
+
                     for (int i = 0; i < range; i++)
                     {
                         var nextDay = startingDate.AddDays(i);

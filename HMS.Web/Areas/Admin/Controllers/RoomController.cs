@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HMS.Library.Helpers;
+using MD.PersianDateTime;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -173,7 +174,12 @@ namespace HMS.Web.Areas.Admin.Controllers
 
             List<string> weekHeaderDate = MyCalender.getDayFromHeader(index);
 
-            return Json(new { monthName, year, weekHeaderDate }, JsonRequestBehavior.AllowGet);
+            PersianDateTime WeekFirstDay = MyCalender.GetCurrentWeekFirstDayDate().AddDays(7 * index);
+            PersianDateTime WeekLastDay = MyCalender.GetCurrentWeekLastDayDate().AddDays(7 * index);
+
+            var roomData = uow.Room.GetRoomsInDateRange(WeekFirstDay,WeekLastDay);
+
+            return Json(new { monthName, year, weekHeaderDate, roomData }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

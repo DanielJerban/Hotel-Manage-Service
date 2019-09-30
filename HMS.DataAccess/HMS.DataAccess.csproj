@@ -63,9 +63,9 @@
     <Compile Include="EntityConfig\Reserve_RoomConfig.cs" />
     <Compile Include="EntityConfig\RoomConfig.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\201909211107515_init.cs" />
-    <Compile Include="Migrations\201909211107515_init.Designer.cs">
-      <DependentUpon>201909211107515_init.cs</DependentUpon>
+    <Compile Include="Migrations\201909300926529_initial.cs" />
+    <Compile Include="Migrations\201909300926529_initial.Designer.cs">
+      <DependentUpon>201909300926529_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,8 +81,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909211107515_init.resx">
-      <DependentUpon>201909211107515_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909300926529_initial.resx">
+      <DependentUpon>201909300926529_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
