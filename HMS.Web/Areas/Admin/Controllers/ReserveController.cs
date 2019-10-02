@@ -4,13 +4,10 @@ using HMS.Web.Controllers.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using HMS.Model.Core.DTOs.Customer;
 using MD.PersianDateTime;
-using Microsoft.Ajax.Utilities;
-using System.Data.Entity;
 using System.Globalization;
+using HMS.Web.Hubs;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -253,8 +250,15 @@ namespace HMS.Web.Areas.Admin.Controllers
 
             var reserve = uow.Reserve.Find(reserveGuid);
             reserve.Status = Status;
-            uow.Reserve.Update(reserve);
+            uow.Reserve.Update(reserve);        
             uow.Complete();
+
+
+
+            dashboardHub hub = new dashboardHub();
+            hub.refreshCalender();
+
+
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
