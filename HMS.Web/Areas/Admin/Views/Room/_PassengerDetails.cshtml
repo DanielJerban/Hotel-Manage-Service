@@ -1,0 +1,137 @@
+﻿@model HMS.Model.Core.DTOs.Customer.CustomerInHotelDetailDto
+
+
+<style>
+
+    .center {
+        text-align: center;
+    }
+</style>
+
+
+
+<!--============ Hidden inputs ============-->
+<input type="hidden" value="@Model.CustomerId" id="customerId" />
+<!--============ /Hidden inputs ============-->
+
+
+<div style="margin: 30px 20px 50px 20px">
+    <div class="row center">
+        <div class="col col-md-6"><strong>میزبان</strong></div>
+        <div class="col col-md-6">@Model.HostName</div>
+    </div>
+    <div class="row center">
+        <div class="col col-md-6"><strong>شماره اتاق</strong></div>
+        <div class="col col-md-6">@Model.RoomsNumber</div>
+    </div>
+    <div class="row center">
+        <div class="col col-md-6"><strong>تاریخ ورود</strong></div>
+        <div class="col col-md-6">@Model.FromDate</div>
+    </div>
+    <div class="row center">
+        <div class="col col-md-6"><strong>تاریخ خروج</strong></div>
+        <div class="col col-md-6">@Model.ToDate</div>
+    </div>
+</div>
+
+<div class="row">
+    <div style="width: 50%; padding-left: 0;">
+        <button class="btn btn-block" id="btnCreateContact" style="background-color: white; color: #3f51b5; border-color: #3f51b5">اطلاعات تماس</button>
+    </div>
+    <div style="width: 50%; padding-right: 0;">
+        <button class="btn btn-block" id="btnUpdateCustomer" style="background-color: white ; color: #3f51b5; border-color: #3f51b5">ویرایش اطلاعات مسافر</button>
+    </div>
+</div>
+
+
+<!--============ Create Contact Partial view using ajax ============-->
+<div id="createContactModal" hidden>
+    <div id="CreateContactPartial"></div>
+</div>
+
+<div id="updateCustomerModal" hidden></div>
+<!--============ /Create Contact Partial view using ajax ============-->
+<!--============ Open Detail Modal ============-->
+<script>
+    $(function () {
+
+        $("#btnCreateContact").mouseenter(function () {
+            $(this).css("background-color", "#3f51b5");
+            $(this).css("color", "#fff");
+        });
+        $("#btnCreateContact").mouseleave(function () {
+            $(this).css("background-color", "#fff");
+            $(this).css("color", "#3f51b5");
+        });
+
+        // Styling the buttons
+        $("#btnUpdateCustomer").mouseenter(function () {
+            $(this).css("background-color", "#3f51b5");
+            $(this).css("color", "#fff");
+        });
+        $("#btnUpdateCustomer").mouseleave(function () {
+            $(this).css("background-color", "#fff");
+            $(this).css("color", "#3f51b5");
+        });
+
+
+        // Calling the _CreateContact partial using ajax
+        $("#btnCreateContact").click(function () {
+
+            $("#createContactModal").iziModal({
+                title: "ثبت اطلاعات",
+                subtitle: "ثبت اطلاعات تماس مسافر",
+                headerColor: '#343a40',
+                rtl: true,
+                fullscreen: true,
+                width: 700,
+                overlay: true,
+                zindex: 2000
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                type: "POST",
+                url: "/Admin/Room/_CreateContact/" + $("#customerId").val(),
+                success: function (result) {
+                    $("#CreateContactPartial").html(result);
+                }
+            });
+
+
+            $("#createContactModal").iziModal('open');
+            $("#createContactModal").removeAttr("hidden");
+        });
+
+
+        // Calling the _CreateFelowCustomer partial using ajax
+        $("#btnUpdateCustomer").click(function() {
+
+            $("#updateCustomerModal").iziModal({
+                title: "ویرایش اطلاعات",
+                subtitle: "ویرایش اطلاعات مسافر حاضر در هتل",
+                headerColor: '#343a40',
+                rtl: true,
+                fullscreen: true,
+                width: 500,
+                overlay: true,
+                zindex: 2000
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                type: "POST",
+                url: "/Admin/Customer/_UpdateCustomer?customerId=" + $("#customerId").val(),
+                success: function (result) {
+                    $("#updateCustomerModal").iziModal('setContent',result);
+
+                    $("#updateCustomerModal").iziModal('open');
+                    $("#updateCustomerModal").removeAttr("hidden");
+                }
+            });
+        });
+    });
+
+</script>
+<!--============ /Open Detail Modal ============-->
+

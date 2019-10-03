@@ -76,9 +76,14 @@
     <Compile Include="Core\DTOs\ContactInfo\ContactInfoDto.cs" />
     <Compile Include="Core\DTOs\Customer\CreateCustomerDto.cs" />
     <Compile Include="Core\DTOs\Customer\CustomerFelowDto.cs" />
+    <Compile Include="Core\DTOs\Customer\CustomerInHotelDetailDto.cs" />
+    <Compile Include="Core\DTOs\Customer\CustomerInHotelDto.cs" />
     <Compile Include="Core\DTOs\Customer\GetCustomerDto.cs" />
+    <Compile Include="Core\DTOs\Customer\UpdateCustomerDto.cs" />
     <Compile Include="Core\DTOs\Hotel\CreateHotelDto.cs" />
     <Compile Include="Core\DTOs\Hotel\GetHotelsDto.cs" />
+    <Compile Include="Core\DTOs\Room\RoomCheckingDetailDto.cs" />
+    <Compile Include="Core\DTOs\Room\RoomReserveDetailDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateReserveViewModel.cs" />

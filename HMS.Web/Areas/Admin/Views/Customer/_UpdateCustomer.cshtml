@@ -1,0 +1,99 @@
+﻿@model HMS.Model.Core.DTOs.Customer.UpdateCustomerDto
+
+<form id="frmUpdateCustomer" class="container">
+    <div class="row">
+        <div class="col-12" style="padding: 20px;">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.ValidationMessageFor(c => c.FirstName, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control form-control-lg", placeholder = "نام", style = "text-align:right;", id = "txt-firstName" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.LastName, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.LastName, new { @class = "form-control form-control-lg", placeholder = "نام خانوادگی", style = "text-align:right;", id = "txt-lastName" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.NationalNo, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.NationalNo, new { @class = "form-control form-control-lg", placeholder = "کد ملی", style = "text-align:right;", id = "txt-nationalNo" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                </div>
+            </div>
+
+            @Html.ValidationMessageFor(c => c.PassportNo, null, new { @class = "text-danger", style = "float:right;" })
+            <div class="input-group mb-3">
+                @Html.TextBoxFor(c => c.PassportNo, new { @class = "form-control form-control-lg", placeholder = "شماره پاسپورت", style = "text-align:right;", id = "txt-passportNo" })
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<input id="btnUpdateCustomer" onclick="updateCustomer()" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #3f51b5; color: white; font-weight: 300; font-size: 16px" />
+
+
+<script>
+    $(function() {
+
+        $("#txt-firstName").val("@Model.FirstName");
+        $("#txt-lastName").val("@Model.LastName");
+        $("#txt-nationalNo").val("@Model.NationalNo");
+        $("#txt-passportNo").val("@Model.PassportNo");
+
+    });
+
+    //$("#btnUpdateCustomer").click(function() {
+    function updateCustomer(){
+        debugger;
+
+        if ($("#frmUpdateCustomer").valid()) {
+            $.ajax({
+                url: "/Admin/Customer/UpdateCustomer",
+                type: "POST",
+                data: {
+                    model: {
+                        FirstName: $("#txt-firstName").val(),
+                        LastName: $("#txt-lastName").val(),
+                        NationalNo: $("#txt-nationalNo").val(),
+                        PassportNo: $("#txt-passportNo").val(),
+                        customerId: $("#customerId").val()
+                    }
+                },
+                success: function (result) {
+                    if (result === true) {
+                        iziToast.success({
+                            position: "bottomRight",
+                            pauseOnHover: false,
+                            timeout: 2000,
+                            displayMode: 1,
+                            rtl: true,
+                            title: "بسیار عالی",
+                            message: "اطلاعات مسافر آپدیت شد."
+                        });
+
+                        // refresh the customer grid
+                        $("#customersInHotelGrid").data("kendoGrid").dataSource.read();
+
+                        // close the create customer modal
+                        $("#updateCustomerModal").iziModal("close");
+
+                    }
+                }
+            });
+        }
+        }
+//    });
+</script>
+
+@Scripts.Render("~/bundles/jqueryval")

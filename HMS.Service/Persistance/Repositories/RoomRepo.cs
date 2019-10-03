@@ -94,7 +94,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                         case 1:
@@ -103,7 +105,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                         case 2:
@@ -112,7 +116,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                         case 3:
@@ -121,7 +127,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                         case 4:
@@ -130,7 +138,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                         case 5:
@@ -139,7 +149,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                         case 6:
@@ -148,7 +160,9 @@ namespace HMS.Service.Persistance.Repositories
                                 Id = item.RoomId,
                                 RoomNumber = item.Room.RoomNumber,
                                 RoomStatus = Status.Payed,
-                                Date = nextDay.ToDateTime()
+                                Date = nextDay.ToDateTime(),
+                                CheckingId = item.Id,
+                                ReserveId = null
                             });
                             break;
                     }
@@ -177,6 +191,7 @@ namespace HMS.Service.Persistance.Repositories
                 var reserveRooms = context.Reserve_Rooms.Include(c => c.Room).Where(c => c.ReserveId == item.Id).ToList();
 
                 var roomStatus = item.Status;
+                var reserveId = item.Id;
 
                 foreach (var reserveRoom in reserveRooms)
                 {
@@ -194,7 +209,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                             case 1:
@@ -203,7 +220,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                             case 2:
@@ -212,7 +231,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                             case 3:
@@ -221,7 +242,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                             case 4:
@@ -230,7 +253,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                             case 5:
@@ -239,7 +264,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                             case 6:
@@ -248,7 +275,9 @@ namespace HMS.Service.Persistance.Repositories
                                     Id = reserveRoom.RoomId,
                                     Date = nextDay,
                                     RoomNumber = reserveRoom.Room.RoomNumber,
-                                    RoomStatus = roomStatus
+                                    RoomStatus = roomStatus,
+                                    ReserveId = reserveId,
+                                    CheckingId = null
                                 });
                                 break;
                         }

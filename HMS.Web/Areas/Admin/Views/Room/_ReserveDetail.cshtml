@@ -1,0 +1,38 @@
+﻿@model HMS.Model.Core.DTOs.Room.RoomReserveDetailDto
+
+<style>
+    dd {
+        margin-right: 60px;
+    }
+
+    dl {
+        margin: 20px;
+        border: 1px solid white !important;
+    }
+</style>
+
+<dl class="form-control">
+
+    <dt>شماره رزرو</dt>
+    <dd>@Model.ReserveNumber</dd>
+
+    <dt>تاریخ ثبت رزرو</dt>
+    <dd>@Model.FromDate</dd>
+
+    <dt>تاریخ اتمام رزرو</dt>
+    <dd>@Model.ToDate</dd>
+
+    <dt>وضعیت اتاق</dt>
+    <dd>@Model.ReserveStatus</dd>
+
+    <dt>مسافر میزبان</dt>
+    <dd>@Model.HostName</dd>
+
+    <dt>مسافرین همراه</dt>
+    @{
+        foreach (var fellow in Model.FellowsName)
+        {
+            <dd>@fellow</dd>
+        }
+    }
+</dl>

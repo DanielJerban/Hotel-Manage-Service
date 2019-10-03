@@ -1,0 +1,35 @@
+﻿@model HMS.Model.Core.DTOs.Room.RoomCheckingDetailDto
+
+<style>
+    dd {
+        margin-right: 60px;
+    }
+
+    dl {
+        margin: 20px;
+        border: 1px solid white !important;
+    }
+</style>
+
+<dl class="form-control">
+
+    <dt>شماره ثبت</dt>
+    <dd>@Model.CheckingNumber</dd>
+
+    <dt>تاریخ ورود</dt>
+    <dd>@Model.FromDate</dd>
+
+    <dt>تاریخ خروج</dt>
+    <dd>@Model.ToDate</dd>
+
+    <dt>مسافر میزبان</dt>
+    <dd>@Model.HostName</dd>
+
+    <dt>مسافرین همراه</dt>
+    @{
+        foreach (var passenger in Model.Passengers)
+        {
+            <dd>@passenger</dd>
+        }
+    }
+</dl>

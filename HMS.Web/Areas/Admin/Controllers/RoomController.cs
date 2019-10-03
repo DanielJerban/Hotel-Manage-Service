@@ -9,6 +9,10 @@ using System.Web;
 using System.Web.Mvc;
 using HMS.Library.Helpers;
 using MD.PersianDateTime;
+using System.Data;
+using System.Data.Entity;
+using HMS.Model.Core.DTOs.Customer;
+using HMS.Model.Core.DTOs.Room;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
@@ -16,7 +20,7 @@ namespace HMS.Web.Areas.Admin.Controllers
     public class RoomController : BaseController
     {
         #region Views
-        
+
         // GET: Admin/Room
         public ActionResult Index()
         {
@@ -42,7 +46,7 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(uow.Room.GetRooms(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Room_Create(Room_FacilityViewModel model , Guid hotelId)
+        public ActionResult Room_Create(Room_FacilityViewModel model, Guid hotelId)
         {
             if (ModelState.IsValid)
             {
@@ -162,7 +166,7 @@ namespace HMS.Web.Areas.Admin.Controllers
 
 
 
-            return Json(new {monthName, year, currentDay, weekHeaderDate, roomData}, JsonRequestBehavior.AllowGet);
+            return Json(new { monthName, year, currentDay, weekHeaderDate, roomData }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetWeekHeader(int index = 0)
@@ -177,7 +181,7 @@ namespace HMS.Web.Areas.Admin.Controllers
             PersianDateTime WeekFirstDay = MyCalender.GetCurrentWeekFirstDayDate().AddDays(7 * index);
             PersianDateTime WeekLastDay = MyCalender.GetCurrentWeekLastDayDate().AddDays(7 * index);
 
-            var roomData = uow.Room.GetRoomsInDateRange(WeekFirstDay,WeekLastDay);
+            var roomData = uow.Room.GetRoomsInDateRange(WeekFirstDay, WeekLastDay);
 
             return Json(new { monthName, year, weekHeaderDate, roomData }, JsonRequestBehavior.AllowGet);
         }
@@ -190,12 +194,184 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Customer
+
+        public JsonResult CustomersInHotel()
+        {
+            var passengers = uow.Passenger.GetAll().Include(c => c.Customer);
+
+            List<CustomerInHotelDto> customerDtos = new List<CustomerInHotelDto>();
+
+            foreach (var passenger in passengers)
+            {
+                CustomerInHotelDto dto = new CustomerInHotelDto()
+                {
+                    FirstName = passenger.Customer.FirstName ?? "",
+                    LastName = passenger.Customer.LastName ?? "",
+                    NationalNo = passenger.Customer.NationalNo ?? "",
+                    PassportNo = passenger.Customer.PassportNo ?? "",
+                    CustomerId = passenger.Customer.Id,
+                    PassengerId = passenger.Id
+                };
+
+
+                if (customerDtos.Find(c => c.CustomerId == dto.CustomerId) == null)
+                {
+                    customerDtos.Add(dto);
+                }
+            }
+
+            return Json(customerDtos.OrderBy(c => c.LastName), JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #region Partial Views 
 
         public PartialViewResult _CreateRoom()
         {
             ViewBag.HotelId = new SelectList(uow.Hotel.GetAll(), "Id", "Name");
+            return PartialView();
+        }
+
+        public PartialViewResult _ReserveDetail(string reserveId, string roomId)
+        {
+            Guid reserveGuid = Guid.Parse(reserveId);
+            Guid roomGuid = Guid.Parse(roomId);
+
+
+            string fromDate;
+            string toDate;
+
+            string reserveNumber;
+            string reserveStatus;
+            string hostName;
+            List<string> fellowCustomers = new List<string>();
+
+            //var reserve = uow.Reserve.Get(c => c.Reserve_Reserve_Rooms.Contains(reserveRoom))
+            //    .Include(c => c.Customer).Include(c => c.Fellows).Include(c => c.Reserve_Reserve_Rooms).SingleOrDefault();
+
+            var reserve = uow.Reserve.Get(c => c.Id == reserveGuid).Include(c => c.Customer).SingleOrDefault();
+
+            hostName = reserve.Customer.FirstName + " " + reserve.Customer.LastName;
+
+            PersianDateTime persianFromDate = new PersianDateTime(reserve.FromDate);
+            PersianDateTime persianToDate = new PersianDateTime(reserve.ToDate);
+
+            fromDate = persianFromDate.ToShortDateString();
+            toDate = persianToDate.ToShortDateString();
+
+            reserveNumber = reserve.Number.ToString();
+
+            //var fellows = uow.Fellow.Get(c => c.ReserveId == reserveGuid).ToList();
+
+            var fellows = uow.Fellow.Get(c => c.ReserveId == reserveGuid).Include(c => c.Customer).ToList();
+
+            foreach (var fellow in fellows)
+            {
+                fellowCustomers.Add(fellow.Customer.FirstName + " " + fellow.Customer.LastName);
+            }
+
+            switch (reserve.Status)
+            {
+                case Status.Payed:
+                    reserveStatus = "پرداخت شده";
+                    break;
+                case Status.Absolute:
+                    reserveStatus = "قطعی";
+                    break;
+                case Status.Temporary:
+                    reserveStatus = "موقت";
+                    break;
+                case Status.Canceled:
+                    reserveStatus = "کنسل شده";
+                    break;
+                default:
+                    reserveStatus = "پرداخت شده";
+                    break;
+            }
+
+            RoomReserveDetailDto dto = new RoomReserveDetailDto()
+            {
+                FromDate = fromDate,
+                ToDate = toDate,
+                ReserveNumber = reserveNumber,
+                ReserveStatus = reserveStatus,
+                HostName = hostName,
+                FellowsName = fellowCustomers
+            };
+
+            return PartialView(dto);
+        }
+
+        public PartialViewResult _CheckingDetail(string checkingId, string roomId)
+        {
+            Guid roomGuid = Guid.Parse(roomId);
+            Guid checkingGuid = Guid.Parse(checkingId);
+
+            var checking = uow.Checking.Get(c => c.Id == checkingGuid).Include(c => c.Customer).SingleOrDefault();
+
+            string checkingNo = checking.Number.ToString();
+
+            PersianDateTime persianFromDate = new PersianDateTime(checking.FromDate);
+            PersianDateTime persianToDate = new PersianDateTime(checking.ToDate);
+
+            string fromDate = persianFromDate.ToShortDateString();
+            string toDate = persianToDate.ToShortDateString();
+
+            string hostName = checking.Customer.FirstName + " " + checking.Customer.LastName;
+
+            var passengers = uow.Passenger.Get(c => c.CheckingId == checkingGuid).Include(c => c.Customer).ToList();
+
+            List<string> passengersName = new List<string>();
+
+            foreach (var passenger in passengers)
+            {
+                passengersName.Add(passenger.Customer.FirstName + " " + passenger.Customer.LastName);
+            }
+
+            RoomCheckingDetailDto dto = new RoomCheckingDetailDto()
+            {
+                FromDate = fromDate,
+                ToDate = toDate,
+                CheckingNumber = checkingNo,
+                HostName = hostName,
+                Passengers = passengersName
+            };
+
+            return PartialView(dto);
+        }
+
+        public PartialViewResult _PassengerDetails(string passengerId)
+        {
+            Guid passengerGuid = Guid.Parse(passengerId);
+            var passenger = uow.Passenger.Get(c => c.Id == passengerGuid).Include(c => c.Checking).SingleOrDefault();
+
+            var checkingId = passenger.CheckingId;
+            var checking = uow.Checking.Get(c => c.Id == checkingId).Include(c => c.Customer).Include(c => c.Room).SingleOrDefault();
+
+            PersianDateTime persianFromDate = new PersianDateTime(checking.FromDate);
+            PersianDateTime persianToDate = new PersianDateTime(checking.ToDate);
+
+            string fromDate = persianFromDate.ToShortDateString();
+            string toDate = persianToDate.ToShortDateString();
+            string roomNumber = checking.Room.RoomNumber;
+
+
+            CustomerInHotelDetailDto dto = new CustomerInHotelDetailDto()
+            {
+                HostName = checking.Customer.FirstName + " " + checking.Customer.LastName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                RoomsNumber = roomNumber,
+                CustomerId = passenger.CustomerId
+            };
+
+            return PartialView(dto);
+        }
+
+        public PartialViewResult _CreateContact()
+        {
             return PartialView();
         }
 

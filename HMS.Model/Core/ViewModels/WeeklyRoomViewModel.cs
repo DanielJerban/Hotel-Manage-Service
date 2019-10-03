@@ -14,5 +14,7 @@ namespace HMS.Model.Core.ViewModels
         public string RoomNumber { get; set; }
         public Status RoomStatus { get; set; }
         public DateTime Date { get; set; }
+        public Guid? CheckingId { get; set; }
+        public Guid? ReserveId { get; set; }
     }
 }

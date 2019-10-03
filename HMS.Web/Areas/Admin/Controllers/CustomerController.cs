@@ -165,6 +165,23 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(dtos, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UpdateCustomer(UpdateCustomerDto model)
+        {
+            //Guid customerGuid = Guid.Parse(customerId);
+
+            var customer = uow.Customer.Find(model.customerId);
+
+            customer.FirstName = model.FirstName;
+            customer.LastName = model.LastName;
+            customer.PassportNo = model.PassportNo;
+            customer.NationalNo = model.NationalNo;
+
+            uow.Customer.Update(customer);
+            uow.Complete();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
 
         #endregion
 
@@ -311,6 +328,23 @@ namespace HMS.Web.Areas.Admin.Controllers
             return PartialView(dto);
         }
 
+
+        public PartialViewResult _UpdateCustomer(string customerId)
+        {
+            Guid customerGuid = Guid.Parse(customerId);
+
+            var customer = uow.Customer.Find(customerGuid);
+
+            UpdateCustomerDto dto = new UpdateCustomerDto()
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                NationalNo = customer.NationalNo,
+                PassportNo = customer.PassportNo
+            };
+
+            return PartialView(dto);
+        }
 
         #endregion
     }

@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "RoomStatusPerWeek";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
 
 <style>
 
@@ -67,7 +65,6 @@
 </style>
 
 
-
 <div class="d-flex justify-content-center mb-3" id="parent-flex-calender-week">
 
     <div class="p-2">
@@ -76,7 +73,7 @@
 
     <div class="p-2" id="child-flex-calender-week">
         <p id="monthName">شهریور</p>
-        <input type="text" value="1399" class="form-control" readonly="readonly" style="height: 40px;" />
+        <input type="text" value="1399" class="form-control" readonly="readonly" style="height: 40px; text-align: center; font-size: 20px;" />
     </div>
 
     <div class="p-2">
@@ -171,18 +168,25 @@
 
         </div>
     </div>
-
-
-
-    @*<input type="button" class="btn btn-success" onclick="" value="payed" />
-        <input type="button" class="btn btn-info" value="absolute" />
-        <input type="button" class="btn btn-warning" value="temporary" />
-        <input type="button" class="btn btn-danger" value="canceled " />*@
-
 </div>
 
+<br /><br /><br /><div class="row" style="border: 1px solid #494f5c"></div><br /><br />
+
+<h3>مسافرین حاضر در هتل </h3>
+<div class="k-rtl" id="customersInHotelGrid" style="margin-bottom: 40px;"></div>
 
 
+<!-- Izi Modals -->
+<div id="reserveDetailModal" hidden></div>
+<div id="checkingDetailModal" hidden></div>
+<div id="PassengerDetails" hidden></div>
+
+<!-- Hidden Ids -->
+<input type="hidden" id="ReserveHiddenId" />
+<input type="hidden" id="CheckingHiddenId" />
+<input type="hidden" id="RoomHiddenId" />
+<input type="hidden" id="customerHiddenId" />
+<input type="hidden" id="passengerHiddenId" />
 
 
 
@@ -202,25 +206,108 @@
         var month;
         var year;
 
+        function ShowDetail(reserveId , checkingId, roomId) {
+
+            if (reserveId != "null") {
+
+                $.ajax({
+                    dataType: "HTML",
+                    //url: "/Admin/Room/_ReserveDetail?reserveId=" + $("#ReserveHiddenId").val() + "&roomId=" + $("#RoomHiddenId").val(),
+                    url: "/Admin/Room/_ReserveDetail?reserveId=" + reserveId + "&roomId=" + roomId,
+                    success: function(result) {
+                        $("#reserveDetailModal").iziModal('setContent', result);
+
+                        $("#reserveDetailModal").iziModal('open');
+                        $("#reserveDetailModal").removeAttr("hidden", "hidden");
+                    }
+                });
+            }
+            else if (checkingId != "null") {
+
+                $.ajax({
+                    dataType: "HTML",
+                    //url: "/Admin/Room/_CheckingDetail?checkingId=" + $("#CheckingHiddenId").val() + "&roomId=" + $("#RoomHiddenId").val(),
+                    url: "/Admin/Room/_CheckingDetail?checkingId=" + checkingId + "&roomId=" + roomId,
+                    success: function(result) {
+                        $("#checkingDetailModal").iziModal('setContent', result);
+
+                        $("#checkingDetailModal").iziModal('open');
+                        $("#checkingDetailModal").removeAttr("hidden", "hidden");
+                    }
+                });
+            }
+
+        }
+
+        function SetRoomData(data , dataHtmlId)
+        {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].RoomStatus === 0) {
+                    $("#" + dataHtmlId).append("<div onClick=ShowDetail("+"'"+ data[i].ReserveId +"'" + "," + "'" + data[i].CheckingId + "'" + "," + "'" + data[i].Id + "'" +")  class='btn btn-success Room-Btn'>" + data[i].RoomNumber + "</div></br>");
+
+                    $("#ReserveHiddenId").val(data[i].ReserveId);
+                    $("#CheckingHiddenId").val(data[i].CheckingId);
+                    $("#RoomHiddenId").val(data[i].Id);
+
+                }else if (data[i].RoomStatus === 1) {
+                    $("#" + dataHtmlId).append("<div onClick=ShowDetail("+"'"+ data[i].ReserveId +"'" + "," + "'" + data[i].CheckingId + "'" + "," + "'" + data[i].Id + "'" +")  class='btn btn-info Room-Btn'>" + data[i].RoomNumber + "</div></br>");
+
+                    $("#ReserveHiddenId").val(data[i].ReserveId);
+                    $("#CheckingHiddenId").val(data[i].CheckingId);
+                    $("#RoomHiddenId").val(data[i].Id);
+
+                }else if (data[i].RoomStatus === 2) {
+                    $("#" + dataHtmlId).append("<div onClick=ShowDetail("+"'"+ data[i].ReserveId +"'" + "," + "'" + data[i].CheckingId + "'" + "," + "'" + data[i].Id + "'" +")  class='btn btn-warning Room-Btn'>" + data[i].RoomNumber + "</div></br>");
+
+                    $("#ReserveHiddenId").val(data[i].ReserveId);
+                    $("#CheckingHiddenId").val(data[i].CheckingId);
+                    $("#RoomHiddenId").val(data[i].Id);
+
+                }else if (data[i].RoomStatus === 3) {
+                    $("#" + dataHtmlId).append("<div onClick=ShowDetail("+"'"+ data[i].ReserveId +"'" + "," + "'" + data[i].CheckingId + "'" + "," + "'" + data[i].Id + "'" +")  class='btn btn-danger Room-Btn'>" + data[i].RoomNumber + "</div></br>");
+
+                    $("#ReserveHiddenId").val(data[i].ReserveId);
+                    $("#CheckingHiddenId").val(data[i].CheckingId);
+                    $("#RoomHiddenId").val(data[i].Id);
+
+                }
+            }
+        }
 
         $(function() {
 
-            WeeklyCalender();
+            $("#reserveDetailModal").iziModal({
+                title: "توضیحات",
+                subtitle: "توضیحات بیشتر درباره اتاق",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 400,
+                zindex: 2000
+            });
 
-            debugger;
+            $("#checkingDetailModal").iziModal({
+                title: "توضیحات",
+                subtitle: "توضیحات بیشتر درباره اتاق",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 400,
+                zindex: 2000
+            });
+
+            WeeklyCalender();
 
             var dashboard = $.connection.dashboardHub;
 
             $.connection.hub.start(function() {
                 dashboard.client.activate(function(response) {
-
                 });
             });
 
             dashboard.client.refreshCalender = function() {
                 WeeklyCalender();
             }
-
         });
 
 
@@ -239,12 +326,12 @@
             $("#Thursday-Room-Data").html("");
             $("#Friday-Room-Data").html("");
 
-            debugger;
+
             $.ajax({
                 type: "JSON",
                 url: "/Admin/Room/GetCurrentDay",
                 success: function(result) {
-                    debugger;
+
                     currentDay = result.currentDay;
 
                     // ================== High light the current day =====================
@@ -294,143 +381,36 @@
                     var tursdayRoom = result.roomData.Thursday;
                     var fridayRoom = result.roomData.Friday;
 
-                    for (var i = 0; i < saturdayRoom.length; i++) {
-                        if (saturdayRoom[i].RoomStatus === 0) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-success Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
 
-                        }else if (saturdayRoom[i].RoomStatus === 1) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var saturdayRoomData = "Saturday-Room-Data";
+                    SetRoomData(saturdayRoom, saturdayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 2) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var SundayRoomData = "Sunday-Room-Data";
+                    SetRoomData(sundayRoom, SundayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 3) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var MondayRoomData = "Monday-Room-Data";
+                    SetRoomData(mondayRoom, MondayRoomData);
 
-                        }
-                    }
+                    var TeusdayRoomData = "Teusday-Room-Data";
+                    SetRoomData(teusdayRoom, TeusdayRoomData);
 
-                    for (var i = 0; i < sundayRoom.length; i++) {
-                        //$("#Sunday-Room-Data").append("<div>" + sundayRoom[i].RoomNumber + "</div>");
+                    var WednsdayRoomData = "Wednsday-Room-Data";
+                    SetRoomData(wednsdayRoom, WednsdayRoomData);
 
-                        if (sundayRoom[i].RoomStatus === 0) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + sundayRoom[i].RoomNumber + "</div><br/>");
+                    var TursdayRoomData = "Thursday-Room-Data";
+                    SetRoomData(tursdayRoom, TursdayRoomData);
 
-                        }else if (sundayRoom[i].RoomStatus === 1) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 2) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 3) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < mondayRoom.length; i++) {
-                        //$("#Monday-Room-Data").append("<div>" + mondayRoom[i].RoomNumber + "</div>");
-
-                        if (mondayRoom[i].RoomStatus === 0) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 1) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 2) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 3) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < teusdayRoom.length; i++) {
-                        //$("#Teusday-Room-Data").append("<div>" + teusdayRoom[i].RoomNumber + "</div>");
-                        if (teusdayRoom[i].RoomStatus === 0) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 1) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 2) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 3) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < wednsdayRoom.length; i++) {
-                        //$("#Wednsday-Room-Data").append("<div>" + wednsdayRoom[i].RoomNumber + "</div>");
-
-                        if (wednsdayRoom[i].RoomStatus === 0) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 1) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 2) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 3) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < tursdayRoom.length; i++) {
-                        //$("#Thursday-Room-Data").append("<div>" + tursdayRoom[i].RoomNumber + "</div>");
-
-                        if (tursdayRoom[i].RoomStatus === 0) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 1) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 2) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 3) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < fridayRoom.length; i++) {
-                        //$("#Friday-Room-Data").append("<div>" + fridayRoom[i].RoomNumber + "</div>");
-
-
-                        if (fridayRoom[i].RoomStatus === 0) {
-                            $("#Friday-Room-Data").append("<div onClick=ShowDetail("+"'"+ fridayRoom[i].Id +"'"+") class='btn btn-success Room-Btn' >" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 1) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 2) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 3) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
+                    var FridayRoomData = "Friday-Room-Data";
+                    SetRoomData(fridayRoom, FridayRoomData);
                 }
             });
 
             $("#btnNextWeek").click(function() {
-
                 NextWeek();
-
             });
 
             $("#btnPreviosWeek").click(function() {
-
                 PreviousWeek();
-
             });
         }
 
@@ -510,20 +490,20 @@
                         }
                     }
 
-                // ================== Set week header date =====================
-                $("#saturday-date").text(result3.weekHeaderDate[0]);
-                $("#sunday-date").text(result3.weekHeaderDate[1]);
-                $("#monday-date").text(result3.weekHeaderDate[2]);
-                $("#tuesday-date").text(result3.weekHeaderDate[3]);
-                $("#wendsday-date").text(result3.weekHeaderDate[4]);
-                $("#thursday-date").text(result3.weekHeaderDate[5]);
-                $("#friday-date").text(result3.weekHeaderDate[6]);
+                    // ================== Set week header date =====================
+                    $("#saturday-date").text(result3.weekHeaderDate[0]);
+                    $("#sunday-date").text(result3.weekHeaderDate[1]);
+                    $("#monday-date").text(result3.weekHeaderDate[2]);
+                    $("#tuesday-date").text(result3.weekHeaderDate[3]);
+                    $("#wendsday-date").text(result3.weekHeaderDate[4]);
+                    $("#thursday-date").text(result3.weekHeaderDate[5]);
+                    $("#friday-date").text(result3.weekHeaderDate[6]);
 
-                // ================== Set month name =====================
-                $("#monthName").text(result3.monthName);
+                    // ================== Set month name =====================
+                    $("#monthName").text(result3.monthName);
 
-                // ================== Set Year =====================
-                $("#child-flex-calender-week > input").val(result3.year);
+                    // ================== Set Year =====================
+                    $("#child-flex-calender-week > input").val(result3.year);
 
 
                     // =================== Rooms details ======================
@@ -535,131 +515,26 @@
                     var tursdayRoom = result3.roomData.Thursday;
                     var fridayRoom = result3.roomData.Friday;
 
-                    for (var i = 0; i < saturdayRoom.length; i++) {
-                        if (saturdayRoom[i].RoomStatus === 0) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-success Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var saturdayRoomData = "Saturday-Room-Data";
+                    SetRoomData(saturdayRoom, saturdayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 1) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var SundayRoomData = "Sunday-Room-Data";
+                    SetRoomData(sundayRoom, SundayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 2) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var MondayRoomData = "Monday-Room-Data";
+                    SetRoomData(mondayRoom, MondayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 3) {
-                            $("#Saturday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var TeusdayRoomData = "Teusday-Room-Data";
+                    SetRoomData(teusdayRoom, TeusdayRoomData);
 
-                        }
-                    }
+                    var WednsdayRoomData = "Wednsday-Room-Data";
+                    SetRoomData(wednsdayRoom, WednsdayRoomData);
 
-                    for (var i = 0; i < sundayRoom.length; i++) {
-                        //$("#Sunday-Room-Data").append("<div>" + sundayRoom[i].RoomNumber + "</div>");
+                    var TursdayRoomData = "Thursday-Room-Data";
+                    SetRoomData(tursdayRoom, TursdayRoomData);
 
-                        if (sundayRoom[i].RoomStatus === 0) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 1) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 2) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 3) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < mondayRoom.length; i++) {
-                        //$("#Monday-Room-Data").append("<div>" + mondayRoom[i].RoomNumber + "</div>");
-
-                        if (mondayRoom[i].RoomStatus === 0) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 1) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 2) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 3) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < teusdayRoom.length; i++) {
-                        //$("#Teusday-Room-Data").append("<div>" + teusdayRoom[i].RoomNumber + "</div>");
-                        if (teusdayRoom[i].RoomStatus === 0) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 1) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 2) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 3) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < wednsdayRoom.length; i++) {
-                        //$("#Wednsday-Room-Data").append("<div>" + wednsdayRoom[i].RoomNumber + "</div>");
-
-                        if (wednsdayRoom[i].RoomStatus === 0) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 1) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 2) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 3) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < tursdayRoom.length; i++) {
-                        //$("#Thursday-Room-Data").append("<div>" + tursdayRoom[i].RoomNumber + "</div>");
-
-                        if (tursdayRoom[i].RoomStatus === 0) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 1) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 2) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 3) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < fridayRoom.length; i++) {
-                        //$("#Friday-Room-Data").append("<div>" + fridayRoom[i].RoomNumber + "</div>");
-
-
-                        if (fridayRoom[i].RoomStatus === 0) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 1) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 2) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 3) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-
+                    var FridayRoomData = "Friday-Room-Data";
+                    SetRoomData(fridayRoom, FridayRoomData);
                 }
             });
         }
@@ -771,134 +646,111 @@
                     var fridayRoom = result3.roomData.Friday;
 
 
-                    for (var i = 0; i < saturdayRoom.length; i++) {
-                        if (saturdayRoom[i].RoomStatus === 0) {
-                        $("#Saturday-Room-Data").append("<div class='btn btn-success Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var saturdayRoomData = "Saturday-Room-Data";
+                    SetRoomData(saturdayRoom, saturdayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 1) {
-                        $("#Saturday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var SundayRoomData = "Sunday-Room-Data";
+                    SetRoomData(sundayRoom, SundayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 2) {
-                        $("#Saturday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var MondayRoomData = "Monday-Room-Data";
+                    SetRoomData(mondayRoom, MondayRoomData);
 
-                        }else if (saturdayRoom[i].RoomStatus === 3) {
-                        $("#Saturday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + saturdayRoom[i].RoomNumber + "</div></br>");
+                    var TeusdayRoomData = "Teusday-Room-Data";
+                    SetRoomData(teusdayRoom, TeusdayRoomData);
 
-                        }
-                    }
+                    var WednsdayRoomData = "Wednsday-Room-Data";
+                    SetRoomData(wednsdayRoom, WednsdayRoomData);
 
-                    for (var i = 0; i < sundayRoom.length; i++) {
-                        //$("#Sunday-Room-Data").append("<div>" + sundayRoom[i].RoomNumber + "</div>");
+                    var TursdayRoomData = "Thursday-Room-Data";
+                    SetRoomData(tursdayRoom, TursdayRoomData);
 
-                        if (sundayRoom[i].RoomStatus === 0) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 1) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 2) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (sundayRoom[i].RoomStatus === 3) {
-                            $("#Sunday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + sundayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < mondayRoom.length; i++) {
-                        //$("#Monday-Room-Data").append("<div>" + mondayRoom[i].RoomNumber + "</div>");
-
-                        if (mondayRoom[i].RoomStatus === 0) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 1) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 2) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (mondayRoom[i].RoomStatus === 3) {
-                            $("#Monday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + mondayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < teusdayRoom.length; i++) {
-                        //$("#Teusday-Room-Data").append("<div>" + teusdayRoom[i].RoomNumber + "</div>");
-                        if (teusdayRoom[i].RoomStatus === 0) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 1) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 2) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (teusdayRoom[i].RoomStatus === 3) {
-                            $("#Teusday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + teusdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < wednsdayRoom.length; i++) {
-                        //$("#Wednsday-Room-Data").append("<div>" + wednsdayRoom[i].RoomNumber + "</div>");
-
-                        if (wednsdayRoom[i].RoomStatus === 0) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 1) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 2) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (wednsdayRoom[i].RoomStatus === 3) {
-                            $("#Wednsday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + wednsdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < tursdayRoom.length; i++) {
-                        //$("#Thursday-Room-Data").append("<div>" + tursdayRoom[i].RoomNumber + "</div>");
-
-                        if (tursdayRoom[i].RoomStatus === 0) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 1) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 2) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (tursdayRoom[i].RoomStatus === 3) {
-                            $("#Thursday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + tursdayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
-                    for (var i = 0; i < fridayRoom.length; i++) {
-                        //$("#Friday-Room-Data").append("<div>" + fridayRoom[i].RoomNumber + "</div>");
-
-
-                        if (fridayRoom[i].RoomStatus === 0) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-success Room-Btn' >" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 1) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-info Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 2) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-warning Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }else if (fridayRoom[i].RoomStatus === 3) {
-                            $("#Friday-Room-Data").append("<div class='btn btn-danger Room-Btn'>" + fridayRoom[i].RoomNumber + "</div><br/>");
-
-                        }
-                    }
-
+                    var FridayRoomData = "Friday-Room-Data";
+                    SetRoomData(fridayRoom, FridayRoomData);
                 }
             });
         }
-
     </script>
 
+    <script>
+        $(function () {
+            $("#customersInHotelGrid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Admin/Room/CustomersInHotel"
+                    },
+                    pageSize: 20
+                },
+                filterable: true,
+                height: 450,
+                width: 'auto',
+                groupable: true,
+                sortable: true,
+                selectable: true,
+                pageable: {
+                    refresh: true,
+                    pageSize: 20,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "FirstName",
+                        title: "نام",
+                        width: 180
+                    },
+                    {
+                        field: "LastName",
+                        title: "نام خانوادگی",
+                        width: 180
+                    },
+                    {
+                        field: "NationalNo",
+                        title: "کد ملی",
+                        width: 180
+                    },
+                    {
+                        field: "PassportNo",
+                        title: "شماره پاسپورت",
+                        width: 180
+                    }
+                ]
+            });
+        });
+
+        $("#customersInHotelGrid").on("dblclick",
+            "tr.k-state-selected",
+            function (e) {
+
+                $("#PassengerDetails").iziModal({
+                    title: "مشخصات",
+                    subtitle: "مشخصات مسافر و ثبت اطلاعات بیشتر",
+                    headerColor: '#343a40',
+                    rtl: true,
+                    fullscreen: true,
+                    width: 600
+                });
+
+
+                var grid = $("#customersInHotelGrid").data("kendoGrid");
+                var row = grid.dataItem(grid.select());
+                var customerId = row.CustomerId;
+                var passengerId = row.PassengerId;
+
+                $("#customerHiddenId").val(customerId);
+                $("#passengerHiddenId").val(passengerId);
+
+                e.preventDefault();
+
+                // Open the Detail modal using ajax and partial view
+                $.ajax({
+                    dataType: "HTML",
+                    type: "POST",
+                    url: "/Admin/Room/_PassengerDetails?passengerId=" + passengerId,
+                    success: function (result) {
+                        $("#PassengerDetails").iziModal('setContent', result);
+                        $("#PassengerDetails").iziModal('open');
+                        $("#PassengerDetails").removeAttr("hidden", "hidden");
+                    }
+                });
+            });
+    </script>
 }
