@@ -6,11 +6,18 @@
 
 
 <style>
-    #btn-RemoveCustomer {
+    #btn-RemoveRoom {
         background-color: #ff0043;
-        border-color: #daeffd;
+        border-color: #F7275B;
         width: 110px;
-        margin-right: 20px;
+        color: #444
+    }
+
+    #PriceDiv {
+        background-color: #fac037;
+        border-color: #fabc2a;
+        width: 110px;
+        color: #444;
     }
 </style>
 
@@ -19,7 +26,7 @@
 <!--============ Button crete room ============-->
 <div class="row">
     <div class="col col-md-6">
-        <input id="btnCreateRoom" type="button" value="ثبت مسافر" class="btn btn-dark" style="width: 15em" />
+        <input id="btnCreateRoom" type="button" value="ثبت اتاق" class="btn fa-remo" style="width: 300px; color: white; background-color: #3f51b5" />
     </div>
 </div>
 
@@ -32,11 +39,12 @@
     <div id="createRoomPartial"></div>
 </div>
 
+<div id="roomPriceModal" hidden></div>
+
 
 
 @section Scripts
 {
-
     <!--============ Customer Grid ============-->
     <script>
 
@@ -54,7 +62,7 @@
                 width: 'auto',
                 groupable: true,
                 sortable: true,
-                selectable: true,
+                selectable: false,
                 pageable: {
                     refresh: true,
                     pageSize: 20,
@@ -64,31 +72,40 @@
                     {
                         field: "RoomNumber",
                         title: "شماره اتاق",
-                        width: 180
+                        width: "100px"
                     },
                     {
                         field: "SingleBedCount",
-                        title: "تعداد تخت خواب یک نفره",
-                        width: 180
+                        title: " تخت  یک نفره",
+                        width: "130px"
                     },
                     {
                         field: "DoubleBedCount",
-                        title: "تعداد تخت خواب دو نفره",
-                        width: 180
+                        title: " تخت  دو نفره",
+                        width: "130px"
                     },
                     {
                         field: "Rate",
                         title: "امتیاز",
-                        width: 180
+                        width: "130px"
                     },
                     {
                         field: "Entertainment",
                         title: "سرگرمی",
-                        width: 180
+                        width: "200px"
                     },
                     {
                         field: "Description",
                         title: "توضیحات",
+                        width: "200px"
+                    },
+                    {
+                        field: "Id",
+                        title: " ",
+                        filterable: false,
+                        sortable: false,
+                        groupable: false,
+                        template: '<div id="btn-RemoveRoom" class="btn" onClick="remove_Room(' + "'#=Id#'" + ')"><span>حذف</span><span>&nbsp;</span><i class="fa fa-remove"></i></div>',
                         width: 180
                     },
                     {
@@ -97,7 +114,7 @@
                         filterable: false,
                         sortable: false,
                         groupable: false,
-                        template: '<button id="btn-RemoveCustomer" class="btn btn-primary" onClick="remove_Room(' + "'#=Id#'" + ')">حذف</button>',
+                        template: '<div class="btn" id="PriceDiv" onClick="SetPrice(' + "'#=Id#'" + ')"><span>ثبت قیمت</span><span>&nbsp;</span><i class="fa fa-dollar"></i></div>',
                         width: 180
                     }
                 ]
@@ -133,7 +150,7 @@
         })
     </script>
     <!--============ /Open create customer partial using ajax ============-->
-    <!--============ Remove Customer ============-->
+    <!--============ Remove Room ============-->
     <script>
 
         function remove_Room(Id) {
@@ -193,6 +210,34 @@
         }
 
     </script>
-    <!--============ /Remove Customer ============-->
+    <!--============ /Remove Room ============-->
+    <!--============ Set Price for Room ============-->
+    <script>
+        function SetPrice(roomId) {
 
+            $("#roomPriceModal").iziModal({
+                title: "ثبت قیمت",
+                subtitle: "ثبت قیمت اتاق برای تاریخ مشخص",
+                headerColor: '#494f5c',
+                rtl: true,
+                fullscreen: false,
+                width: 700,
+                zindex: 2000
+            });
+
+            $.ajax({
+                dataType: "HTML",
+                //url: "/Admin/Room/_CheckingDetail?checkingId=" + $("#CheckingHiddenId").val() + "&roomId=" + $("#RoomHiddenId").val(),
+                url: "/Admin/Room/_RoomPrice",
+                success: function(result) {
+                    $("#roomPriceModal").iziModal('setContent', result);
+
+                    $("#roomPriceModal").iziModal('open');
+                    $("#roomPriceModal").removeAttr("hidden", "hidden");
+                }
+            });
+
+        }
+    </script>
+    <!--============ /Set Price for Room ============-->
 }

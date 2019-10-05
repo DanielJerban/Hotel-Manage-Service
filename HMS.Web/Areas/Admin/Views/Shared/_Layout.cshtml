@@ -62,9 +62,13 @@
             src: url('/fonts/IranSans/IRANSansWeb.woff') format('woff'), url('/fonts/IranSans/IRANSansWeb.ttf') format('truetype');
         }
 
-        body {
-            font-family: 'Iran Sans' !important;
+        @@font-face {
+            font-family: 'Iran-Sans-fa';
+            src: url('/fonts/IranSans/IRANSansWeb(FaNum).eot');
+            src: url('/fonts/IranSans/IRANSansWeb(FaNum).woff') format('woff'), url('/fonts/IranSans/IRANSansWeb(FaNum).ttf') format('truetype');
         }
+
+    body { font-family: 'Iran-Sans-fa' !important; }
     </style>
 
     <!--KENDO-->

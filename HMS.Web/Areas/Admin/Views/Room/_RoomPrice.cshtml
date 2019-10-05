@@ -1,0 +1,94 @@
+﻿<!-- Persian DateTime picker -->
+<script src="~/DatePicker/popper.min.js"></script>
+<script src="~/DatePicker/bootstrap.min.js"></script>
+<link href="~/DatePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+<link href="~/Content/Tab.css" rel="stylesheet" />
+<script src="~/Scripts/Tab.js"></script>
+
+
+
+<style>
+
+    div {
+        font-family: 'Iran Sans' !important;
+    }
+
+    #Tab1 {
+        padding: 0 !important;
+    }
+
+    label {
+        padding-right: 30px;
+    }
+</style>
+
+
+
+<div class="tab">
+    <button class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab2')">مسافرین همراه</button>
+    <button id="btnInformation" class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab1')">اطلاعات رزرو</button>
+</div>
+
+
+<div id="Tab1" class="tabcontent">
+    <div class="d-flex justify-content-center">
+        <div style="padding: 8px 16px; width: 450px" class="p-6">
+            <div class="form-group">
+                <label>از تاریخ: </label>
+                <div class="form-inline" style="padding-right: 40px;">
+                    <i class="input-group-text cursor-pointer fa fa-calendar" style="height: 30px; vertical-align: middle;" id="date4"></i>
+                    <input readonly="readonly" type="text" id="inputDate4" style="width: 300px; height: 30px;" class="form-control" aria-label="date4"
+                           aria-describedby="date4">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>تا تاریخ: </label>
+                <div class="form-inline" style="padding-right: 40px;">
+                    <i class="input-group-text cursor-pointer fa fa-calendar" style="height: 30px;" id="date5"></i>
+                    <input readonly="readonly" type="text" id="inputDate5" style="width: 300px; height: 30px;" class="form-control" aria-label="date5"
+                           aria-describedby="date5">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>قیمت: </label>
+                <div class="form-inline" style="padding-right: 40px;">
+                    <i class="input-group-text fa fa-dollar" style="height: 30px;"></i>
+                    <input type="number" id="txtRoomPrice" style="height: 30px; width: 300px; font-family:'Iran-Sans-fa'" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input id="btnConfirmPrice" type="button" value="ثبت" class="btn btn-block" style="background-color: #3f51b5; color: rgb(255, 255, 255); border-color: #e6e6e6;" />
+</div>
+
+<div id="Tab2" class="tabcontent">
+
+</div>
+
+
+
+<!-- Persian Date picker initialization -->
+<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+<script type="text/javascript">
+
+    $('#date4').MdPersianDateTimePicker({
+        targetTextSelector: '#inputDate4',
+        fromDate: true,
+        enableTimePicker: false,
+        groupId: 'rangeSelector1',
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+    $('#date5').MdPersianDateTimePicker({
+        targetTextSelector: '#inputDate5',
+        toDate: true,
+        groupId: 'rangeSelector1',
+        placement: 'top',
+        enableTimePicker: false,
+        dateFormat: 'yyyy-MM-dd',
+        textFormat: 'yyyy-MM-dd',
+        disableBeforeToday: true,
+    });
+</script>

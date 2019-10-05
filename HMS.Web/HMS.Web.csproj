@@ -1361,6 +1361,7 @@
     <Content Include="Areas\Admin\Views\Room\_PassengerDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Room\_CreateContact.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\_UpdateCustomer.cshtml" />
+    <Content Include="Areas\Admin\Views\Room\_RoomPrice.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Dashboard\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Dashboard\dataTables.bootstrap4.min.js" />

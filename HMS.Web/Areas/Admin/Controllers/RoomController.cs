@@ -32,11 +32,6 @@ namespace HMS.Web.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult MonthlyCalender()
-        {
-            return View();
-        }
-
         #endregion
 
         #region Room Operations
@@ -226,6 +221,12 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Room Pricing
+
+        
+
+        #endregion
+
         #region Partial Views 
 
         public PartialViewResult _CreateRoom()
@@ -371,6 +372,11 @@ namespace HMS.Web.Areas.Admin.Controllers
         }
 
         public PartialViewResult _CreateContact()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult _RoomPrice()
         {
             return PartialView();
         }
