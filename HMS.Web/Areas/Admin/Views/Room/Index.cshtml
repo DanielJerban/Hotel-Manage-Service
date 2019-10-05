@@ -34,13 +34,15 @@
 <div id="roomGrid" class="k-rtl"></div>
 
 
-
+<!-- Modals -->
 <div id="createRoomModal" hidden>
     <div id="createRoomPartial"></div>
 </div>
-
 <div id="roomPriceModal" hidden></div>
+<!-- /Modals -->
 
+
+<input type="hidden" id="roomHiddenIdForPrice" />
 
 
 @section Scripts
@@ -214,6 +216,8 @@
     <!--============ Set Price for Room ============-->
     <script>
         function SetPrice(roomId) {
+
+            $("#roomHiddenIdForPrice").val(roomId);
 
             $("#roomPriceModal").iziModal({
                 title: "ثبت قیمت",

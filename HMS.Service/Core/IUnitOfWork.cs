@@ -19,6 +19,7 @@ namespace HMS.Service.Core
         IFellowRepo Fellow { get; }
         IReserve_RoomRepo Reserve_Room { get; }
         ICheckingRepo Checking { get; }
+        IRoomPriceRepo RoomPrice { get; }
         
         /// <summary>
         /// Save changes on database 

@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201909300926529_initial.Designer.cs">
       <DependentUpon>201909300926529_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910051138362_updateRoomPrice.cs" />
+    <Compile Include="Migrations\201910051138362_updateRoomPrice.Designer.cs">
+      <DependentUpon>201910051138362_updateRoomPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909300926529_initial.resx">
       <DependentUpon>201909300926529_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910051138362_updateRoomPrice.resx">
+      <DependentUpon>201910051138362_updateRoomPrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

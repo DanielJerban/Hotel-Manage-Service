@@ -83,6 +83,7 @@
     <Compile Include="Core\DTOs\Hotel\CreateHotelDto.cs" />
     <Compile Include="Core\DTOs\Hotel\GetHotelsDto.cs" />
     <Compile Include="Core\DTOs\Room\RoomCheckingDetailDto.cs" />
+    <Compile Include="Core\DTOs\Room\RoomPriceDto.cs" />
     <Compile Include="Core\DTOs\Room\RoomReserveDetailDto.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerAccountViewModel.cs" />
     <Compile Include="Core\ViewModels\CreateCustomerViewModel.cs" />

@@ -223,7 +223,52 @@ namespace HMS.Web.Areas.Admin.Controllers
 
         #region Room Pricing
 
-        
+        public ActionResult SetRoomPrice(RoomPriceDto model)
+        {
+            PersianDateTime persianFromDate = PersianDateTime.Parse(model.FromDate);
+            PersianDateTime persianToDate = PersianDateTime.Parse(model.ToDate);
+            Guid roomGuid = Guid.Parse(model.RoomId);
+
+            DateTime fromDate = persianFromDate.ToDateTime();
+            DateTime toDate = persianToDate.ToDateTime();
+
+            var dateRange = toDate.Subtract(fromDate).Days + 1;
+
+            List<RoomPrice> roomPriceList = new List<RoomPrice>();
+
+            for (int i = 0; i < dateRange; i++)
+            {
+                var nextDay = persianFromDate.AddDays(i);
+
+                DateTime nextDateTime = nextDay.ToDateTime();
+
+                var roomPriceDB = uow.RoomPrice.Get(c => c.Date == nextDateTime && c.RoomId == roomGuid)
+                    .SingleOrDefault();
+
+                if (roomPriceDB == null)
+                {
+                    RoomPrice roomPrice = new RoomPrice()
+                    {
+                        Date = nextDay.ToDateTime(),
+                        Price = model.Price,
+                        RoomId = roomGuid
+                    };
+
+                    uow.RoomPrice.Add(roomPrice);
+
+                    roomPriceList.Add(roomPrice);
+                }
+            }
+
+            if (roomPriceList.Count < 1)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+            uow.Complete();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

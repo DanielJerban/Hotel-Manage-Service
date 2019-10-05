@@ -25,8 +25,8 @@
 
 
 <div class="tab">
-    <button class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab2')">مسافرین همراه</button>
-    <button id="btnInformation" class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab1')">اطلاعات رزرو</button>
+    <button class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab2')">تقویم ماهانه</button>
+    <button id="btnInformation" class="tablinks" style="width:50%;" onclick="openTab(event, 'Tab1')">ثبت قیمت</button>
 </div>
 
 
@@ -66,6 +66,48 @@
 
 </div>
 
+
+<script>
+    $("#btnConfirmPrice").click(function() {
+
+        $.ajax({
+            url: "/Admin/Room/SetRoomPrice",
+            type: "POST",
+            data: {
+                model: {
+                    FromDate: $("#inputDate4").val(),
+                    ToDate: $("#inputDate5").val(),
+                    RoomId: $("#roomHiddenIdForPrice").val(),
+                    Price: $("#txtRoomPrice").val(),
+                }
+            },
+            success: function (result) {
+                if (result === true) {
+                    iziToast.success({
+                        position: "bottomRight",
+                        pauseOnHover: false,
+                        timeout: 3000,
+                        displayMode: 1,
+                        rtl: true,
+                        title: "بسیار عالی",
+                        message: "قیمت اتاق در بازه زمانی مد نظر ثبت شد"
+                    });
+                    // close the modal
+                    $("#roomPriceModal").iziModal("close");
+                } else {
+                    iziToast.warning({
+                        position: "bottomRight",
+                        pauseOnHover: false,
+                        timeout: 3000,
+                        displayMode: 1,
+                        rtl: true,
+                        message: "این اتاق در تاریخ مد نظر دارای قیمت می باشد!"
+                    });
+                }
+            }
+        });
+    })
+</script>
 
 
 <!-- Persian Date picker initialization -->
