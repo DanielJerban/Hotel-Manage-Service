@@ -3539,6 +3539,7 @@
     <Content Include="Views\Test\StrtRating.cshtml" />
     <Content Include="Views\Test\Upload.cshtml" />
     <Content Include="Views\Test\PersianDatePicker.cshtml" />
+    <Content Include="Views\Test\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

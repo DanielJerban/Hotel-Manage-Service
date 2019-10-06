@@ -270,6 +270,87 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult MonthlyCalender(int monthIndex)
+        {
+            List<string> monthDates = new List<string>();
+            List<int> monthDays = new List<int>();
+
+            PersianDateTime currentDate = PersianDateTime.Now;
+
+            PersianDateTime nextMonthDate = currentDate.AddMonths(monthIndex);
+
+            int monthRange = nextMonthDate.GetMonthDays;
+            int monthDay = nextMonthDate.Day;
+
+            //int daysAfterToday = monthRange - monthDay;
+            //int daysBeforeToday = monthRange - daysAfterToday;
+
+            PersianDateTime firstDateOfMonth = nextMonthDate.AddDays(-monthDay + 1);
+            DayOfWeek firstDayOfMonth = firstDateOfMonth.DayOfWeek;
+
+
+            switch (firstDayOfMonth)
+            {
+                case DayOfWeek.Saturday:
+                    break;
+                case DayOfWeek.Sunday:
+                    monthDates.Add("");
+                    break;
+                case DayOfWeek.Monday:
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    break;
+                case DayOfWeek.Tuesday:
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    break;
+                case DayOfWeek.Wednesday:
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    break;
+                case DayOfWeek.Thursday:
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    break;
+                case DayOfWeek.Friday:
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    monthDates.Add("");
+                    break;
+            }
+
+
+            for (int i = 0; i < monthRange; i++)
+            {
+                var nextDayDate = firstDateOfMonth.AddDays(i);
+                monthDates.Add(nextDayDate.ToShortDateString());
+            }
+
+            for (int i = 0; i < monthRange; i++)
+            {
+                var nextDay = firstDateOfMonth.AddDays(i).Day;
+                monthDays.Add(nextDay);
+            }
+
+            MonthlyCalenderViewModel vm = new MonthlyCalenderViewModel()
+            {
+                MonthPersianDates = monthDates,
+                MonthName = nextMonthDate.MonthName,
+                Year = nextMonthDate.Year.ToString()
+            };
+
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Partial Views 

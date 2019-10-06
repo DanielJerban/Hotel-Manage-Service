@@ -22,6 +22,74 @@
     }
 </style>
 
+<!-- Monthly Calender Style-->
+<style>
+
+    @@font-face {
+        font-family: 'Iran-Sans-fa';
+        src: url('/fonts/IranSans/IRANSansWeb(FaNum).eot');
+        src: url('/fonts/IranSans/IRANSansWeb(FaNum).woff') format('woff'), url('/fonts/IranSans/IRANSansWeb(FaNum).ttf') format('truetype');
+    }
+
+    /* General CSS */
+
+    html,
+    body,
+    input{
+        height: 100%;
+        /*font-family: "Iran-Sans" !important;*/
+        font-family: "Iran-Sans-fa" !important;
+    }
+
+    #monthName {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 0;
+    }
+
+    .calender-header {
+        background-color: #494f5c;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 20px;
+        font-size: 20px;
+        color: white;
+    }
+
+    tbody {
+        text-align: center;
+    }
+
+    .PriceInput {
+        text-align: center;
+        width: 100px;
+        padding-top: 5px;
+        font-size: 10px;
+    }
+
+    .changeMonth {
+        width: 170px;
+    }
+
+    #yearNumber {
+        font-size: 19px;
+        font-weight: bold;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .txtDate {
+        font-size: 20px;
+        color: #6c757d;
+    }
+
+    .table th, .table td {
+        padding: 5px !important; 
+    }
+
+</style>
+<!-- /Monthly Calender Style-->
+
 
 
 <div class="tab">
@@ -64,8 +132,177 @@
 
 <div id="Tab2" class="tabcontent">
 
+    <div class="d-flex justify-content-center" style="height:50%;">
+        <div class="p-3" style="padding: 0px !important;">
+            <span id="monthName" class="text-primary"></span>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="p-3">
+            <input type="button" class="btn btn-primary changeMonth" value="<-&nbsp;&nbsp;&nbsp;ماه قبل" id="btnPreviousMonth" />
+        </div>
+        <div class="p-3" style="width: 170px; text-align:center; vertical-align:middle;">
+            <span id="yearNumber" class="text-secondary"></span>
+        </div>
+        <div class="p-3">
+            <input type="button" class="btn btn-primary changeMonth" value="ماه بعد &nbsp;&nbsp;->" id="btnNextMonth" />
+        </div>
+    </div>
+
+
+    <div style="width: 800px; max-width: 800px;overflow-x: scroll;">
+        <table id="tblCalender" class="table table-bordered" style="width: 750px; padding: 10px;">
+            <thead class="calender-header">
+                <tr>
+                    <td>
+                        شنبه
+                    </td>
+                    <td>
+                        یک شنبه
+                    </td>
+                    <td>
+                        دو شنبه
+                    </td>
+                    <td>
+                        سه شنبه
+                    </td>
+                    <td>
+                        چهار شنبه
+                    </td>
+                    <td>
+                        پنج شنبه
+                    </td>
+                    <td>
+                        جمعه
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="tblCalender-body"></tbody>
+        </table>
+    </div>
+
 </div>
 
+
+<!-- Monthly Calender Tab -->
+<script>
+
+        var monthIndex = 0;
+
+        // ========================== Create Table ==============================
+        function CreateTable(date){
+            var d = 0;
+
+            var tbody = '';
+
+            for (var i = 0; i < 6; i++) { // rows
+                tbody += '<tr>';
+                for (var j = 0; j < 7; j++) { // cols
+                    //debugger;
+                    if (date[d] === undefined) {
+                        tbody += '<td></td>';
+                    } else {
+                        if(date[d] != '')
+                        tbody += ('<td>' + '<span class="txtDate">' + date[d].substring(8,10) + '</span>' + '<br/>' + '<input type="text" style="font-size:14px;" class="PriceInput" onchange="(' + "'" + date[d] + "'" + ')" />' + '</td>');
+                        else
+                        tbody += '<td></td>';
+                    }
+                    d++;
+                }
+                tbody += '</tr>';
+            }
+
+            $("#tblCalender-body").append(tbody);
+        };
+        // ========================== /Create Table ==============================
+
+
+        // ======================= Current Month =================================
+        $(function() {
+
+            monthIndexUI = 0;
+
+            $.ajax({
+                type: "JSON",
+                url: "/Admin/Room/MonthlyCalender",
+                data: {
+                    monthIndex: monthIndexUI
+                },
+                success: function(array) {
+                    var thisDate = array.MonthPersianDates;
+
+                    //=======================
+                    CreateTable(thisDate);
+                    //=======================
+
+                    $("#monthName").text(array.MonthName);
+                    $("#yearNumber").text(array.Year);
+                }
+            });
+
+            $(".clear").html('');
+        });
+        // ======================= /Current Month =================================
+
+
+        // ====================== Next Month ==============================
+        $("#btnNextMonth").click(function() {
+            monthIndexUI++;
+
+            $("#tblCalender-body").html('');
+
+            $.ajax({
+                type: "JSON",
+                url: "/Admin/Room/MonthlyCalender",
+                data: {
+                    monthIndex: monthIndexUI
+                },
+                success: function(array) {
+
+                    var thisDate = array.MonthPersianDates;
+
+                    //=======================
+                    CreateTable(thisDate);
+                    //=======================
+
+                    $("#monthName").text(array.MonthName);
+                    $("#yearNumber").text(array.Year);
+                }
+            });
+
+        });
+        // ====================== /Next Month ==============================
+
+        // ====================== Previous Month ==============================
+        $("#btnPreviousMonth").click(function() {
+            monthIndexUI--;
+
+            $("#tblCalender-body").html('');
+
+            $.ajax({
+                type: "JSON",
+                url: "/Admin/Room/MonthlyCalender",
+                data: {
+                    monthIndex: monthIndexUI
+                },
+                success: function(array) {
+
+                    var thisDate = array.MonthPersianDates;
+
+                    //=======================
+                    CreateTable(thisDate);
+                    //=======================
+
+                    $("#monthName").text(array.MonthName);
+                    $("#yearNumber").text(array.Year);
+                }
+            });
+        });
+        // ====================== /Previous Month ==============================
+
+</script>
+<!-- /Monthly Calender Tab -->
 
 <script>
     $("#btnConfirmPrice").click(function() {
@@ -108,7 +345,6 @@
         });
     })
 </script>
-
 
 <!-- Persian Date picker initialization -->
 <script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>

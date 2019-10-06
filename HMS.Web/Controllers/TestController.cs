@@ -23,5 +23,10 @@ namespace HMS.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Table()
+        {
+            return View();
+        }
     }
 }
