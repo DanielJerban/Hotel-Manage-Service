@@ -1,7 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -44,7 +46,6 @@
 
 <input type="hidden" id="roomHiddenIdForPrice" />
 
-
 @section Scripts
 {
     <!--============ Customer Grid ============-->
@@ -52,6 +53,7 @@
 
         // this is same as (document).ready(function(){})
         $(function () {
+
             $("#roomGrid").kendoGrid({
                 dataSource: {
                     transport: {
@@ -244,4 +246,8 @@
         }
     </script>
     <!--============ /Set Price for Room ============-->
+    <!-- Persian Date picker initialization -->
+    <script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+    
+
 }

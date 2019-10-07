@@ -270,22 +270,33 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult MonthlyCalender(int monthIndex)
+        public ActionResult MonthlyCalender(int monthIndex, string roomId)
         {
             List<string> monthDates = new List<string>();
-            List<int> monthDays = new List<int>();
+            List<string> monthPrice = new List<string>();
+
+
+            Guid roomGuid = Guid.Parse(roomId);
 
             PersianDateTime currentDate = PersianDateTime.Now;
+            DateTime currentDateTime = currentDate.ToDateTime();
 
             PersianDateTime nextMonthDate = currentDate.AddMonths(monthIndex);
+            DateTime nextMonthDateTime = currentDateTime.AddMonths(monthIndex);
 
             int monthRange = nextMonthDate.GetMonthDays;
             int monthDay = nextMonthDate.Day;
+            int monthDayDateTime = nextMonthDateTime.Day;
+
 
             //int daysAfterToday = monthRange - monthDay;
             //int daysBeforeToday = monthRange - daysAfterToday;
 
             PersianDateTime firstDateOfMonth = nextMonthDate.AddDays(-monthDay + 1);
+            DateTime firstDateOfMonthDateTime = firstDateOfMonth.ToDateTime();
+
+
+
             DayOfWeek firstDayOfMonth = firstDateOfMonth.DayOfWeek;
 
 
@@ -295,21 +306,35 @@ namespace HMS.Web.Areas.Admin.Controllers
                     break;
                 case DayOfWeek.Sunday:
                     monthDates.Add("");
+
+                    monthPrice.Add("");
                     break;
                 case DayOfWeek.Monday:
                     monthDates.Add("");
                     monthDates.Add("");
+
+                    monthPrice.Add("");
+                    monthPrice.Add("");
                     break;
                 case DayOfWeek.Tuesday:
                     monthDates.Add("");
                     monthDates.Add("");
                     monthDates.Add("");
+
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
                     break;
                 case DayOfWeek.Wednesday:
                     monthDates.Add("");
                     monthDates.Add("");
                     monthDates.Add("");
                     monthDates.Add("");
+
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
                     break;
                 case DayOfWeek.Thursday:
                     monthDates.Add("");
@@ -317,6 +342,12 @@ namespace HMS.Web.Areas.Admin.Controllers
                     monthDates.Add("");
                     monthDates.Add("");
                     monthDates.Add("");
+
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
                     break;
                 case DayOfWeek.Friday:
                     monthDates.Add("");
@@ -325,6 +356,13 @@ namespace HMS.Web.Areas.Admin.Controllers
                     monthDates.Add("");
                     monthDates.Add("");
                     monthDates.Add("");
+
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
+                    monthPrice.Add("");
                     break;
             }
 
@@ -335,20 +373,70 @@ namespace HMS.Web.Areas.Admin.Controllers
                 monthDates.Add(nextDayDate.ToShortDateString());
             }
 
+            // clear the time increaments 
+
             for (int i = 0; i < monthRange; i++)
             {
-                var nextDay = firstDateOfMonth.AddDays(i).Day;
-                monthDays.Add(nextDay);
+                var nextDayDate = firstDateOfMonthDateTime.AddDays(i);
+                var onlyDate = nextDayDate.ToShortDateString();
+                var nextDayDate2 = DateTime.Parse(onlyDate);
+
+                //DateTime nextDayDate = firstDateOfMonth2.AddDays(i).ToDateTime();
+                var roomPrice = uow.RoomPrice
+                    .Get(c => c.RoomId == roomGuid && c.Date == nextDayDate2).SingleOrDefault();
+
+                if (roomPrice == null)
+                {
+                    monthPrice.Add("");
+                }
+                else
+                {
+                    monthPrice.Add(roomPrice.Price.ToString());
+                }
             }
 
             MonthlyCalenderViewModel vm = new MonthlyCalenderViewModel()
             {
                 MonthPersianDates = monthDates,
+                MonthPrice = monthPrice,
                 MonthName = nextMonthDate.MonthName,
                 Year = nextMonthDate.Year.ToString()
             };
 
             return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdatePriceInDate(string price, string date, string roomId)
+        {
+            Guid roomGuid = Guid.Parse(roomId);
+            PersianDateTime persianDate = PersianDateTime.Parse(date);
+            DateTime Date = persianDate.ToDateTime();
+            double Price = Convert.ToDouble(price);
+
+            var roomPrice = uow.RoomPrice.Get(c => c.RoomId == roomGuid && c.Date == Date).SingleOrDefault();
+            if (roomPrice != null)
+            {
+                roomPrice.Price = Price;
+
+                uow.RoomPrice.Update(roomPrice);
+                uow.Complete();
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                RoomPrice roomPriceObj = new RoomPrice()
+                {
+                    RoomId = roomGuid,
+                    Date = Date,
+                    Price = Price
+                };
+
+                uow.RoomPrice.Add(roomPriceObj);
+                uow.Complete();
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
         }
 
         #endregion

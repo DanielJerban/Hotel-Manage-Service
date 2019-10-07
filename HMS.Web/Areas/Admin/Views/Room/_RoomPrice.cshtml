@@ -35,7 +35,7 @@
 
     html,
     body,
-    input{
+    input {
         height: 100%;
         /*font-family: "Iran-Sans" !important;*/
         font-family: "Iran-Sans-fa" !important;
@@ -84,9 +84,8 @@
     }
 
     .table th, .table td {
-        padding: 5px !important; 
+        padding: 5px !important;
     }
-
 </style>
 <!-- /Monthly Calender Style-->
 
@@ -185,13 +184,19 @@
 </div>
 
 
+<input type="hidden" id="hiddenPriceInputId"/>
+<input type="hidden" id="hiddenDate"/>
+
+@*<input type="text" name="name" data-date=date[d] onchange="functionname" value="" />*@ <!-- $(this).data("date") -->
+
+
 <!-- Monthly Calender Tab -->
 <script>
 
         var monthIndex = 0;
 
         // ========================== Create Table ==============================
-        function CreateTable(date){
+        function CreateTable(date, price){
             var d = 0;
 
             var tbody = '';
@@ -199,12 +204,24 @@
             for (var i = 0; i < 6; i++) { // rows
                 tbody += '<tr>';
                 for (var j = 0; j < 7; j++) { // cols
-                    //debugger;
                     if (date[d] === undefined) {
                         tbody += '<td></td>';
                     } else {
                         if(date[d] != '')
-                        tbody += ('<td>' + '<span class="txtDate">' + date[d].substring(8,10) + '</span>' + '<br/>' + '<input type="text" style="font-size:14px;" class="PriceInput" onchange="(' + "'" + date[d] + "'" + ')" />' + '</td>');
+                        {
+                        var dateId = date[d].substring(0,4) + date[d].substring(5,7) + date[d].substring(8,10);
+                        tbody +=
+                        ('<td>'
+                        + '<span class="txtDate">' + date[d].substring(8,10) + '</span>'
+                        + '<br/>'
+                        + '<input type="text" style="font-size:14px;" class="PriceInput" '
+                        //+ 'onchange="UpdatePriceInTime(' + "'" + date[d] + "'" + ')" '
+                        + 'onchange="UpdatePriceInTime()" '
+                        + 'onclick="SetValueInHidden(' + "'" + dateId + "','" + date[d] + "'" + ')" '
+                        + 'id="' + dateId + '" '
+                        + 'value="'+ price[d] +'"/>'
+                        + '</td>');
+                        }
                         else
                         tbody += '<td></td>';
                     }
@@ -227,13 +244,15 @@
                 type: "JSON",
                 url: "/Admin/Room/MonthlyCalender",
                 data: {
-                    monthIndex: monthIndexUI
+                    monthIndex: monthIndexUI,
+                    roomId: $("#roomHiddenIdForPrice").val()
                 },
                 success: function(array) {
                     var thisDate = array.MonthPersianDates;
+                    var thisPrice = array.MonthPrice;
 
                     //=======================
-                    CreateTable(thisDate);
+                    CreateTable(thisDate, thisPrice);
                     //=======================
 
                     $("#monthName").text(array.MonthName);
@@ -256,14 +275,16 @@
                 type: "JSON",
                 url: "/Admin/Room/MonthlyCalender",
                 data: {
-                    monthIndex: monthIndexUI
+                    monthIndex: monthIndexUI,
+                    roomId: $("#roomHiddenIdForPrice").val()
                 },
                 success: function(array) {
 
                     var thisDate = array.MonthPersianDates;
+                    var thisPrice = array.MonthPrice;
 
                     //=======================
-                    CreateTable(thisDate);
+                    CreateTable(thisDate, thisPrice);
                     //=======================
 
                     $("#monthName").text(array.MonthName);
@@ -284,14 +305,16 @@
                 type: "JSON",
                 url: "/Admin/Room/MonthlyCalender",
                 data: {
-                    monthIndex: monthIndexUI
+                    monthIndex: monthIndexUI,
+                    roomId: $("#roomHiddenIdForPrice").val()
                 },
                 success: function(array) {
 
                     var thisDate = array.MonthPersianDates;
+                    var thisPrice = array.MonthPrice;
 
                     //=======================
-                    CreateTable(thisDate);
+                    CreateTable(thisDate, thisPrice);
                     //=======================
 
                     $("#monthName").text(array.MonthName);
@@ -303,6 +326,41 @@
 
 </script>
 <!-- /Monthly Calender Tab -->
+
+<!-- Update Price from Calender -->
+<script>
+
+    function UpdatePriceInTime(e)
+    {
+        var thisId = $("#hiddenPriceInputId").val();
+
+        var price = $("#" + thisId ).val();
+        var date = $("#hiddenDate").val();
+        var roomId = $("#roomHiddenIdForPrice").val();
+        
+    debugger;
+        $.ajax({
+            type: "JSON",
+            url: "/Admin/Room/UpdatePriceInDate",
+            data:{
+                price: price,
+                date: date,
+                roomId: roomId
+            },
+            success: function(){
+                $("#" + thisId).css("background-color", "#80ffb8");
+            }    
+        });
+    }
+
+    function SetValueInHidden(dateId , date)
+    {
+        $("#hiddenPriceInputId").val(dateId);
+        $("#hiddenDate").val(date);
+    }
+    
+</script>
+<!-- /Update Price from Calender -->
 
 <script>
     $("#btnConfirmPrice").click(function() {
@@ -346,8 +404,6 @@
     })
 </script>
 
-<!-- Persian Date picker initialization -->
-<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
 <script type="text/javascript">
 
     $('#date4').MdPersianDateTimePicker({
@@ -357,7 +413,7 @@
         groupId: 'rangeSelector1',
         dateFormat: 'yyyy-MM-dd',
         textFormat: 'yyyy-MM-dd',
-        disableBeforeToday: true,
+        disableBeforeToday: false,
     });
     $('#date5').MdPersianDateTimePicker({
         targetTextSelector: '#inputDate5',
@@ -367,6 +423,6 @@
         enableTimePicker: false,
         dateFormat: 'yyyy-MM-dd',
         textFormat: 'yyyy-MM-dd',
-        disableBeforeToday: true,
+        disableBeforeToday: false,
     });
 </script>

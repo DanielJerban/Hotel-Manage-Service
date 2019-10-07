@@ -9,6 +9,7 @@ namespace HMS.Model.Core.ViewModels
     public class MonthlyCalenderViewModel
     {
         public List<string> MonthPersianDates { get; set; }
+        public List<string> MonthPrice { get; set; }
         public string MonthName { get; set; }
         public string Year { get; set; }
     }
