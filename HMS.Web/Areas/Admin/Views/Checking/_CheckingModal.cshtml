@@ -35,6 +35,12 @@
     <div id="FreeRoomGridParentDiv">
         <div id="FreeRoomsGrid" class="k-rtl"></div>
     </div>
+
+    <div class="row" style="padding-right: 10px;">
+        <h4 style="font-family: Iran-Sans-fa">مبلغ قابل پرداخت: </h4>
+        <h5 style="font-family: Iran-Sans-fa; padding-right: 10px;" id="checkingTotalPrice" class="text-primary"></h5>
+        <h5 style="font-family: Iran-Sans-fa; padding-right: 10px;" class="text-primary">تومان</h5>
+    </div>
 </div>
 
 <div id="Tab2" class="tabcontent">
@@ -51,11 +57,47 @@
 <!--============= IziModal ===============-->
 <div id="CreateFellowModal" hidden></div>
 <!--============= /IziModal===============-->
-<!-- Persian Date picker initialization -->
-<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+
 
 <!--==================== Fellow Customer =====================-->
 <script>
+
+    var selectedRoomId;
+
+    function ShowReservePrice(fromDate, toDate, roomId)
+    {
+        $.ajax({
+                type: "JSON",
+                url: "/Admin/Checking/CalcualteReservePrice",
+                data:{
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    roomId: roomId
+                },
+                success: function(reservePrice){
+                    $("#checkingTotalPrice").text(reservePrice);
+                }
+            });
+    }
+
+
+    $("#inputFromDate").change(function(){
+        var fromDate = $("#inputFromDate").val();
+        var toDate = $("#inputToDate").val();
+
+        if(toDate !== "")
+            ShowReservePrice(fromDate, toDate, selectedRoomId);
+    });
+
+    $("#inputToDate").change(function(){
+        var fromDate = $("#inputFromDate").val();
+        var toDate = $("#inputToDate").val();
+
+        if(fromDate !== "")
+            ShowReservePrice(fromDate, toDate, selectedRoomId);
+    });
+
+
     $(function () {
 
         //<!--==================== /Fellow Customer =====================-->
@@ -146,6 +188,18 @@
     //<!--==================== Free Rooms =====================-->
     freeRoomGrid("#FreeRoomsGrid");
 
+    function onChangeRoom(e){
+        var grid = $("#FreeRoomsGrid").data("kendoGrid");
+        var dataItem = grid.dataItem(grid.select());
+        selectedRoomId = dataItem.Id;
+
+
+        var fromDate = $("#inputFromDate").val();
+        var toDate = $("#inputToDate").val();
+
+        ShowReservePrice(fromDate, toDate, selectedRoomId);
+    }
+
     var selectedRoomId;
     function freeRoomGrid(ID) {
 
@@ -162,6 +216,7 @@
             groupable: true,
             sortable: true,
             selectable: true,
+            change: onChangeRoom,
             pageable: {
                 refresh: true,
                 pageSize: 20,

@@ -10,7 +10,7 @@
             <div class="input-group mb-3">
                 @Html.TextBoxFor(c => c.RoomNumber, new { @class = "form-control form-control-lg", placeholder = "شماره اتاق", style = "text-align:right;", id = "txt-RoomNumber" })
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-sort-numeric-up"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-sort-numeric-up"></i></span>
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
             <div class="input-group mb-3">
                 @Html.TextBoxFor(c => c.Rate, new { type = "number", @class = "form-control form-control-lg", placeholder = "امتیاز", style = "text-align:right;", id = "txt-Rate" })
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-percent"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-percent"></i></span>
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
             <div class="input-group mb-3">
                 @Html.TextBoxFor(c => c.SingleBedCount, new { type = "number", @class = "form-control form-control-lg", placeholder = "تعداد تخت یک نفره", style = "text-align:right;", id = "txt-SingleBedCount" })
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-bed"></i></span>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
             <div class="input-group mb-3">
                 @Html.TextBoxFor(c => c.DoubleBedCount, new { type = "number", @class = "form-control form-control-lg", placeholder = "تعداد تخت دو نفره", style = "text-align:right;", id = "txt-DoubleBedCount" })
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-bed"></i></span>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                 @Html.DropDownList("HotelId", null, htmlAttributes: new { @class = "form-control", style = "height:40px;", Id = "HotelId" })
 
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-home"></i></span>
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-home"></i></span>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
             <div class="input-group mb-3">
                 @Html.TextAreaFor(c => c.Entertainment, new { @class = "form-control form-control-lg", placeholder = "سرگرمی ها", style = "text-align:right;", id = "txt-Entertainment" })
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-audio-description"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-audio-description"></i></span>
                 </div>
 
             </div>
@@ -59,15 +59,13 @@
             <div class="input-group mb-3">
                 @Html.TextAreaFor(c => c.Description, new { @class = "form-control form-control-lg", placeholder = "توضیحات", style = "text-align:right;", id = "txt-Desc" })
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-audio-description"></i></span>
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-audio-description"></i></span>
                 </div>
             </div>
 
         </div>
     </div>
 </form>
-
-<hr />
 
 <div id="Upload" class="tabcontent">
     <form id="myform">
@@ -82,7 +80,7 @@
     </form>
 </div>
 
-<input id="bntCreateRoom" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #13a394; color: white; font-weight: 300; font-size: 16px" />
+<input id="bntCreateRoom" type="button" value="ثبت اطلاعات" class="btn btn-block" style="background-color: #3f51b5; color: white; font-weight: 300; font-size: 16px" />
 
 
 <!-- Send an ajax to controller to create new customer-->

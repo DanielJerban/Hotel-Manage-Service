@@ -170,6 +170,49 @@ namespace HMS.Web.Areas.Admin.Controllers
             return Json(uow.Checking.GetCheckings(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult CalcualteReservePrice(string fromDate, string toDate, string roomId)
+        {
+            double price = 0;
+
+            if (roomId == null)
+            {
+                return Json(price.ToString(), JsonRequestBehavior.AllowGet);
+            }
+
+            PersianDateTime persianFromDate = PersianDateTime.Parse(fromDate);
+            DateTime FromDate = persianFromDate.ToDateTime();
+
+            PersianDateTime persianToDate = PersianDateTime.Parse(toDate);
+            DateTime ToDate = persianToDate.ToDateTime();
+
+            int dateRange = ToDate.Subtract(FromDate).Days + 1;
+
+            Guid roomGuid = Guid.Parse(roomId);
+            var room = uow.RoomPrice.Get(c => c.RoomId == roomGuid && c.Date == FromDate).SingleOrDefault();
+
+            if (room == null) // The room does not have any price set
+            {
+                RoomPrice roomPrice = new RoomPrice()
+                {
+                    RoomId = roomGuid,
+                    Date = FromDate,
+                    Price = 100000
+                };
+
+                uow.RoomPrice.Add(roomPrice);
+                uow.Complete();
+
+                price += (roomPrice.Price * dateRange);
+            }
+            else
+            {
+                price += (room.Price * dateRange);
+            }
+
+
+            return Json(price.ToString(), JsonRequestBehavior.AllowGet);
+        }
+
 
 
         #region Parital views

@@ -1,8 +1,29 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+<style>
+
+    @@font-face {
+        font-family: 'Iran-Sans-fa';
+        src: url('/fonts/IranSans/IRANSansWeb(FaNum).eot');
+        src: url('/fonts/IranSans/IRANSansWeb(FaNum).woff') format('woff'), url('/fonts/IranSans/IRANSansWeb(FaNum).ttf') format('truetype');
+    }
+
+    /* General CSS */
+
+    html,
+    body {
+        height: 100%;
+        /*font-family: "Iran-Sans" !important;*/
+        font-family: "Iran-Sans-fa" !important;
+    }
+</style>
+
 
 <!--==================== References =====================-->
 <link href="~/Content/Tab.css" rel="stylesheet" />
@@ -144,4 +165,6 @@
     <!--==================== References =====================-->
     <script src="~/Scripts/Tab.js"></script>
     <!--==================== /References =====================-->
+    <!-- Persian Date picker initialization -->
+    <script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
 }

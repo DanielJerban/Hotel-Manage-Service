@@ -16,7 +16,7 @@ using HMS.Model.Core.DTOs.Room;
 
 namespace HMS.Web.Areas.Admin.Controllers
 {
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoomController : BaseController
     {
         #region Views

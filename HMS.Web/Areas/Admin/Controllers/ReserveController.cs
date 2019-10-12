@@ -250,7 +250,7 @@ namespace HMS.Web.Areas.Admin.Controllers
 
             var reserve = uow.Reserve.Find(reserveGuid);
             reserve.Status = Status;
-            uow.Reserve.Update(reserve);        
+            uow.Reserve.Update(reserve);
             uow.Complete();
 
 
@@ -278,6 +278,53 @@ namespace HMS.Web.Areas.Admin.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
             return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CalcualteReservePrice(string fromDate, string toDate, List<string> roomsId)
+        {
+            double price = 0;
+
+            if (roomsId == null)
+            {
+                return Json(price.ToString(), JsonRequestBehavior.AllowGet);
+            }
+
+            PersianDateTime persianFromDate = PersianDateTime.Parse(fromDate);
+            DateTime FromDate = persianFromDate.ToDateTime();
+
+            PersianDateTime persianToDate = PersianDateTime.Parse(toDate);
+            DateTime ToDate = persianToDate.ToDateTime();
+
+            int dateRange = ToDate.Subtract(FromDate).Days + 1;
+
+            foreach (var id in roomsId)
+            {
+                Guid roomGuid = Guid.Parse(id);
+                var room = uow.RoomPrice.Get(c => c.RoomId == roomGuid && c.Date == FromDate).SingleOrDefault();
+
+                if (room == null) // The room does not have any price set
+                {
+                    RoomPrice roomPrice = new RoomPrice()
+                    {
+                        RoomId = roomGuid,
+                        Date = FromDate,
+                        Price = 100000
+                    };
+
+                    uow.RoomPrice.Add(roomPrice);
+                    uow.Complete();
+
+                    price += (roomPrice.Price * dateRange);
+                }
+                else
+                {
+                    price += (room.Price * dateRange);
+                }
+            }
+
+            price /= 2;
+
+            return Json(price.ToString(), JsonRequestBehavior.AllowGet);
         }
 
         #region Partial Views 

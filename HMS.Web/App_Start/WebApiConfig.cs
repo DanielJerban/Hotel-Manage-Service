@@ -1,7 +1,11 @@
-﻿using System;
+﻿using HMS.Web.Auth.IocConfig;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
+using System.Web.Http.Filters;
 
 namespace HMS.Web
 {
@@ -9,7 +13,12 @@ namespace HMS.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            var container = SmObjectFactory.Container;
+            GlobalConfiguration.Configuration.Services.Replace(
+                typeof(IHttpControllerActivator), new SmWebApiControllerActivator(container));
+
+            config.Services.Replace(typeof(IFilterProvider), new SmWebApiFilterProvider(container));
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -19,6 +28,17 @@ namespace HMS.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            setSerializerSettings();
+        }
+
+        private static void setSerializerSettings()
+        {
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

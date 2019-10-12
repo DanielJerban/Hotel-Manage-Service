@@ -42,6 +42,12 @@
     <div id="FreeRoomGridParentDiv">
         <div id="FreeRoomsGrid" class="k-rtl"></div>
     </div>
+
+    <div class="row" style="padding-right: 10px;">
+        <h4 style="font-family: Iran-Sans-fa">مبلغ قابل پرداخت: </h4>
+        <h5 style="font-family: Iran-Sans-fa; padding-right: 10px;" id="reserveTotalPrice" class="text-primary"></h5>
+        <h5 style="font-family: Iran-Sans-fa; padding-right: 10px;" class="text-primary">تومان</h5>
+    </div>
 </div>
 
 <div id="Tab2" class="tabcontent">
@@ -58,11 +64,44 @@
 <!--============= IziModal ===============-->
 <div id="CreateFellowModal" hidden></div>
 <!--============= /IziModal===============-->
-<!-- Persian Date picker initialization -->
-<script src="~/DatePicker/jquery.md.bootstrap.datetimepicker.js"></script>
 
-<!--==================== Fellow Customer =====================-->
+
 <script>
+    var selectedRoomRowsId = [];
+    // ===================== Show Reserve Price =========================
+
+    function ShowReservePrice(fromDate, toDate, roomsId)
+    {
+        $.ajax({
+                type: "JSON",
+                url: "/Admin/Reserve/CalcualteReservePrice",
+                data:{
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    roomsId: roomsId
+                },
+                success: function(reservePrice){
+                    $("#reserveTotalPrice").text(reservePrice);
+                }
+            });
+    }
+
+    $("#inputDate4").change(function(){
+        var fromDate = $("#inputDate4").val();
+        var toDate = $("#inputDate5").val();
+
+        if(toDate !== "")
+            ShowReservePrice(fromDate, toDate, selectedRoomRowsId);
+    });
+
+    $("#inputDate5").change(function(){
+        var fromDate = $("#inputDate4").val();
+        var toDate = $("#inputDate5").val();
+
+        if(fromDate !== "")
+            ShowReservePrice(fromDate, toDate, selectedRoomRowsId);
+    });
+
     var selectedFellowId = [];
     $(function () {
 
@@ -151,13 +190,14 @@
             }
         });
     });
-    //<!--==================== /Fellow Customer =====================-->
+    // ==================== /Fellow Customer =====================
 
-    //<!--==================== Free Rooms =====================-->
+    // ==================== Free Rooms ===========================
     freeRoomGrid("#FreeRoomsGrid");
 
-    var selectedRoomRowsId = [];
+
     function freeRoomGrid(ID){
+
         function onChangeRoom(e) {
             var rows = e.sender.select();
             selectedRoomRowsId = [];
@@ -166,7 +206,14 @@
                 var dataItem = grid.dataItem(this);
                 selectedRoomRowsId.push(dataItem.Id);
             });
+
+        var fromDatePrice = $("#inputDate4").val();
+        var toDatePrice = $("#inputDate5").val();
+
+        if( fromDatePrice !== "" && toDatePrice !== ""){
+            ShowReservePrice(fromDatePrice, toDatePrice, selectedRoomRowsId);
         }
+    }
 
         $(ID).kendoGrid({
             dataSource: {
