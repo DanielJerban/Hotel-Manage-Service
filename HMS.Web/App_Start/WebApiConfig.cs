@@ -1,4 +1,5 @@
-﻿using HMS.Web.Auth.IocConfig;
+﻿using JwtWithWebAPI.IoCConfig;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace HMS.Web
             var formatters = GlobalConfiguration.Configuration.Formatters;
             var jsonFormatter = formatters.JsonFormatter;
             var settings = jsonFormatter.SerializerSettings;
-            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }

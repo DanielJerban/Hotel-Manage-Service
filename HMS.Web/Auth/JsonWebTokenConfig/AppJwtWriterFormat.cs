@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public class AppJwtWriterFormat : ISecureDataFormat<AuthenticationTicket>
     {

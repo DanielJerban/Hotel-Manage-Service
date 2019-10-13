@@ -1,9 +1,8 @@
-﻿using HMS.Service.Auth.Interfaces;
-using System;
+﻿using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace HMS.Service.Auth.Implements
+namespace JwtWithWebAPI.Services
 {
     public class SecurityService : ISecurityService
     {

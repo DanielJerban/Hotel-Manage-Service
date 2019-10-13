@@ -1,14 +1,13 @@
 ﻿using System;
 using StructureMap;
 using System.Threading;
+using JwtWithWebAPI.JsonWebTokenConfig;
+using JwtWithWebAPI.Services;
 using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.OAuth;
 using StructureMap.Web;
-using HMS.Service.Auth.Interfaces;
-using HMS.Service.Auth.Implements;
-using HMS.Web.Auth.JwtConfig;
 
-namespace HMS.Web.Auth.IocConfig
+namespace JwtWithWebAPI.IoCConfig
 {
     public static class SmObjectFactory
     {

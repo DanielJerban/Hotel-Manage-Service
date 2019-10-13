@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public static class GuardExtensions
     {

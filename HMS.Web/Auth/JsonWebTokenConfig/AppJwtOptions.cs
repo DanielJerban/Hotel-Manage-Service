@@ -3,7 +3,7 @@ using System.Text;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Jwt;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public class AppJwtOptions : JwtBearerAuthenticationOptions
     {

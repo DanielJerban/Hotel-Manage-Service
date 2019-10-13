@@ -60,12 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\Implements\SecurityService.cs" />
-    <Compile Include="Auth\Implements\TokenStoreService.cs" />
-    <Compile Include="Auth\Implements\UsersService.cs" />
-    <Compile Include="Auth\Interfaces\ISecurityService.cs" />
-    <Compile Include="Auth\Interfaces\ITokenStoreService.cs" />
-    <Compile Include="Auth\Interfaces\IUsersService.cs" />
     <Compile Include="Core\Interfaces\IContactInfoRepo.cs" />
     <Compile Include="Core\Interfaces\ICustomerRepo.cs" />
     <Compile Include="Core\Interfaces\ICheckingRepo.cs" />

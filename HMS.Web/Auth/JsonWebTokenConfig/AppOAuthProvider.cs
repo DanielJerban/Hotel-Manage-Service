@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using HMS.Model.Auth;
-using HMS.Service.Auth.Interfaces;
+using JwtWithWebAPI.DomainClasses;
+using JwtWithWebAPI.Services;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public class AppOAuthProvider : OAuthAuthorizationServerProvider
     {

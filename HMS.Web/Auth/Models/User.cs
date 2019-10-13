@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HMS.Model.Auth
+namespace JwtWithWebAPI.DomainClasses
 {
     public class User
     {

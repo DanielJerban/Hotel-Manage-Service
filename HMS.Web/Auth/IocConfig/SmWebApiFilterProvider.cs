@@ -4,7 +4,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using StructureMap;
 
-namespace HMS.Web.Auth.IocConfig
+namespace JwtWithWebAPI.IoCConfig
 {
     public class SmWebApiFilterProvider : ActionDescriptorFilterProvider, IFilterProvider
     {

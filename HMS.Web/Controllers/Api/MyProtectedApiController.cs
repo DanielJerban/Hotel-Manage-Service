@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
-using HMS.Web.Auth.JwtConfig;
+using JwtWithWebAPI.JsonWebTokenConfig;
 
-namespace HMS.Web.Controllers.Api
+namespace JwtWithWebAPI.Controllers
 {
     [JwtAuthorize]
     public class MyProtectedApiController : ApiController

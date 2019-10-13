@@ -4,7 +4,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
 using StructureMap;
 
-namespace HMS.Web.Auth.IocConfig
+namespace JwtWithWebAPI.IoCConfig
 {
     public class SmWebApiControllerActivator : IHttpControllerActivator
     {

@@ -55,8 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\User.cs" />
-    <Compile Include="Auth\UserToken.cs" />
     <Compile Include="Core\DomainModels\ApplicationUser.cs" />
     <Compile Include="Core\DomainModels\Base\ObjectModel.cs" />
     <Compile Include="Core\DomainModels\Checking.cs" />

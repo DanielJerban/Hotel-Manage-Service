@@ -1,10 +1,9 @@
-﻿using HMS.Model.Auth;
-using HMS.Service.Auth.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JwtWithWebAPI.DomainClasses;
 
-namespace HMS.Service.Auth.Implements
+namespace JwtWithWebAPI.Services
 {
     public class TokenStoreService : ITokenStoreService
     {

@@ -1,9 +1,9 @@
-﻿using HMS.Service.Auth.Interfaces;
-using HMS.Web.Auth.JwtConfig;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Web.Http;
+using JwtWithWebAPI.JsonWebTokenConfig;
+using JwtWithWebAPI.Services;
 
-namespace HMS.Web.Controllers.Api
+namespace JwtWithWebAPI.Controllers
 {
     [JwtAuthorize(Roles = "Admin")]
     public class MyProtectedAdminApiController : ApiController

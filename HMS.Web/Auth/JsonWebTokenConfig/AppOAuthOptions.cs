@@ -1,10 +1,10 @@
 ﻿using System;
-using HMS.Web.Auth.IocConfig;
+using JwtWithWebAPI.IoCConfig;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.OAuth;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public class AppOAuthOptions : OAuthAuthorizationServerOptions
     {

@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using HMS.Model.Core.DomainModels;
+﻿using HMS.Model.Core.DomainModels;
 using HMS.Web.Models;
+using JwtWithWebAPI.IoCConfig;
+using JwtWithWebAPI.JsonWebTokenConfig;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-[assembly: OwinStartupAttribute(typeof(HMS.Web.Startup))]
+[assembly: OwinStartup(typeof(HMS.Web.Startup))]
 namespace HMS.Web
 {
     public partial class Startup
@@ -18,6 +20,9 @@ namespace HMS.Web
             app.MapSignalR();
             ConfigureAuth(app);
             CreateAdmin();
+
+            app.UseOAuthAuthorizationServer(SmObjectFactory.Container.GetInstance<AppOAuthOptions>());
+            app.UseJwtBearerAuthentication(SmObjectFactory.Container.GetInstance<AppJwtOptions>());
         }
 
         public void CreateAdmin()

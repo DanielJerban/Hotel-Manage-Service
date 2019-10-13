@@ -1,4 +1,4 @@
-﻿namespace HMS.Service.Auth.Interfaces
+﻿namespace JwtWithWebAPI.Services
 {
     public interface ISecurityService
     {

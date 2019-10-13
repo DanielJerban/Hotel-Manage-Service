@@ -1,7 +1,7 @@
-using HMS.Model.Auth;
 using System.Collections.Generic;
+using JwtWithWebAPI.DomainClasses;
 
-namespace HMS.Service.Auth.Interfaces
+namespace JwtWithWebAPI.Services
 {
     public interface IUsersService
     {

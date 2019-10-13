@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public interface IAppJwtConfiguration
     {

@@ -3,10 +3,10 @@
 <head>
     <title>Testing JWT</title>
     <meta charset="utf-8" />
+
     <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="Scripts/jwt-decode.js"></script>
     <style>
-
         .highlight {
             padding: 1rem;
             margin-top: 1rem;
@@ -24,19 +24,24 @@
     <button type="button" onclick="doCallAdminApiUsingGet()" id="callAdminApiUsingGet">Call Protected Admin API, Test $.ajaxSetup</button>
     <button type="button" onclick="doRefreshToken()" name="refreshToken">Refresh Token</button>
     <button type="button" onclick="doLogout()" name="logout">Logout</button>
+
     <div id="ajaxResponse" style="display: none;">
         <h2>Response</h2>
         <div class="highlight">
             <pre><code id="ajaxResponseInfo"></code></pre>
         </div>
     </div>
+
     <div id="decodedToken" style="display: none;">
         <h2>Decoded Access Token</h2>
         <div class="highlight">
             <pre><code id="jwtInfo"></code></pre>
         </div>
     </div>
-    <script type="text/javascript">var jwtToken;
+
+    <script type="text/javascript">
+
+        var jwtToken;
         var refreshToken;
 
         function isNullOrEmpty(value) {
@@ -199,6 +204,7 @@
             let responseStr = JSON.stringify(response, null, ' ');
             console.log("response", response);
             $("#ajaxResponseInfo").text(responseStr);
-        }</script>
+        }
+    </script>
 </body>
 </html>

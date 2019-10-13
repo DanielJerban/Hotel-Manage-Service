@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JwtWithWebAPI.DomainClasses;
+using JwtWithWebAPI.Services;
 using Microsoft.Owin.Security.Infrastructure;
 using System.Security.Claims;
-using HMS.Service.Auth.Interfaces;
-using HMS.Model.Auth;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     /// <summary>
     /// With the refresh token the user does not need to login again and

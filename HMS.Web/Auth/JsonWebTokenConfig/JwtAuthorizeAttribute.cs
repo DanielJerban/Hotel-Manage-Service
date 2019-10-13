@@ -1,11 +1,11 @@
-﻿using HMS.Service.Auth.Interfaces;
-using System;
+﻿using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using JwtWithWebAPI.Services;
 
-namespace HMS.Web.Auth.JwtConfig
+namespace JwtWithWebAPI.JsonWebTokenConfig
 {
     public class JwtAuthorizeAttribute : AuthorizeAttribute
     {
