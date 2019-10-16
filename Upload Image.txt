@@ -1,0 +1,93 @@
+public void GetImages(IEnumerable<HttpPostedFileBase> files)
+{
+	HttpPostedFileBase postedImage;
+
+	foreach(var item in files)
+	{
+		// skip the empty file 
+		if(item == null)
+		{
+			continue;
+		}
+
+		postedImage = ImageList.PostedFiles.SingleOrDefault(c => c.FileName == item.FileName);
+
+		if(postedImage == null)
+		{
+			ImageList.PostedFiles.Add(item);
+		}
+	}
+}
+
+private RoomImage SaveImage(HttpPostedFileBase file)
+{
+	// Save file in directory 
+	// Check if the directoory exists 
+	if(!Directory.Exists(Server.MapPath("~/Content/Img/Upload")))
+	{
+		Directory.CreateDirectory(Server.MapPath("~/Content/Img/Upload"));
+
+	}
+
+	var fileName = Path.GetFileName(file.FileName);
+	var fileLocation = Path.Combine(Server.MapPath("~/Content/Img/Upload", fileName);
+	var reletivePath = "~/Content/Img/Upload/" + fileName ; 
+
+	file.SaveAs(fileLocation);
+
+	var imageExist = uow.RoomImage.Get(c => c.Path == reletivePath).SingleOrDefault();
+	if(imageExist == null)
+	{
+		RoomImage img = new RoomImage()
+		{
+			Path = "/Content/Img/Upload/" + fileName,
+			FileName = fileName, 
+			TotalFileSize = file.ContentLength
+		};
+		return img
+	}
+	
+	return null;
+
+}
+
+public JsonResult SetImage(string roomId)
+{
+	Guid roomGuid = Guid.Parse(roomId);
+	var room = uow.Room.Find(roomGuid);
+
+	foreach(var item in ImageList.PostedFiles)
+	{
+		var image = SaveImage(item);
+		if(image != null)
+		{
+			image.RoomId = roomGuid, 
+			uow.RoomImage.Add(image);
+		}
+	}
+
+	uow.Complete();
+
+	return Json(true , JsonRequestBehavior.AllowGet);
+}
+
+
+public JsonResult roomImagesPath(string roomId)
+{
+	Guid roomGuid = Guid.Parse(roomId);
+	var room = uow.Room.Find(roomGuid);
+	var roomImage = uow.RoomImage.Get(c => c.Room.Id == roomGuid).Include(c => c.Room).ToList();
+
+	List<string> ImageUrl = new List<string>();
+	foreach(var imgPath in roomImages)
+	{
+		ImageUrl.Add(imgPath.Path);
+	}
+
+	return Json(new{ ImageUrl}, JsonRequestBehavior.AllowGet);
+}
+
+public static class ImageList
+{
+	public static List<HttpPostedFileBase> PostedFile = new List<HttpPostedFileBase>();
+}
